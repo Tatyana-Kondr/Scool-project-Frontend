@@ -1,0 +1,21 @@
+.cabinet{
+    background-color: #F0ECEB;
+}
+.avert_container{
+    width: 1000px;
+    background-color: white;
+    border: 1px solid ;
+}
+
+.avert_card {
+    display: flex;
+    align-items: center;
+    width: 800px;
+    border: 1px solid gray;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+    list-style: none;
+}
+.avert_card li{
+    list-style: none; 
+}

@@ -1,0 +1,71 @@
+.homePageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  gap: 40px;
+}
+
+.content {
+  width: 800px;
+  text-align: justify;
+  margin: 0 40px;
+  font-family: "Hero", sans-serif;
+  font-size: 33px;
+}
+
+.text1 {
+  margin-left: 150px;
+  text-align: left;
+  font-family: "PF Scandal Pro", sans-serif;
+  font-size: 40px;
+  color: #54cd38;
+}
+.text2 {
+  margin-left: 750px;
+  text-align: left;
+  font-family: "PF Scandal Pro", sans-serif;
+  font-size: 40px;
+  color: #54cd38;
+}
+.lookingFor {
+  display: block;
+  justify-content: center;
+  height: 780px;
+  margin-bottom: 100px;
+}
+.lookingForTitle {
+  font-family: Ubuntu;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  color: #54cd38;
+}
+.dogs_cats_container {
+  display: flex;
+  justify-content: center;
+  gap: 200px;
+  margin: 0 250px;
+}
+.dogs_cats {
+  margin-bottom: 150px;
+}
+.dogs_cats img:hover {
+  opacity: 0.8;
+}
+.dogs_cats_btn {
+  padding: 10px 20px;
+  background-color: #54cd38;
+  border-radius: 25px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-family: Ubuntu;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 700;
+  transition:
+    color 0.5s,
+    font-size 0.5s;
+}
+
