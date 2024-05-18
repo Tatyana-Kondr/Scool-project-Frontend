@@ -3,12 +3,13 @@ export const sexList = [
     {value: "female"},
 ];
 export const countryList = [
-    {value: "Russia"},
+    {value: "Ukraine"},
     {value: "USA"},
     {value: "Kasakhstan"},
+    {value: "Russia"}
 ];
 export const ageList = [
-    {value: "puppy/Kitten"},
+    {value: "puppy/kitten"},
     {value: "young"},
     {value: "adult"},
     {value: "senior"},

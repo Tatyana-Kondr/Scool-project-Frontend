@@ -1,5 +1,5 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchPet, fetchPets, fetchPetsByAuthor, fetchPetsByCountry, fetchPetsByFilter, fetchPetsByGender, fetchPetsByType } from "./api"
+import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
 import type { PetDTO, PetsState } from "./types"
 
 const initialState: PetsState = {
@@ -37,19 +37,7 @@ export const petsSlice = createAppSlice({
         rejected: state => {},
       },
     ),
-    getPetsByCountry: create.asyncThunk(
-      async (country: string) => {
-        const response = await fetchPetsByCountry(country)
-        return response
-      },
-      {
-        pending: state => {},
-        fulfilled: (state, action) => {
-          state.petsList = action.payload
-        },
-        rejected: state => {},
-      },
-    ),
+    
     getPetsByFilter: create.asyncThunk(
       async (filters: FilterParamDto) => {
         const response = await fetchPetsByFilter(filters)
@@ -63,21 +51,9 @@ export const petsSlice = createAppSlice({
         rejected: state => {},
       },
     ),
-    getPetsByAuthor: create.asyncThunk(
-      async (author: string) => {
-        const response = await fetchPetsByAuthor(author)
-        return response
-      },
-      {
-        pending: state => {},
-        fulfilled: (state, action) => {
-          state.petsList = action.payload
-        },
-        rejected: state => {},
-      },
-    ),
+    
     deletePet: create.asyncThunk(
-      async (id: string) => {
+      async (id: number) => {
         const response = await fetchDeletePet(id)
         return response
       },
@@ -122,6 +98,6 @@ export const petsSlice = createAppSlice({
   },
 })
 
-export const { getPets, getPet, getPetsByType, getPetsByCountry, getPetsByAuthor, getPetsByFilter, deletePet, addPet } = petsSlice.actions
+export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet } = petsSlice.actions
 
 export const { selectPets, selectPet } = petsSlice.selectors
