@@ -14,7 +14,8 @@ export async function fetchPetsByFilter(
   filterParam: FilterParamDto,
 ): Promise<Pet[]> {
   let queryString = ""
-  queryString += `petType=${filterParam.petType}&`
+  // queryString += `petType=${filterParam.petType}&`
+  queryString += filterParam?.petType ? `petType=${filterParam.petType}&` : ""
   queryString += filterParam?.country ? `country=${filterParam.country}&` : ""
   queryString += filterParam?.category
     ? `category=${filterParam.category}&`
@@ -23,13 +24,7 @@ export async function fetchPetsByFilter(
   queryString += filterParam?.gender ? `gender=${filterParam.gender}&` : ""
   queryString += filterParam?.author ? `author=${filterParam.author}` : ""
 
-  const res = await fetch(`/api/pet/found?${queryString}`, {
-    headers: {
-      "Content-Type": "application/json",
-      accept: "*/*",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
-    }, 
-  })
+  const res = await fetch(`/api/pet/found?${queryString}`)
   return res.json()
 }
 
