@@ -17,11 +17,12 @@ import { selectIsAuthenticated, user } from "./features/auth/authSlice"
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(user())
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, dispatch])
   return (
     <div className="App">
       <Routes>

@@ -5,12 +5,7 @@ import { Link } from "react-router-dom"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import s from "./petsList.module.css"
 import Dropdown from "../../../components/dropdown/Dropdown"
-import {
-  sexList,
-  countryList,
-  categoryList,
-  ageList,
-} from "./data"
+import { sexList, countryList, categoryList, ageList } from "./data"
 import Checkbox from "../../../components/dropdown/Checkbox"
 
 export default function PetsList() {
@@ -23,7 +18,6 @@ export default function PetsList() {
     category: StringParam,
     age: StringParam,
     gender: StringParam,
-    disability: BooleanParam,
   })
 
   useEffect(() => {
@@ -38,14 +32,7 @@ export default function PetsList() {
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    param: string,
-  ) => {
-    const checked = event.target.checked
-    setQueryParams({ ...queryParams, [param]: checked })
-  }
-
+  
   return (
     <>
       {/* <CreatePet /> */}
@@ -53,7 +40,7 @@ export default function PetsList() {
         <div className={s.dropdown_menu}>
           <Dropdown
             label="Country"
-            options={[ ...countryList]}
+            options={[...countryList]}
             value={queryParams.country || ""}
             onChange={event => handleDropdownChange(event, "country")}
           />
@@ -74,13 +61,6 @@ export default function PetsList() {
             options={[...sexList]}
             value={queryParams.gender || ""}
             onChange={event => handleDropdownChange(event, "gender")}
-          />
-          <Checkbox
-            label="Disability"
-            checked={queryParams.disability || false}
-            onChange={checked =>
-              setQueryParams({ ...queryParams, disability: checked })
-            }
           />
         </div>
       </div>

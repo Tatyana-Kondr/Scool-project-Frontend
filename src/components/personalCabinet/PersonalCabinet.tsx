@@ -1,24 +1,31 @@
 import React, { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { getPets, selectPets } from "../../features/pets/petsSlice"
+import { getPets, getPetsByFilter, selectPets } from "../../features/pets/petsSlice"
 import { Link } from "react-router-dom"
 import s from "./personalCabinet.module.css"
-import CreatePet from "../../features/pets/createPet/CreatePet"
+import { StringParam, useQueryParams } from "use-query-params"
+import { getUser, selectUser } from "../../features/auth/authSlice"
 
 export default function PersonalCabinet() {
   const petsList = useAppSelector(selectPets)
+  const user = useAppSelector(selectUser)
   const dispatch = useAppDispatch()
+  const [queryParams, setQueryParams] = useQueryParams({
+    author: StringParam,
+  })
 
   useEffect(() => {
-    dispatch(getPets())
+    dispatch(getPetsByFilter(queryParams))
+  }, [dispatch, queryParams])
+
+  useEffect(() => {
+    dispatch(getUser())
   }, [dispatch])
 
   return (
     <div className={s.cabinet}>
       <div className={s.avert_container}>
         <div>
-          {/* <button onClick={}>Add new avert</button> */}
-          {/* <CreatePet /> */}
           <Link to="/createPet">Add new avert</Link>
         </div>
         <ul>
@@ -26,9 +33,9 @@ export default function PersonalCabinet() {
             <li key={p.id}>
               <div className={s.avert_card}>
                 <div className={s.avert_img}>
-                  <img src={p.photo[0]} alt="" />
+                  <img src={p.photo[0]} alt={p.caption} />
                 </div>
-                <Link to={String(p.id)}>{p.caption}</Link>
+                <Link to={`/pets/${p.id}`}>{p.caption}</Link>
                 <button type="button">Edit</button>
                 <button type="button">Delete</button>
               </div>

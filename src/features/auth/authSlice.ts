@@ -55,7 +55,7 @@ export const authSlice = createAppSlice({
       },
     ),
 
-    user: create.asyncThunk(
+    getUser: create.asyncThunk(
       async (arg: void) => {
         const response = await fetchCurrentUser();
         return response;
@@ -88,6 +88,6 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { register, login, user, logout } = authSlice.actions
+export const { register, login, getUser, logout } = authSlice.actions
 
 export const { selectUser, selectRoles, selectIsAuthenticated, selectToken, selectLoginError, selectRegisterError } = authSlice.selectors

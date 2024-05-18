@@ -16,6 +16,10 @@
     padding: 20px 10px;
     list-style: none;
 }
-.avert_card li{
+.avert_container li{
     list-style: none; 
+}
+.avert_img img{
+    max-width: 70px;
+    border-radius: 4px;
 }
