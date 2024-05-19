@@ -32,10 +32,9 @@ export default function PetsList() {
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
-  
+
   return (
     <>
-      {/* <CreatePet /> */}
       <div className={s.dropdown_container}>
         <div className={s.dropdown_menu}>
           <Dropdown

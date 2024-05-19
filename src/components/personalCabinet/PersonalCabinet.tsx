@@ -10,17 +10,9 @@ import { string } from "yup"
 export default function PersonalCabinet() {
   const {author} = useParams<{author: string}>();
   const petsList = useAppSelector(selectPets);
-  // const userSel = useAppSelector(selectUser);
+  
   const dispatch = useAppDispatch();
-  // const [queryParams, setQueryParams] = useQueryParams({
-  //   author: StringParam,
-  // })
-
-  // useEffect(() => {
-  //   if (userSel?.login) {
-  //     setQueryParams({ author: userSel.login });
-  //   }
-  // }, [userSel?.login, setQueryParams]);
+ 
 
   useEffect(() => {
     dispatch(getPetsByFilter({author}))

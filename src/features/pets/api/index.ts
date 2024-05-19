@@ -14,7 +14,6 @@ export async function fetchPetsByFilter(
   filterParam: FilterParamDto,
 ): Promise<Pet[]> {
   let queryString = ""
-  // queryString += `petType=${filterParam.petType}&`
   queryString += filterParam?.petType ? `petType=${filterParam.petType}&` : ""
   queryString += filterParam?.country ? `country=${filterParam.country}&` : ""
   queryString += filterParam?.category
@@ -43,22 +42,9 @@ export async function fetchPetsByType(petType: string): Promise<Pet[]> {
   const res = await fetch(`/api/pet/found?petType=${petType}`)
   return res.json()
 }
-export async function fetchPetsByAuthor(author: string): Promise<Pet[]> {
-  const res = await fetch(`/api/pet/found?author=${author}`)
-  return res.json()
-}
 
-export async function fetchPet(id: string): Promise<Pet> {
+export async function fetchPet(id: number): Promise<Pet> {
   const res = await fetch(`/api/pet/found/id/${id}`)
-  return res.json()
-}
-
-export async function fetchPetsByCountry(country: string): Promise<Pet[]> {
-  const res = await fetch(`/api/pet/found?country=${country}`)
-  return res.json()
-}
-export async function fetchPetsByGender(gender: string): Promise<Pet[]> {
-  const res = await fetch(`/api/pet/found?gender=${gender}`)
   return res.json()
 }
 
@@ -67,7 +53,7 @@ interface ServerDeleteProductResponse extends Pet {
 }
 
 export async function fetchDeletePet(
-  id: string,
+  id: number,
 ): Promise<ServerDeleteProductResponse> {
   const res = await fetch(`/api/pet/${id}`, {
     method: "DELETE",
