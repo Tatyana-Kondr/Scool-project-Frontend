@@ -4,3 +4,8 @@
   margin: 20px;
   padding: 20px;
 }
+.modal_error{
+  color: red;
+  font-size: 40px;
+  
+}

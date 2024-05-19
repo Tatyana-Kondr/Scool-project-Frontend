@@ -1,29 +1,84 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import style from "./PetCard.module.css"
 import { getPet, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
+import { author, selectUser } from "../../auth/authSlice"
+import { User } from "../../auth/types"
+import Modal from "../../../components/modalProps/ModalProps"
 
 export default function PetCard() {
+  const currentUser = useAppSelector(selectUser)
   const { petId } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-   const pet = useAppSelector(selectPet)
-   useEffect(() => {
-     dispatch(getPet(Number(petId)))
-  }, [dispatch])
-   if (pet) {
-     return (
-       <div className={style.box}>
-         <h2>{pet?.caption}</h2>
-         {/*<img src={pet.photo[0]} alt={pet?.caption} />*/}
-         <p>{pet?.description}</p>
-         <Link to="/pets">To pets</Link>
-         <button onClick={() => navigate(-1)}>To previous page</button>
-       </div>
-     )
-   } else {
-     return <PageNotFound />
-   }
+  const pet = useAppSelector(selectPet)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [authorData, setAuthorData] = useState<User | null>(null)
+  const [modalContent, setModalContent] = useState<JSX.Element | null>(null)
+
+  useEffect(() => {
+    if (petId) {
+      dispatch(getPet(Number(petId)))
+    }
+  }, [dispatch, petId])
+
+  const handleUser = async () => {
+    if (currentUser && pet && pet.author) {
+      try {
+        const response = await dispatch(author(pet.author))
+        const userData = response.payload as User
+        if (userData && "fullName" in userData) {
+          setAuthorData(userData)
+          setModalContent(
+            <div>
+              <p>Name: {userData.fullName}</p>
+              <p>Email: {userData.email}</p>
+              <p>Phone: {userData.phone}</p>
+              <p>Telegram: {userData.telegram}</p>
+              <p>Website: {userData.website}</p>
+            </div>,
+          )
+          setIsModalOpen(true)
+        }
+      } catch (error) {
+        console.error("Ошибка при получении данных автора: ", error)
+      }
+    } else {
+      setModalContent(
+        <div className={style.modal_error}>
+          <p>Only registered users can view contacts!</p>
+        </div>,
+      )
+      setIsModalOpen(true)
+    }
+  }
+
+  if (!pet) {
+    return <PageNotFound />
+  }
+
+  return (
+    <div className={style.box}>
+      <h2>{pet.caption}</h2>
+      {/* <img src={pet.photo[0]} alt={pet.caption} /> */}
+      <p>{pet.description}</p>
+      <p>{pet.dateCreate}</p>
+      <p>{pet.author}</p>
+
+      <button onClick={() => navigate(-1)}>To previous page</button>
+
+      <button onClick={handleUser}>Contacts</button>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Contact details:"
+      >
+        {modalContent}
+      </Modal>
+    </div>
+  )
 }

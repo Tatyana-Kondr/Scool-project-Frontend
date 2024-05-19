@@ -36,7 +36,7 @@ export async function fetchPetsByType(petType: string): Promise<Pet[]> {
 
  
 export async function fetchPet(id: number): Promise<Pet> {
-   const res = await fetch(`/api/pet/found/id/${id}`)
+   const res = await fetch(`/api/pet/${id}`)
    return res.json()
  }
 
