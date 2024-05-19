@@ -5,11 +5,12 @@ import { register } from "../../features/auth/authSlice"
 import { useNavigate } from "react-router-dom"
 
 export default function Register() {
+  
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   return (
     <div>
-      <h1>Any place in your app!</h1>
+      <h1>Sign up</h1>
       <Formik
         initialValues={{
           email: "",

@@ -5,7 +5,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { logout, selectUser } from "../../features/auth/authSlice"
 
 export default function Header() {
-  const user = useAppSelector(selectUser)
+
+  const userSelected = useAppSelector(selectUser)
   const dispatch = useAppDispatch()
   function handleLogout() {
     dispatch(logout())
@@ -26,13 +27,13 @@ export default function Header() {
                 <a href="#!">I want help</a>
               </li>
               <li>
-                <a href="#!">How it work</a>
+                <a href="#!">How it works</a>
               </li>
 
-              {user ? (
+              {userSelected ? (
                 <>
                   <li>
-                    <Link to="/personalCabinet">Personal cabinet</Link>
+                    <Link to={`/personalCabinet/${userSelected.login}`}>Personal cabinet</Link>
                   </li>
                   <li>
                     <Link to="/" onClick={handleLogout}>Log out</Link>

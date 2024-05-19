@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { getPetsByFilter, selectPets } from "../petsSlice"
+import { deletePet, getPetsByFilter, selectPets } from "../petsSlice"
 import { Link } from "react-router-dom"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import s from "./petsList.module.css"
@@ -11,7 +11,7 @@ import {
   categoryList,
   ageList,
 } from "./data"
-import Checkbox from "../../../components/dropdown/Checkbox"
+//import Checkbox from "../../../components/dropdown/Checkbox"
 
 export default function PetsList() {
   const petsByType = useAppSelector(selectPets)
@@ -22,14 +22,15 @@ export default function PetsList() {
     country: StringParam,
     category: StringParam,
     age: StringParam,
-    gender: StringParam,
-    disability: BooleanParam,
+    gender: StringParam
+  
   })
 
   useEffect(() => {
     dispatch(getPetsByFilter(queryParams))
   }, [dispatch, queryParams])
 
+  
   const handleDropdownChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
     param: string,
@@ -38,17 +39,9 @@ export default function PetsList() {
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
-  const handleCheckboxChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    param: string,
-  ) => {
-    const checked = event.target.checked
-    setQueryParams({ ...queryParams, [param]: checked })
-  }
-
+ 
   return (
     <>
-      {/* <CreatePet /> */}
       <div className={s.dropdown_container}>
         <div className={s.dropdown_menu}>
           <Dropdown
@@ -75,13 +68,7 @@ export default function PetsList() {
             value={queryParams.gender || ""}
             onChange={event => handleDropdownChange(event, "gender")}
           />
-          <Checkbox
-            label="Disability"
-            checked={queryParams.disability || false}
-            onChange={checked =>
-              setQueryParams({ ...queryParams, disability: checked })
-            }
-          />
+          
         </div>
       </div>
       <ul>
@@ -103,14 +90,14 @@ export default function PetsList() {
               <Link to={String(p.id)}>Read more</Link>
             </div>
 
-            {/* <button
+            <button
               type="button"
               onClick={() => {
                 dispatch(deletePet(p.id))
               }}
             >
               Delete
-            </button> */}
+            </button>
           </li>
         ))}
       </ul>
