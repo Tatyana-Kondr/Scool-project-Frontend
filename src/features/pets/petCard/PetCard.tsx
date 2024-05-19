@@ -25,17 +25,34 @@ export default function PetCard() {
     }
   }, [dispatch, petId])
 
+//   if (currentUser && pet && pet.author) {
+//     const response = await dispatch(author(pet.author))
+//   const ownerEmail = (response.payload as User).email
+  
+  
+//   const handleSendEmail = () => {
+//     const subject = encodeURIComponent("Интерес к вашему объявлению о животном");
+//     const body = encodeURIComponent(`Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`);
+//     window.location.href = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
+//   }
+// };
+
   const handleUser = async () => {
     if (currentUser && pet && pet.author) {
       try {
         const response = await dispatch(author(pet.author))
         const userData = response.payload as User
+        const handleSendEmail = () => {
+              const subject = encodeURIComponent("Интерес к вашему объявлению о животном");
+              const body = encodeURIComponent(`Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`);
+              window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`;
+            }
         if (userData && "fullName" in userData) {
           setAuthorData(userData)
           setModalContent(
             <div>
               <p>Name: {userData.fullName}</p>
-              <p>Email: {userData.email}</p>
+              <button onClick={handleSendEmail}>Email: {userData.email}</button>
               <p>Phone: {userData.phone}</p>
               <p>Telegram: {userData.telegram}</p>
               <p>Website: {userData.website}</p>
@@ -71,6 +88,7 @@ export default function PetCard() {
       <button onClick={() => navigate(-1)}>To previous page</button>
 
       <button onClick={handleUser}>Contacts</button>
+      {/* <button onClick={handleSendEmail}>Send a message</button> */}
 
       <Modal
         isOpen={isModalOpen}
