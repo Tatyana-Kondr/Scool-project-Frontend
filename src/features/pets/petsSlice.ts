@@ -66,7 +66,7 @@ export const petsSlice = createAppSlice({
       },
     ),
      getPet: create.asyncThunk(
-       async (id: string) => {
+       async (id: number) => {
          const response = await fetchPet(id)
          return response
        },

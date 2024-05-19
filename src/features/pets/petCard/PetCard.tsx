@@ -11,7 +11,7 @@ export default function PetCard() {
   const navigate = useNavigate()
    const pet = useAppSelector(selectPet)
    useEffect(() => {
-     dispatch(getPet(String(petId)))
+     dispatch(getPet(Number(petId)))
   }, [dispatch])
    if (pet) {
      return (

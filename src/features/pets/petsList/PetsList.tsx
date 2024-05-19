@@ -5,12 +5,7 @@ import { Link } from "react-router-dom"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import s from "./petsList.module.css"
 import Dropdown from "../../../components/dropdown/Dropdown"
-import {
-  sexList,
-  countryList,
-  categoryList,
-  ageList,
-} from "./data"
+import { sexList, countryList, categoryList, ageList } from "./data"
 //import Checkbox from "../../../components/dropdown/Checkbox"
 
 export default function PetsList() {
@@ -22,15 +17,13 @@ export default function PetsList() {
     country: StringParam,
     category: StringParam,
     age: StringParam,
-    gender: StringParam
-  
+    gender: StringParam,
   })
 
   useEffect(() => {
     dispatch(getPetsByFilter(queryParams))
   }, [dispatch, queryParams])
 
-  
   const handleDropdownChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
     param: string,
@@ -39,14 +32,14 @@ export default function PetsList() {
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
- 
+
   return (
     <>
       <div className={s.dropdown_container}>
         <div className={s.dropdown_menu}>
           <Dropdown
             label="Country"
-            options={[ ...countryList]}
+            options={[...countryList]}
             value={queryParams.country || ""}
             onChange={event => handleDropdownChange(event, "country")}
           />
@@ -68,7 +61,6 @@ export default function PetsList() {
             value={queryParams.gender || ""}
             onChange={event => handleDropdownChange(event, "gender")}
           />
-          
         </div>
       </div>
       <ul>
@@ -77,6 +69,9 @@ export default function PetsList() {
             <div className={s.petCard}>
               <div className={s.petCard_img}>
                 <img src={p.photo[0]} alt="" />
+                <div className={s.petCard_btn}>
+              <Link to={String(p.id)}>Read more</Link>
+            </div>
               </div>
               <div className={s.petCard_body}>
                 <p>{p.dateCreate}</p>
@@ -86,18 +81,7 @@ export default function PetsList() {
                 <p>{p.category}</p>
               </div>
             </div>
-            <div className={s.petCard_btn}>
-              <Link to={String(p.id)}>Read more</Link>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(deletePet(p.id))
-              }}
-            >
-              Delete
-            </button>
+            
           </li>
         ))}
       </ul>
