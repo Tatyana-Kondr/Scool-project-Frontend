@@ -1,10 +1,33 @@
 .cabinet{
     background-color: #F0ECEB;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 30px 30px;
+}
+.profile_container{
+max-width: 500px;
+background-color: white;
+padding: 0 20px;
+}
+.contact{
+    display: flex;
+    align-items: center;
+    color: #757575;
+}
+.contact label{
+    font-weight:500;
+}
+.profile_container h1{
+    color: #54CD38;  
+}
+.profile_container h2{
+    color: #757575;
+    
 }
 .avert_container{
-    width: 1000px;
-    background-color: white;
-    border: 1px solid ;
+    max-width: 1000px;
+    background-color: white; 
 }
 
 .avert_card {

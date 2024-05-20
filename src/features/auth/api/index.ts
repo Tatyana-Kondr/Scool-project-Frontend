@@ -76,3 +76,20 @@ export async function fetchUser(author: string): Promise<User> {
   }
   return res.json()
 }
+
+interface ServerDeleteUserResponse extends User {
+  isDeleted: boolean
+}
+
+export async function fetchDeleteUser(
+  id: number,
+): Promise<ServerDeleteUserResponse> {
+  const res = await fetch(`/api/account/user/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json", 
+    accept: "*/*",
+    authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+  return res.json()
+}

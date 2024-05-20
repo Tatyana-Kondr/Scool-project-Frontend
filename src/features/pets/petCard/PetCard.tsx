@@ -25,18 +25,6 @@ export default function PetCard() {
     }
   }, [dispatch, petId])
 
-//   if (currentUser && pet && pet.author) {
-//     const response = await dispatch(author(pet.author))
-//   const ownerEmail = (response.payload as User).email
-  
-  
-//   const handleSendEmail = () => {
-//     const subject = encodeURIComponent("Интерес к вашему объявлению о животном");
-//     const body = encodeURIComponent(`Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`);
-//     window.location.href = `mailto:${ownerEmail}?subject=${subject}&body=${body}`;
-//   }
-// };
-
   const handleUser = async () => {
     if (currentUser && pet && pet.author) {
       try {
