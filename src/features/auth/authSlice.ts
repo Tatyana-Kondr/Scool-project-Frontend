@@ -1,10 +1,11 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import type { AuthState, UserCreateDto, UserLoginDto } from "./types"
+import type { AuthState, UserCreateDto, UserLoginDto, UserUpdateDto } from "./types"
 import {
   fetchCurrentUser,
   fetchDeleteUser,
   fetchLogin,
   fetchRegister,
+  fetchUpdateUser,
   fetchUser,
 } from "./api"
 
@@ -93,6 +94,22 @@ export const authSlice = createAppSlice({
       },
     ),
 
+    updateUser: create.asyncThunk(
+      async ({user, id}:{user: UserUpdateDto, id: number}) => {
+        const response = await fetchUpdateUser(user, id);
+        return response;
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action) => {
+          state.user = action.payload;
+        },
+        rejected: (state, action) => {
+          console.error(action.error.message);
+        },
+      }
+    ),
+
     deleteUser: create.asyncThunk(
       async (id: number) => {
         const response = await fetchDeleteUser(id)
@@ -102,11 +119,12 @@ export const authSlice = createAppSlice({
         pending: state => {},
         fulfilled: (state, action) => {
           state.user = action.payload
-        },
-        rejected: state => {
           state.user = undefined
           state.isAuthenticated = false
           state.token = undefined
+        },
+        rejected: (state, action) => {
+          console.error(action.error.message);
         },
       },
     ),
@@ -127,7 +145,7 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { register, login, user, logout, author } = authSlice.actions
+export const { register, login, user, logout, author, updateUser, deleteUser } = authSlice.actions
 
 export const {
   selectUser,

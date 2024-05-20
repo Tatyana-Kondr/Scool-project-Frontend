@@ -12,8 +12,9 @@ import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./app/hooks"
 import { selectIsAuthenticated, user } from "./features/auth/authSlice"
 import CreatePet from "./features/pets/createPet/CreatePet"
-import MyProfile from "./components/updateMyProfile/MyProfile"
+import MyProfile from "./components/editUser/EditUser"
 import NewPassword from "./components/newPassword/NewPassword"
+import EditUser from "./components/editUser/EditUser"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -31,7 +32,7 @@ const App = () => {
           <Route path="loginForm" element={<LoginForm />} />
           <Route path="register" element={<Register />} />
           <Route path="personalCabinet/:author" element={<PersonalCabinet />} />
-          <Route path="myProfile" element={<MyProfile />} />
+          <Route path="editUser" element={<EditUser />} />
           <Route path="newPassword" element={<NewPassword />} />
           <Route path="createPet" element={<CreatePet />} />
           <Route path="pets" element={<PetsList />} />

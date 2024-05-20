@@ -8,12 +8,13 @@ import {
 } from "../../features/pets/petsSlice"
 import { Link, useParams } from "react-router-dom"
 import s from "./personalCabinet.module.css"
-import { selectUser } from "../../features/auth/authSlice"
+import { deleteUser, selectUser } from "../../features/auth/authSlice"
 
 export default function PersonalCabinet() {
   const { author } = useParams<{ author: string }>()
   const petsList = useAppSelector(selectPets)
   const user = useAppSelector(selectUser)
+  const {id} = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -39,9 +40,9 @@ export default function PersonalCabinet() {
         </div>
 
         <div>
-          <Link to={`/myPofile${user?.id}`}>Change personal details</Link>
+          <Link to={`/editUser`}>Change personal details</Link>
           <Link to={`/newPassword${user?.id}`}>Change password</Link>
-          <button >Delete account</button>
+          <button onClick={() => dispatch(deleteUser(Number(id)))}>Delete account</button>
         </div>
       </div>
 
