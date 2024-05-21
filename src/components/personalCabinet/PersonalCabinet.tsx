@@ -51,7 +51,7 @@ export default function PersonalCabinet() {
 
         <div>
           <Link to={`/editUser`}>Change personal details</Link>
-          <Link to={`/newPassword${user?.id}`}>Change password</Link>
+          <Link to={`/newPassword`}>Change password</Link>
           <button onClick={handleDeleteAccount}>Delete account</button>
         </div>
       </div>

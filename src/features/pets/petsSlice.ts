@@ -117,6 +117,6 @@ export const petsSlice = createAppSlice({
   },
 })
 
-export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet } = petsSlice.actions
+export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
 
 export const { selectPets, selectPet } = petsSlice.selectors

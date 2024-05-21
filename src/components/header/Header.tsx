@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import styles from "./header.module.css"
-import logoImg from "./../../media/logo.png"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { logout, selectUser } from "../../features/auth/authSlice"
+import logoImg from "./../../media/logo.png"
+import styles from "./header.module.css"
 
 export default function Header() {
 
