@@ -42,13 +42,13 @@ export async function fetchPet(id: number): Promise<Pet> {
 
 
 
-interface ServerDeleteProductResponse extends Pet {
+interface ServerDeletePetResponse extends Pet {
   isDeleted: boolean
 }
 
 export async function fetchDeletePet(
   id: number,
-): Promise<ServerDeleteProductResponse> {
+): Promise<ServerDeletePetResponse> {
   const res = await fetch(`/api/pet/${id}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json", 
