@@ -6,7 +6,7 @@ import {
   getPetsByFilter,
   selectPets,
 } from "../../features/pets/petsSlice"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import s from "./personalCabinet.module.css"
 import { deleteUser, selectUser } from "../../features/auth/authSlice"
 
@@ -14,13 +14,23 @@ export default function PersonalCabinet() {
   const { author } = useParams<{ author: string }>()
   const petsList = useAppSelector(selectPets)
   const user = useAppSelector(selectUser)
-  const {id} = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getPetsByFilter({ author }))
   }, [dispatch, author])
 
+  const handleDeleteAccount = async () => {
+    if (user) {
+      const result = await dispatch(deleteUser(user.id));
+      if (deleteUser.fulfilled.match(result)) {
+        navigate('/'); // Перенаправление на домашнюю страницу
+      } else {
+        console.error('Failed to delete user:', result.error.message);
+      }
+    }
+  }; 
   return (
     <div className={s.cabinet}>
       <div className={s.profile_container}>
@@ -42,7 +52,7 @@ export default function PersonalCabinet() {
         <div>
           <Link to={`/editUser`}>Change personal details</Link>
           <Link to={`/newPassword${user?.id}`}>Change password</Link>
-          <button onClick={() => dispatch(deleteUser(Number(id)))}>Delete account</button>
+          <button onClick={handleDeleteAccount}>Delete account</button>
         </div>
       </div>
 
