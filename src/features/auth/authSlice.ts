@@ -1,16 +1,19 @@
 import { createAppSlice } from "../../app/createAppSlice"
 import type { AuthState, UserCreateDto, UserLoginDto, UserUpdateDto } from "./types"
 import {
+  fetchChangePassword,
   fetchCurrentUser,
   fetchDeleteUser,
   fetchLogin,
   fetchRegister,
   fetchUpdateUser,
   fetchUser,
+  fetchUsers,
 } from "./api"
 
 const initialState: AuthState = {
   user: undefined,
+  userList: [],
   roles: [],
   isAuthenticated: false,
   token: "",
@@ -77,6 +80,20 @@ export const authSlice = createAppSlice({
       },
     ),
 
+    getUsers: create.asyncThunk(
+      async (arg: void) => {
+        const response = await fetchUsers()
+        return response
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action) => {
+          state.userList = action.payload
+        },
+        rejected: state => {},
+      },
+    ),
+
     author: create.asyncThunk(
       async (author: string) => {
         const response = await fetchUser(author)
@@ -134,10 +151,28 @@ export const authSlice = createAppSlice({
       state.token = undefined
       state.isAuthenticated = false
     }),
+    changePassword: create.asyncThunk(
+      async (newPassword: string) => {
+        const response = await fetchChangePassword(newPassword)
+        return response
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action) => {
+          state.user = undefined
+          state.isAuthenticated = false
+          state.token = undefined
+        },
+        rejected: (state, action) => {
+          console.error(action.error.message);
+        },
+      }
+    ),
   }),
   selectors: {
     selectUser: userState => userState.user,
     selectRoles: userState => userState.roles,
+    selectUsers: userState => userState.userList,
     selectIsAuthenticated: userState => userState.isAuthenticated,
     selectToken: userState => userState.token,
     selectLoginError: userState => userState.loginErrorMessage,
@@ -145,11 +180,12 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { register, login, user, logout, author, updateUser, deleteUser } = authSlice.actions
+export const { register, login, user, logout, author, updateUser, deleteUser, getUsers, changePassword } = authSlice.actions
 
 export const {
   selectUser,
   selectRoles,
+  selectUsers,
   selectIsAuthenticated,
   selectToken,
   selectLoginError,

@@ -15,6 +15,7 @@ import CreatePet from "./features/pets/createPet/CreatePet"
 import MyProfile from "./components/editUser/EditUser"
 import NewPassword from "./components/newPassword/NewPassword"
 import EditUser from "./components/editUser/EditUser"
+import UserList from "./features/auth/userList/userList"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -35,6 +36,8 @@ const App = () => {
           <Route path="editUser" element={<EditUser />} />
           <Route path="newPassword" element={<NewPassword />} />
           <Route path="createPet" element={<CreatePet />} />
+          <Route path="userList" element={<UserList />} />
+          <Route path="newPassword" element={<NewPassword />} />
           <Route path="pets" element={<PetsList />} />
           <Route path="pets/:petId" element={<PetCard />} />
           <Route path="*" element={<NoPageFound />} />
