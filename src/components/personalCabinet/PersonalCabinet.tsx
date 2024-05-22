@@ -68,7 +68,7 @@ export default function PersonalCabinet() {
                   <img src={p.photo[0]} alt="" />
                 </div>
                 <Link to={String(p.id)}>{p.caption}</Link>
-                <button type="button">Edit</button>
+                <Link to={`/editPet/${p.id}`}>Edit</Link>
                 <button
                   type="button"
                   onClick={() => {
