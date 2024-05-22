@@ -24,6 +24,11 @@ export interface UserLoginDto {
   password: string
 }
 
+export interface PasswordDto {
+  oldPassword: string
+  newPassword: string
+}
+
 export interface UserUpdateDto {
   fullName: string
   telegram: string

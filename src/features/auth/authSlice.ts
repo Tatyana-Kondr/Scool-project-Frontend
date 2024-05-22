@@ -1,9 +1,10 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import type { AuthState, UserCreateDto, UserLoginDto, UserUpdateDto } from "./types"
+import type { AuthState, PasswordDto, UserCreateDto, UserLoginDto, UserUpdateDto } from "./types"
 import {
   fetchCurrentUser,
   fetchDeleteUser,
   fetchLogin,
+  fetchPassword,
   fetchRegister,
   fetchUpdateUser,
   fetchUser,
@@ -129,6 +130,23 @@ export const authSlice = createAppSlice({
       },
     ),
 
+    changePassword: create.asyncThunk(
+      async (paswordDto:PasswordDto) => {
+        const response = await fetchPassword(paswordDto)
+        return response
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action) => {         
+          state.isAuthenticated = false
+          state.token = undefined
+        },
+        rejected: (state, action) => {
+          console.error(action.error.message);
+        },
+      },
+    ),
+
     logout: create.reducer(state => {
       state.user = undefined
       state.token = undefined
@@ -145,7 +163,7 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { register, login, user, logout, author, updateUser, deleteUser } = authSlice.actions
+export const { register, login, user, logout, author, updateUser, deleteUser, changePassword } = authSlice.actions
 
 export const {
   selectUser,

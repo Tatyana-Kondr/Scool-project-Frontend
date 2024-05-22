@@ -1,52 +1,90 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useNavigate } from "react-router-dom";
-import { addPet } from "../petsSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { editPet, getPet, selectPet } from "../petsSlice";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
+import styles from "./EditPet.module.css"
 import { selectUser } from "../../auth/authSlice";
 
-export default function CreatePet(){
 
-    const userSelected = useAppSelector(selectUser);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+const EditPet: React.FC = () => {
 
-    return(
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { petId } = useParams<{ petId: string }>();
+  const currentPet = useAppSelector(selectPet);
+  const currentUser = useAppSelector(selectUser);
+  
+  const [initialValues, setInitialValues] = useState({
+    caption: currentPet?.caption || "",
+    petType: currentPet?.petType || "",
+    category: currentPet?.category || "",
+    gender: currentPet?.gender || "",
+    age: currentPet?.age || "",
+    photo: currentPet?.photo || ["foto1"],
+    country: currentPet?.country || "",
+    city: currentPet?.city || "Berlin",
+    description: currentPet?.description || "",
+  });
 
-        <div>
-      <h1>Pet registration form</h1>
-      <Formik
-        initialValues={{ 
-            caption: "",
-            petType: "",
-            category: "",
-            gender: "",
-            age: "",
-            photo: ["foto1"],
-            country: "",
-            city: "",
-            description: "" 
-        }}
+  useEffect(() => {
+    if (petId) {
+      dispatch(getPet(Number(petId)));
+    }
+  }, [dispatch, petId]);
+
+  useEffect(() => {
+    if (currentPet) {
+      setInitialValues({
+        caption: currentPet.caption,
+        petType: currentPet.petType,
+        category: currentPet.category,
+        gender: currentPet.gender,
+        age: currentPet.age,
+        photo: currentPet.photo,
+        country: currentPet.country,
+        city: currentPet.city,
+        description: currentPet.description,
+      });
+    }
+  }, [currentPet]);
+
+  const handleSubmit = async (values: any,
+    { setSubmitting, resetForm }: any,) => {
+      if (petId) {
+      try {
         
-        onSubmit={async(values, { setSubmitting, resetForm }) => {
-            try{
-            await dispatch(addPet(values))
-            resetForm() // очищаем форму
-            navigate("/personalCabinet/${userSelected.login}")
-            }
-            catch(error){
-              console.error("Ошибка при регистрации объявления: ", error)
-            } finally{
-              setSubmitting(false)
-            }
-        }}
-      >
-        {({ isSubmitting }) => (
+        await dispatch(editPet({ petDTO: values, id: Number(petId) }));
+        alert('Pet details updated successfully');
+        navigate(`/personalCabinet/${currentUser?.login}`);
+        
+        resetForm()
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error updating pet details');
+      }
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.box}>
+        <h2>Edit Pet</h2>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+        >
           <Form>
-            <div>
+          <div>
               <label htmlFor="caption">Caption</label>
-              <Field type="text" name="caption" />
-              <ErrorMessage name="caption" component="div" />
+              <Field name="caption" type="text" />
+              <ErrorMessage
+                name="caption"
+                component="div"
+                className={styles.error}
+              />
             </div>
 
             <div>
@@ -122,23 +160,29 @@ export default function CreatePet(){
 
             <div>
               <label htmlFor="city">City</label>
-              <Field type="text" name="city" />
-              <ErrorMessage name="city" component="div" />
+              <Field name="city" type="text" />
+              <ErrorMessage
+                name="city"
+                component="div"
+                className={styles.error}
+              />
             </div>
 
             <div>
               <label htmlFor="description">Description</label>
-              <Field as="textarea" name="description" />
-              <ErrorMessage name="description" component="div" />
+              <Field name="description" as="textarea" />
+              <ErrorMessage
+                name="description"
+                component="div"
+                className={styles.error}
+              />
             </div>
-
-            <button type="submit" disabled={isSubmitting}>
-              Send
-            </button>
+            <button type="submit">Update</button>
           </Form>
-        )}
-      </Formik>
+        </Formik>
+      </div>
     </div>
-  )
-}
-    
+  );
+};
+
+export default EditPet;

@@ -50,8 +50,8 @@ export default function PersonalCabinet() {
         </div>
 
         <div>
-          <Link to={`/editUser`}>Change personal details</Link>
-          <Link to={`/newPassword${user?.id}`}>Change password</Link>
+          <Link to={`/editUser/${user?.id}`}>Change personal details</Link>
+          <Link to={`/newPassword/${user?.id}`}>Change password</Link>
           <button onClick={handleDeleteAccount}>Delete account</button>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default function PersonalCabinet() {
                   <img src={p.photo[0]} alt="" />
                 </div>
                 <Link to={String(p.id)}>{p.caption}</Link>
-                <button type="button">Edit</button>
+                <Link to={`/editPet/${p.id}`}>Edit</Link>
                 <button
                   type="button"
                   onClick={() => {

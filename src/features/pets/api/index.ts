@@ -36,10 +36,18 @@ export async function fetchPetsByType(petType: string): Promise<Pet[]> {
 
  
 export async function fetchPet(id: number): Promise<Pet> {
-   const res = await fetch(`/api/pet/${id}`)
+   const res = await fetch(`/api/pet/${id}`,{
+    method: "GET",
+    headers: { "Content-Type": "application/json", 
+    accept: "*/*",
+    authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+   })
+   if (!res.ok) {
+    throw new Error(`Failed to fetch pet with id ${id}: ${res.statusText}`)
+  }
    return res.json()
  }
-
 
 
 interface ServerDeletePetResponse extends Pet {

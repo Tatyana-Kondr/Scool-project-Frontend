@@ -1,6 +1,7 @@
 import {
   AuthState,
   LoginResponse,
+  PasswordDto,
   User,
   UserCreateDto,
   UserLoginDto,
@@ -111,4 +112,22 @@ export async function fetchUpdateUser(
     throw new Error("Failed to update user")
   }
   return res.json()
+}
+
+
+export async function fetchPassword(paswordDto:PasswordDto): Promise<void> {
+  const res = await fetch(`/api/account/password`, {
+    method: "PUT",
+    headers: { 
+      "Content-Type": "application/json", 
+      "Accept": "*/*",
+      "Authorization": `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify(paswordDto)
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to update password: ${errorText}`);
+  }
 }
