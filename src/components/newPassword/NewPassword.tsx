@@ -9,20 +9,23 @@ export default function NewPassword() {
   const dispatch = useAppDispatch();
   const currentUser = useSelector(selectUser);
   const navigate = useNavigate();
-  const [newPassword, setNewPassword] = useState('');
+  const [passwordData, setPasswordData] = useState({oldPassword: '', newPassword: ''});
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewPassword(event.target.value); // Обновляем состояние нового пароля при изменении ввода
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-
+    event.preventDefault();
 
     try {
-      await dispatch(changePassword(newPassword)); 
+      await dispatch(changePassword(passwordData)); 
       alert('Password changed successfully');
-      navigate('/');
+      navigate(`/personalCabinet/${currentUser?.login}`);
     } catch (error) {
       console.error('Error:', error);
       alert('Error changing password');
@@ -35,13 +38,22 @@ export default function NewPassword() {
       <h2>Change Password</h2>
       <h1>{currentUser?.login}</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={handleChange}
-          required
-        />
+      <input
+            type="password"
+            name="oldPassword"
+            placeholder="Old Password"
+            value={passwordData.oldPassword}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="newPassword"
+            placeholder="New Password"
+            value={passwordData.newPassword}
+            onChange={handleChange}
+            required
+          />
         <button type="submit">Change</button>
       </form>
     </div>

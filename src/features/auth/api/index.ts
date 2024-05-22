@@ -7,6 +7,11 @@ import {
   UserUpdateDto,
 } from "../types"
 
+export interface PasswordDto {
+  oldPassword: string
+  newPassword: string
+}
+
 export async function fetchRegister(
   userCreateDto: UserCreateDto,
 ): Promise<User> {
@@ -126,26 +131,43 @@ export async function fetchUpdateUser(
   }
   return res.json()
 }
-export async function fetchChangePassword(newPassword: string) {
-  try {
-    const response = await fetch("/api/account/password", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "*/*",
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-        "X-Password": newPassword,
-      },
-      credentials: "include", // чтобы куки сессии были отправлены
-    })
+// export async function fetchChangePassword(newPassword: string) {
+//   try {
+//     const response = await fetch("/api/account/password", {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         accept: "*/*",
+//         authorization: `Bearer ${localStorage.getItem("token")}`,
+//         "X-Password": newPassword,
+//       },
+//       credentials: "include", // чтобы куки сессии были отправлены
+//     })
 
-    if (response.status === 204) {
-      alert("Password changed successfully")
-    } else {
-      alert("Failed to change password")
-    }
-  } catch (error) {
-    console.error("Error:", error)
-    alert("Error changing password")
+//     if (response.status === 204) {
+//       alert("Password changed successfully")
+//     } else {
+//       alert("Failed to change password")
+//     }
+//   } catch (error) {
+//     console.error("Error:", error)
+//     alert("Error changing password")
+//   }
+// }
+
+export async function fetchPassword(paswordDto:PasswordDto): Promise<void> {
+  const res = await fetch(`/api/account/password`, {
+    method: "PUT",
+    headers: { 
+      "Content-Type": "application/json", 
+      "Accept": "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(paswordDto)
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to update password: ${errorText}`);
   }
 }

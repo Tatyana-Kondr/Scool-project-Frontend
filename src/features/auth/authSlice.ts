@@ -1,10 +1,16 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import type { AuthState, UserCreateDto, UserLoginDto, UserUpdateDto } from "./types"
+import type {
+  AuthState,
+  UserCreateDto,
+  UserLoginDto,
+  UserUpdateDto,
+} from "./types"
 import {
-  fetchChangePassword,
+  PasswordDto,
   fetchCurrentUser,
   fetchDeleteUser,
   fetchLogin,
+  fetchPassword,
   fetchRegister,
   fetchUpdateUser,
   fetchUser,
@@ -112,19 +118,19 @@ export const authSlice = createAppSlice({
     ),
 
     updateUser: create.asyncThunk(
-      async ({user, id}:{user: UserUpdateDto, id: number}) => {
-        const response = await fetchUpdateUser(user, id);
-        return response;
+      async ({ user, id }: { user: UserUpdateDto; id: number }) => {
+        const response = await fetchUpdateUser(user, id)
+        return response
       },
       {
         pending: state => {},
         fulfilled: (state, action) => {
-          state.user = action.payload;
+          state.user = action.payload
         },
         rejected: (state, action) => {
-          console.error(action.error.message);
+          console.error(action.error.message)
         },
-      }
+      },
     ),
 
     deleteUser: create.asyncThunk(
@@ -141,7 +147,7 @@ export const authSlice = createAppSlice({
           state.token = undefined
         },
         rejected: (state, action) => {
-          console.error(action.error.message);
+          console.error(action.error.message)
         },
       },
     ),
@@ -152,21 +158,17 @@ export const authSlice = createAppSlice({
       state.isAuthenticated = false
     }),
     changePassword: create.asyncThunk(
-      async (newPassword: string) => {
-        const response = await fetchChangePassword(newPassword)
+      async (passwordDto: PasswordDto) => {
+        const response = await fetchPassword(passwordDto)
         return response
       },
       {
         pending: state => {},
-        fulfilled: (state, action) => {
-          state.user = undefined
-          state.isAuthenticated = false
-          state.token = undefined
-        },
+        fulfilled: (state, action) => {},
         rejected: (state, action) => {
-          console.error(action.error.message);
+          console.error(action.error.message)
         },
-      }
+      },
     ),
   }),
   selectors: {
@@ -180,7 +182,17 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { register, login, user, logout, author, updateUser, deleteUser, getUsers, changePassword } = authSlice.actions
+export const {
+  register,
+  login,
+  user,
+  logout,
+  author,
+  updateUser,
+  deleteUser,
+  getUsers,
+  changePassword,
+} = authSlice.actions
 
 export const {
   selectUser,
