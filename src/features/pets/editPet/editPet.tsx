@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { Form, useNavigate, useParams } from "react-router-dom"
-import { editPet, getPet, selectPet } from "../petsSlice"
-import { selectUser } from "../../auth/authSlice"
-import { ErrorMessage, Field, Formik } from "formik"
-import {
-  ageList,
-  categoryList,
-  countryList,
-  petTypeList,
-  sexList,
-} from "../petsList/data"
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useNavigate, useParams } from "react-router-dom";
+import { editPet, getPet, selectPet } from "../petsSlice";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
 import styles from "./editPet.module.css"
+import { selectUser } from "../../auth/authSlice";
+
 
 const EditPet: React.FC = () => {
 

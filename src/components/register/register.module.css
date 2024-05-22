@@ -1,0 +1,87 @@
+.register {
+   background: linear-gradient(245deg, #d6f6f5 0%, #7d908f 151.23%);
+}
+.register_container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #9d9595;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  
+   
+}
+
+h2 {
+  text-align: center;
+  color: #68d74e;
+  margin-bottom: 20px;
+}
+
+.form_group {
+  margin-bottom: 15px;
+  display: flex;
+
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+.required_field::after {
+}
+
+.form_control {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.checkbox_group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox_group label {
+  margin-left: 10px;
+}
+
+.submit_button {
+  background-color: #68d74e;
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}
+
+.submit_button:hover {
+  background-color: #378724;
+}
+
+p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+p a {
+  color: #68d74e;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}

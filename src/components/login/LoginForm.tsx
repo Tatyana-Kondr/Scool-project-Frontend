@@ -32,7 +32,7 @@ const LoginForm = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.login_container}>
       <div className={styles.box_front}>
       <h2 className={styles.header}>Sign In Form</h2>
       <p className={styles.subtitle}>sign in here using your username and password</p>
