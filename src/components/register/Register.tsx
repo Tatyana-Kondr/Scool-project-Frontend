@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import { useAppDispatch } from "../../app/hooks"
 import { register } from "../../features/auth/authSlice"
@@ -9,6 +9,7 @@ import s from "./register.module.css"
 export default function Register() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
 
   const initialValues = {
     email: "",
@@ -33,6 +34,14 @@ export default function Register() {
     telegram: Yup.string(),
     agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
   })
+
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files[0]
+    if (file) {
+      setAvatarPreview(URL.createObjectURL(file))
+    }
+  }
+
   const lapa = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +102,32 @@ export default function Register() {
             }
           }}
         >
-          {({ isSubmitting }) => (
+          {({ setFieldValue, isSubmitting }) => (
             <Form className={s.register_form}>
+              {/* <div className={s.avatar_upload}>
+                <div className={s.avatar_preview}>
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="Avatar Preview" />
+                  ) : (
+                    <div className={s.avatar_placeholder}">
+                      <span>+</span>
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={event => {
+                    handleAvatarChange(event)
+                    if (event.currentTarget.files) {
+                      setFieldValue("avatar", event.currentTarget.files[0])
+                    }
+                  }}
+                />
+                <ErrorMessage name="avatar" component="div" className="error" />
+              </div> */}
+
               <div className={s.form_group}>
                 <label htmlFor="fullname" className={s.required_field}>
                   {lapa}
@@ -233,7 +266,7 @@ export default function Register() {
           )}
         </Formik>
         <p>
-          Already have an account? <a href="/login">Log in!</a>
+          Already have an account? <a href="/login">Sign in</a>
         </p>
       </div>
     </div>
