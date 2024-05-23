@@ -32,7 +32,14 @@ export default function PetsList() {
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
-
+  const handleResetFilter = () => {
+    setQueryParams({
+      country: "",
+      category: "",
+      age: "",
+      gender: "",
+    })
+  }
   return (
     <>
       <div className={s.dropdown_container}>
@@ -61,6 +68,13 @@ export default function PetsList() {
             value={queryParams.gender || ""}
             onChange={event => handleDropdownChange(event, "gender")}
           />
+          <button
+            className={s.reset_filter}
+            type="button"
+            onClick={handleResetFilter}
+          >
+            Reset filter
+          </button>
         </div>
       </div>
       <ul>
@@ -70,8 +84,8 @@ export default function PetsList() {
               <div className={s.petCard_img}>
                 <img src={p.photo[0]} alt="" />
                 <div className={s.petCard_btn}>
-              <Link to={String(p.id)}>Read more</Link>
-            </div>
+                  <Link to={`/petCard/${p.id}`}>Read more</Link>
+                </div>
               </div>
               <div className={s.petCard_body}>
                 <p>{p.dateCreate}</p>
@@ -81,7 +95,6 @@ export default function PetsList() {
                 <p>{p.category}</p>
               </div>
             </div>
-            
           </li>
         ))}
       </ul>
