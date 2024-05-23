@@ -1,5 +1,5 @@
 import { createAppSlice } from "../../app/createAppSlice"
-import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
+import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
 import type { PetDTO, PetsState } from "./types"
 
 const initialState: PetsState = {
@@ -91,6 +91,25 @@ export const petsSlice = createAppSlice({
         rejected: state => {},
       },
     ),
+
+    editPet: create.asyncThunk(
+      async ({petDTO, id}: {petDTO: PetDTO, id:number}) => {
+        const response = await fetchEditPet(petDTO, id)
+        return response
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action) => {
+         state.petsList = state.petsList.map(p=>{
+          if(p.id===action.payload.id){
+            return action.payload
+          } 
+          return p;          
+        })
+        },
+        rejected: state => {},
+      },
+    ),
   }),
   selectors: {
     selectPets: petsState => petsState.petsList,
@@ -98,6 +117,6 @@ export const petsSlice = createAppSlice({
   },
 })
 
-export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet } = petsSlice.actions
+export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
 
 export const { selectPets, selectPet } = petsSlice.selectors

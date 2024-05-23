@@ -35,6 +35,7 @@ export interface UserUpdateDto {
 
 export interface AuthState {
   user?: User
+  userList: User[]
   roles: string[]
   isAuthenticated: boolean
   token?: string

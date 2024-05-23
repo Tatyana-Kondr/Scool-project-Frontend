@@ -72,3 +72,17 @@ export async function fetchAddPet(
   })
   return res.json()
 }
+
+export async function fetchEditPet(
+  petDTO: PetDTO, id: number
+): Promise<Pet> {
+  const res = await fetch(`/api/pet/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json", 
+    accept: "*/*",
+    authorization: `Bearer ${localStorage.getItem("token")}`
+    },
+    body: JSON.stringify(petDTO),
+  })
+  return res.json()
+}

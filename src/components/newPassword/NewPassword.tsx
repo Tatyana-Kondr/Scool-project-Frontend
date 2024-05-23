@@ -1,53 +1,62 @@
-import React, { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import {
-  login,
-  selectIsAuthenticated,
-  selectLoginError,
-} from "../../features/auth/authSlice"
-import { UserLoginDto } from "../../features/auth/types"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from 'react';
+import { useAppDispatch } from '../../app/hooks';
+import { changePassword, selectUser } from '../../features/auth/authSlice';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styles from "./newPassword.module.css"
 
-const LoginForm = () => {
-  const dispatch = useAppDispatch()
-  //const isAuthenticated = useAppSelector(selectIsAuthenticated);
+export default function NewPassword() {
+  const dispatch = useAppDispatch();
+  const currentUser = useSelector(selectUser);
+  const navigate = useNavigate();
+  const [passwordData, setPasswordData] = useState({oldPassword: '', newPassword: ''});
 
-  const [loginDto, setLoginDto] = useState<UserLoginDto>({
-    login: "",
-    password: "",
-  })
-  const message = useAppSelector(selectLoginError)
-  const navigate = useNavigate()
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswordData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-  const handleLogin = async () => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     try {
-      const dispatchResult = await dispatch(login(loginDto))
-      if (login.fulfilled.match(dispatchResult)) {
-        navigate("/")
-      }
+      await dispatch(changePassword(passwordData)); 
+      alert('Password changed successfully');
+      navigate(`/personalCabinet/${currentUser?.login}`);
     } catch (error) {
-      console.error("Ошибка при авторизации:", error)
+      console.error('Error:', error);
+      alert('Error changing password');
     }
-  }
+  };
 
   return (
-    <div>
-      {message && <span>{message}</span>}
+    <div className={styles.container}>
+      <div className={styles.box_front}>
+      <h2>Change Password</h2>
+      <h1>{currentUser?.login}</h1>
+      <form onSubmit={handleSubmit}>
       <input
-        type="text"
-        value={loginDto.login}
-        onChange={e => setLoginDto({ ...loginDto, login: e.target.value })}
-        placeholder="Login"
-      />
-      <input
-        type="password"
-        value={loginDto.password}
-        onChange={e => setLoginDto({ ...loginDto, password: e.target.value })}
-        placeholder="Password"
-      />
-      <button onClick={handleLogin}>Login</button>
+            type="password"
+            name="oldPassword"
+            placeholder="Old Password"
+            value={passwordData.oldPassword}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="newPassword"
+            placeholder="New Password"
+            value={passwordData.newPassword}
+            onChange={handleChange}
+            required
+          />
+        <button type="submit">Change</button>
+      </form>
     </div>
-  )
+    </div>
+  );
 }
-
-export default LoginForm

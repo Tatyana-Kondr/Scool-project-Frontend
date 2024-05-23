@@ -6,7 +6,7 @@ import {
   getPetsByFilter,
   selectPets,
 } from "../../features/pets/petsSlice"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import s from "./personalCabinet.module.css"
 import { deleteUser, selectUser } from "../../features/auth/authSlice"
 
@@ -14,13 +14,23 @@ export default function PersonalCabinet() {
   const { author } = useParams<{ author: string }>()
   const petsList = useAppSelector(selectPets)
   const user = useAppSelector(selectUser)
-  const {id} = useParams<{ id: string }>()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(getPetsByFilter({ author }))
   }, [dispatch, author])
 
+  const handleDeleteAccount = async () => {
+    if (user) {
+      const result = await dispatch(deleteUser(user.id));
+      if (deleteUser.fulfilled.match(result)) {
+        navigate('/'); // Перенаправление на домашнюю страницу
+      } else {
+        console.error('Failed to delete user:', result.error.message);
+      }
+    }
+  }; 
   return (
     <div className={s.cabinet}>
       <div className={s.profile_container}>
@@ -41,8 +51,8 @@ export default function PersonalCabinet() {
 
         <div>
           <Link to={`/editUser`}>Change personal details</Link>
-          <Link to={`/newPassword${user?.id}`}>Change password</Link>
-          <button onClick={() => dispatch(deleteUser(Number(id)))}>Delete account</button>
+          <Link to={`/newPassword`}>Change password</Link>
+          <button onClick={handleDeleteAccount}>Delete account</button>
         </div>
       </div>
 
@@ -57,8 +67,8 @@ export default function PersonalCabinet() {
                 <div className={s.avert_img}>
                   <img src={p.photo[0]} alt="" />
                 </div>
-                <Link to={String(p.id)}>{p.caption}</Link>
-                <button type="button">Edit</button>
+                <Link to={`/petCard/${p.id}`}>{p.caption}</Link>
+                <Link to={`/editPet/${p.id}`}>Edit</Link>
                 <button
                   type="button"
                   onClick={() => {

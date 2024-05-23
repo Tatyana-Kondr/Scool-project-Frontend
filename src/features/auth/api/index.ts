@@ -7,6 +7,11 @@ import {
   UserUpdateDto,
 } from "../types"
 
+export interface PasswordDto {
+  oldPassword: string
+  newPassword: string
+}
+
 export async function fetchRegister(
   userCreateDto: UserCreateDto,
 ): Promise<User> {
@@ -78,6 +83,18 @@ export async function fetchUser(author: string): Promise<User> {
   return res.json()
 }
 
+export async function fetchUsers(): Promise<User[]> {
+  const res = await fetch("/api/account/users", {
+    headers: {
+      "Content-Type": "application/json",
+      accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+
+  return res.json()
+}
+
 interface ServerDeleteUserResponse extends User {
   isDeleted: boolean
 }
@@ -87,10 +104,11 @@ export async function fetchDeleteUser(
 ): Promise<ServerDeleteUserResponse> {
   const res = await fetch(`/api/account/user/${id}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json", 
-    accept: "*/*",
-    authorization: `Bearer ${localStorage.getItem("token")}`
-    }
+    headers: {
+      "Content-Type": "application/json",
+      accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   })
   return res.json()
 }
@@ -101,9 +119,10 @@ export async function fetchUpdateUser(
 ): Promise<User> {
   const res = await fetch(`/api/account/user/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", 
-    accept: "*/*",
-    authorization: `Bearer ${localStorage.getItem("token")}`
+    headers: {
+      "Content-Type": "application/json",
+      accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(userUpdateDto),
   })
@@ -111,4 +130,44 @@ export async function fetchUpdateUser(
     throw new Error("Failed to update user")
   }
   return res.json()
+}
+// export async function fetchChangePassword(newPassword: string) {
+//   try {
+//     const response = await fetch("/api/account/password", {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         accept: "*/*",
+//         authorization: `Bearer ${localStorage.getItem("token")}`,
+//         "X-Password": newPassword,
+//       },
+//       credentials: "include", // чтобы куки сессии были отправлены
+//     })
+
+//     if (response.status === 204) {
+//       alert("Password changed successfully")
+//     } else {
+//       alert("Failed to change password")
+//     }
+//   } catch (error) {
+//     console.error("Error:", error)
+//     alert("Error changing password")
+//   }
+// }
+
+export async function fetchPassword(paswordDto:PasswordDto): Promise<void> {
+  const res = await fetch(`/api/account/password`, {
+    method: "PUT",
+    headers: { 
+      "Content-Type": "application/json", 
+      "Accept": "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(paswordDto)
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to update password: ${errorText}`);
+  }
 }
