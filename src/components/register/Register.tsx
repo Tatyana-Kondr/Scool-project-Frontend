@@ -35,12 +35,12 @@ export default function Register() {
     agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
   })
 
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files[0]
-    if (file) {
-      setAvatarPreview(URL.createObjectURL(file))
-    }
-  }
+  // const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.currentTarget.files[0]
+  //   if (file) {
+  //     setAvatarPreview(URL.createObjectURL(file))
+  //   }
+  // }
 
   const lapa = (
     <svg
