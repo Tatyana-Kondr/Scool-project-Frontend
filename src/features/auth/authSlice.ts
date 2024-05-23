@@ -126,6 +126,12 @@ export const authSlice = createAppSlice({
         pending: state => {},
         fulfilled: (state, action) => {
           state.user = action.payload
+          state.userList = state.userList.map(e=>{
+            if(e.id===action.payload.id){
+              return action.payload
+            } 
+            return e;          
+          })
         },
         rejected: (state, action) => {
           console.error(action.error.message)
@@ -141,6 +147,7 @@ export const authSlice = createAppSlice({
       {
         pending: state => {},
         fulfilled: (state, action) => {
+          state.userList = state.userList.filter(e => e.id !== action.payload.id)
           state.user = action.payload
           state.user = undefined
           state.isAuthenticated = false

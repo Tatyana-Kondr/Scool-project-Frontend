@@ -22,18 +22,18 @@ export default function Register() {
     telegram: "",
     agreeToTerms: false,
   }
-  const validationSchema = Yup.object().shape({
-    fullname: Yup.string().required("Required"),
-    username: Yup.string().required("Required"),
-    password: Yup.string()
-      .min(8, "Password must be at least 8 characters")
-      .required("Required"),
-    email: Yup.string().email("Invalid email format").required("Required"),
-    phone: Yup.string(),
-    website: Yup.string().url("Invalid URL"),
-    telegram: Yup.string(),
-    agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
-  })
+  // const validationSchema = Yup.object().shape({
+  //   fullname: Yup.string().required("Required"),
+  //   username: Yup.string().required("Required"),
+  //   password: Yup.string()
+  //     .min(8, "Password must be at least 4 characters")
+  //     .required("Required"),
+  //   email: Yup.string().email("Invalid email format").required("Required"),
+  //   phone: Yup.string(),
+  //   website: Yup.string().url("Invalid URL"),
+  //   telegram: Yup.string(),
+  //   agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
+  // })
 
   // const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   const file = event.currentTarget.files[0]
@@ -89,7 +89,7 @@ export default function Register() {
         <h2>Create your account</h2>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          // validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             try {
               await dispatch(register(values))
@@ -146,17 +146,17 @@ export default function Register() {
               </div>
 
               <div className={s.form_group}>
-                <label htmlFor="username" className={s.required_field}>
+                <label htmlFor="login" className={s.required_field}>
                   {lapa}
                 </label>
                 <Field
                   type="text"
-                  name="username"
+                  name="login"
                   className={s.form_control}
-                  placeholder="Username"
+                  placeholder="Login"
                 />
                 <ErrorMessage
-                  name="username"
+                  name="login"
                   component="div"
                   className={s.error}
                 />
