@@ -67,8 +67,8 @@ export default function PersonalCabinet() {
                 <div className={s.avert_img}>
                   <img src={p.photo[0]} alt="" />
                 </div>
-                <Link to={String(p.id)}>{p.caption}</Link>
-                <button type="button">Edit</button>
+                <Link to={`/petCard/${p.id}`}>{p.caption}</Link>
+                <Link to={`/editPet/${p.id}`}>Edit</Link>
                 <button
                   type="button"
                   onClick={() => {
