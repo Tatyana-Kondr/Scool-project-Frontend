@@ -24,8 +24,10 @@ export default function PetCard() {
       dispatch(getPet(Number(petId)))
     }
   }, [dispatch, petId])
+  
 
   const handleUser = async () => {
+    
     if (currentUser && pet && pet.author) {
       try {
         const response = await dispatch(author(pet.author))
@@ -68,7 +70,7 @@ export default function PetCard() {
   return (
     <div className={style.box}>
       <h2>{pet.caption}</h2>
-      {/* <img src={pet.photo[0]} alt={pet.caption} /> */}
+      <img src={pet.photos[0]} alt={pet.caption} />
       <p>{pet.description}</p>
       <p>{pet.dateCreate}</p>
       <p>{pet.author}</p>
