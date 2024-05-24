@@ -6,7 +6,7 @@ export interface Pet {
   category: string
   gender: string
   age: string
-  photo: string[]
+  photos: string[]
   country: string
   city: string
   description: string
@@ -26,7 +26,7 @@ export interface PetDTO {
   category: string
   gender: string
   age: string
-  photo: string[]
+  photos: string[]
   country: string
   city: string
   description: string

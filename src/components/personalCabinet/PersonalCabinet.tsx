@@ -75,7 +75,7 @@ export default function PersonalCabinet() {
             <li key={p.id}>
               <div className={s.avert_card}>
                 <div className={s.avert_img}>
-                  <img src={p.photo[0]} alt="" />
+                  <img src={p.photos[0]} alt="" />
                 </div>
                 <Link to={`/petCard/${p.id}`}>{p.caption}</Link>
                 <Link to={`/editPet/${p.id}`}>Edit</Link>

@@ -4,12 +4,39 @@ import { useNavigate } from "react-router-dom";
 import { addPet } from "../petsSlice";
 import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
 import { selectUser } from "../../auth/authSlice";
+import { useState } from "react";
+import s from "./createPet.module.css"
 
 export default function CreatePet(){
 
     const userSelected = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+
+    const handlePetPhotoChange = (
+      event: React.ChangeEvent<HTMLInputElement>,
+      setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+    ) => {
+      const file = event.currentTarget.files?.[0];
+      if (file) {
+        // if (file.size > 5 * 1024 * 1024) { // Проверка на 5MB
+        //   setAvatarError("File size should be less than 5MB");
+        //   return;
+        // }
+        // setAvatarError(null); // Сброс ошибки, если файл подходит
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result?.toString().split(',')[1]; // Удаление префикса "data:image/png;base64,"
+          if (base64String) {
+            setFieldValue('avatar', base64String);
+            setPhotoPreview(reader.result?.toString() || null); // Установка превью
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+    };
 
     return(
 
@@ -22,17 +49,19 @@ export default function CreatePet(){
             category: "",
             gender: "",
             age: "",
-            photo: ["foto1"],
+            photos: [""],
             country: "",
             city: "",
             description: "" 
         }}
+
+        
         
         onSubmit={async(values, { setSubmitting, resetForm }) => {
             try{
             await dispatch(addPet(values))
             resetForm() // очищаем форму
-            navigate("/personalCabinet/${userSelected.login}")
+            navigate(`/personalCabinet/${userSelected?.login}`)
             }
             catch(error){
               console.error("Ошибка при регистрации объявления: ", error)
@@ -41,7 +70,7 @@ export default function CreatePet(){
             }
         }}
       >
-        {({ isSubmitting }) => (
+        {({ setFieldValue, isSubmitting }) => (
           <Form>
             <div>
               <label htmlFor="caption">Caption</label>
@@ -101,11 +130,11 @@ export default function CreatePet(){
               <ErrorMessage name="age" component="div" />
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="photo">Photo</label>
               <Field type="text" name="photo" />
               <ErrorMessage name="photo" component="div" />
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="country">Country</label>
@@ -131,6 +160,25 @@ export default function CreatePet(){
               <Field as="textarea" name="description" />
               <ErrorMessage name="description" component="div" />
             </div>
+
+            <div className={s.photo_upload}>
+                <div className={s.photo_preview}>
+                  {photoPreview ? (
+                    <img src={photoPreview} alt="Avatar Preview" />
+                  ) : (
+                    <div className={s.photo_placeholder}>
+                      <span>+</span>
+                    </div>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  name="photos"
+                  accept="image/*"
+                  onChange={(event) => handlePetPhotoChange(event, setFieldValue)}
+                />
+                <ErrorMessage name="photos" component="div" className="error" />
+              </div>
 
             <button type="submit" disabled={isSubmitting}>
               Send

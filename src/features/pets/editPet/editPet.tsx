@@ -22,9 +22,9 @@ const EditPet: React.FC = () => {
     category: currentPet?.category || "",
     gender: currentPet?.gender || "",
     age: currentPet?.age || "",
-    photo: currentPet?.photo || ["foto1"],
+    photo: currentPet?.photos || [""],
     country: currentPet?.country || "",
-    city: currentPet?.city || "Berlin",
+    city: currentPet?.city || "",
     description: currentPet?.description || "",
   });
 
@@ -42,7 +42,7 @@ const EditPet: React.FC = () => {
         category: currentPet.category,
         gender: currentPet.gender,
         age: currentPet.age,
-        photo: currentPet.photo,
+        photo: currentPet.photos,
         country: currentPet.country,
         city: currentPet.city,
         description: currentPet.description,
@@ -139,11 +139,11 @@ const EditPet: React.FC = () => {
               <ErrorMessage name="age" component="div" />
             </div>
 
-            <div>
-              <label htmlFor="photo">Photo</label>
-              <Field type="text" name="photo" />
-              <ErrorMessage name="photo" component="div" />
-            </div>
+            {/* <div>
+              <label htmlFor="photos">Photo</label>
+              <Field type="text" name="photos" />
+              <ErrorMessage name="photos" component="div" />
+            </div> */}
 
             <div>
               <label htmlFor="country">Country</label>

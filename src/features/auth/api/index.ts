@@ -23,10 +23,7 @@ export async function fetchRegister(
     },
     body: JSON.stringify(userCreateDto),
   })
-  // if (!res.ok) {
-  //   const{message}= await res.json()
-  //   throw new Error(message)
-  // }
+  
   if (res.status === 409) {
     throw new Error("Conflict: User already exists.")
   }
@@ -38,28 +35,6 @@ export async function fetchRegister(
   const data = await res.json();
   return data;
 }
-
-export async function fetchUploadAvatar(avatarFile: File): Promise<string> {
-  const formData = new FormData();
-  formData.append("avatar", avatarFile);
-
-  const res = await fetch("/api/account/avatar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      accept: "*/*",
-    },
-    body: formData,
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to upload avatar.");
-  }
-
-  const data = await res.json();
-  return data.avatarUrl; 
-}
-
 
 export async function fetchLogin(
   userLoginDto: UserLoginDto,
@@ -153,29 +128,6 @@ export async function fetchUpdateUser(
   }
   return res.json()
 }
-// export async function fetchChangePassword(newPassword: string) {
-//   try {
-//     const response = await fetch("/api/account/password", {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         accept: "*/*",
-//         authorization: `Bearer ${localStorage.getItem("token")}`,
-//         "X-Password": newPassword,
-//       },
-//       credentials: "include", // чтобы куки сессии были отправлены
-//     })
-
-//     if (response.status === 204) {
-//       alert("Password changed successfully")
-//     } else {
-//       alert("Failed to change password")
-//     }
-//   } catch (error) {
-//     console.error("Error:", error)
-//     alert("Error changing password")
-//   }
-// }
 
 export async function fetchPassword(paswordDto:PasswordDto): Promise<void> {
   const res = await fetch(`/api/account/password`, {

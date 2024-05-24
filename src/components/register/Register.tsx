@@ -9,6 +9,7 @@ export default function Register() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [avatarError, setAvatarError] = useState<string | null>(null);
 
   const initialValues = {
     email: "",
@@ -43,13 +44,20 @@ export default function Register() {
   ) => {
     const file = event.currentTarget.files?.[0];
     if (file) {
+      // if (file.size > 5 * 1024 * 1024) { // Проверка на 5MB
+      //   setAvatarError("File size should be less than 5MB");
+      //   return;
+      // }
+      // setAvatarError(null); // Сброс ошибки, если файл подходит
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64String = reader.result?.toString().split(',')[1]; // Удаление префикса "data:image/png;base64,"
         if (base64String) {
           setFieldValue('avatar', base64String);
+          setAvatarPreview(reader.result?.toString() || null); // Установка превью
         }
       };
+      
       reader.readAsDataURL(file);
     }
   };
@@ -121,7 +129,7 @@ export default function Register() {
                   type="text"
                   name="login"
                   className={s.form_control}
-                  placeholder="Login"
+                  placeholder="Username"
                 />
                 <ErrorMessage
                   name="login"
