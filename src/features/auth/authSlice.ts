@@ -13,8 +13,7 @@ import {
   fetchPassword,
   fetchRegister,
   fetchUpdateUser,
-  fetchUploadAvatar,
-  fetchUser,
+   fetchUser,
   fetchUsers,
 } from "./api"
 
@@ -32,25 +31,6 @@ export const authSlice = createAppSlice({
   name: "auth",
   initialState,
   reducers: create => ({
-    // register: create.asyncThunk(
-    //   async ({ user, avatarFile }: { user: UserCreateDto; avatarFile?: File | undefined }) => {
-    //     const response = await fetchRegister(user);
-    //     if (avatarFile) {
-    //       await fetchUploadAvatar(avatarFile); 
-    //     }
-    //     return response;
-    //   },
-    //   {
-    //     pending: (state) => {},
-    //     fulfilled: (state, action) => {
-    //       // state.user = action.payload
-    //     },
-    //     rejected: (state, action) => {
-    //       state.registerErrorMessage = action.error.message;
-    //     },
-    //   }
-    // ),
-
     register: create.asyncThunk(
       async (user: UserCreateDto) => {
         const response = await fetchRegister(user)
@@ -146,11 +126,11 @@ export const authSlice = createAppSlice({
         pending: state => {},
         fulfilled: (state, action) => {
           state.user = action.payload
-          state.userList = state.userList.map(e=>{
-            if(e.id===action.payload.id){
+          state.userList = state.userList.map(e => {
+            if (e.id === action.payload.id) {
               return action.payload
-            } 
-            return e;          
+            }
+            return e
           })
         },
         rejected: (state, action) => {
@@ -167,7 +147,9 @@ export const authSlice = createAppSlice({
       {
         pending: state => {},
         fulfilled: (state, action) => {
-          state.userList = state.userList.filter(e => e.id !== action.payload.id)
+          state.userList = state.userList.filter(
+            e => e.id !== action.payload.id,
+          )
           state.user = action.payload
           state.user = undefined
           state.isAuthenticated = false
@@ -219,7 +201,6 @@ export const {
   deleteUser,
   getUsers,
   changePassword,
-  
 } = authSlice.actions
 
 export const {

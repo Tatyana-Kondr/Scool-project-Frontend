@@ -82,7 +82,7 @@ export default function PetsList() {
           <li key={p.id}>
             <div className={s.petCard}>
               <div className={s.petCard_img}>
-                <img src={p.photo[0]} alt="" />
+                <img src={p.photos[0]} alt="" />
                 <div className={s.petCard_btn}>
                   <Link to={`/petCard/${p.id}`}>Read more</Link>
                 </div>
