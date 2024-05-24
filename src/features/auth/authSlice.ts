@@ -13,6 +13,7 @@ import {
   fetchPassword,
   fetchRegister,
   fetchUpdateUser,
+  fetchUploadAvatar,
   fetchUser,
   fetchUsers,
 } from "./api"
@@ -31,6 +32,25 @@ export const authSlice = createAppSlice({
   name: "auth",
   initialState,
   reducers: create => ({
+    // register: create.asyncThunk(
+    //   async ({ user, avatarFile }: { user: UserCreateDto; avatarFile?: File | undefined }) => {
+    //     const response = await fetchRegister(user);
+    //     if (avatarFile) {
+    //       await fetchUploadAvatar(avatarFile); 
+    //     }
+    //     return response;
+    //   },
+    //   {
+    //     pending: (state) => {},
+    //     fulfilled: (state, action) => {
+    //       // state.user = action.payload
+    //     },
+    //     rejected: (state, action) => {
+    //       state.registerErrorMessage = action.error.message;
+    //     },
+    //   }
+    // ),
+
     register: create.asyncThunk(
       async (user: UserCreateDto) => {
         const response = await fetchRegister(user)
@@ -199,6 +219,7 @@ export const {
   deleteUser,
   getUsers,
   changePassword,
+  
 } = authSlice.actions
 
 export const {

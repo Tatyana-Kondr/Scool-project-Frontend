@@ -24,13 +24,16 @@ export interface UserLoginDto {
   password: string
 }
 
+export interface UserAvatarDto{
+avatarFile: File
+}
+
 export interface UserUpdateDto {
   fullName: string
   telegram: string
   email: string
   website: string
   phone: string
-  avatar: string
 }
 
 export interface AuthState {
