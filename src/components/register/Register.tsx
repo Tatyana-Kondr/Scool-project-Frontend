@@ -20,7 +20,21 @@ export default function Register() {
     phone: "",
     telegram: "",
     agreeToTerms: false,
-  };
+
+  }
+  // const validationSchema = Yup.object().shape({
+  //   fullname: Yup.string().required("Required"),
+  //   username: Yup.string().required("Required"),
+  //   password: Yup.string()
+  //     .min(8, "Password must be at least 4 characters")
+  //     .required("Required"),
+  //   email: Yup.string().email("Invalid email format").required("Required"),
+  //   phone: Yup.string(),
+  //   website: Yup.string().url("Invalid URL"),
+  //   telegram: Yup.string(),
+  //   agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
+  // })
+
 
   
   const handleAvatarChange = (
@@ -99,13 +113,15 @@ export default function Register() {
 
               <div className={s.form_group}>
                 <label htmlFor="login" className={s.required_field}>
+                  
                   Username
+
                 </label>
                 <Field
                   type="text"
                   name="login"
                   className={s.form_control}
-                  placeholder="Username"
+                  placeholder="Login"
                 />
                 <ErrorMessage
                   name="login"

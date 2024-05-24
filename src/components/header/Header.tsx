@@ -31,24 +31,30 @@ export default function Header() {
               </li>
 
               {userSelected ? (
-                <>
-                  <li>
-                    <Link to={`/personalCabinet/${userSelected.login}`}>Personal cabinet</Link>
-                  </li>
-                  <li>
-                    <Link to="/" onClick={handleLogout}>Log out</Link>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <Link to="/register">Sign up</Link>
-                  </li>
-                  <li>
-                    <Link to="/loginForm">Sign in</Link>
-                  </li>
-                </>
-              )}
+  <>
+    {userSelected.login === 'admin' ? (
+      <li>
+        <Link to="/adminCabinet">Admin Cabinet</Link>
+      </li>
+    ) : (
+      <li>
+        <Link to={`/personalCabinet/${userSelected.login}`}>Personal cabinet</Link>
+      </li>
+    )}
+    <li>
+      <Link to="/" onClick={handleLogout}>Log out</Link>
+    </li>
+  </>
+) : (
+  <>
+    <li>
+      <Link to="/register">Sign up</Link>
+    </li>
+    <li>
+      <Link to="/loginForm">Sign in</Link>
+    </li>
+  </>
+)}
             </ul>
           </nav>
         </div>

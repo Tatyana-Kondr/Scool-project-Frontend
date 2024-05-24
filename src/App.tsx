@@ -16,6 +16,8 @@ import NewPassword from "./components/newPassword/NewPassword"
 import EditUser from "./components/editUser/EditUser"
 import UserList from "./features/auth/userList/userList"
 import EditPet from "./features/pets/editPet/editPet"
+import AdminCabinet from "./components/adminCabinet/AdminCabinet"
+import UserPetsList from "./components/adminCabinet/userPetsList/UserPetsList"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="loginForm" element={<LoginForm />} />
           <Route path="register" element={<Register />} />
           <Route path="personalCabinet/:author" element={<PersonalCabinet />} />
+          <Route path="adminCabinet" element={<AdminCabinet />} />
+          <Route path="/user/:login/pets" element={<UserPetsList />} />
           <Route path="editUser" element={<EditUser />} />
           <Route path="editPet/:petId" element={<EditPet />} />
           <Route path="newPassword" element={<NewPassword />} />

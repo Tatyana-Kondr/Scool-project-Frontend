@@ -100,6 +100,7 @@ export const petsSlice = createAppSlice({
       {
         pending: state => {},
         fulfilled: (state, action) => {
+        //  state.selectedPet = action.payload;
          state.petsList = state.petsList.map(p=>{
           if(p.id===action.payload.id){
             return action.payload
