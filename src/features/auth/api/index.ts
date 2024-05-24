@@ -35,9 +35,31 @@ export async function fetchRegister(
     const errorData = await res.json()
     throw new Error(errorData.message || "Failed to register user.")
   }
-
-  return res.json()
+  const data = await res.json();
+  return data;
 }
+
+export async function fetchUploadAvatar(avatarFile: File): Promise<string> {
+  const formData = new FormData();
+  formData.append("avatar", avatarFile);
+
+  const res = await fetch("/api/account/avatar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "*/*",
+    },
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to upload avatar.");
+  }
+
+  const data = await res.json();
+  return data.avatarUrl; 
+}
+
 
 export async function fetchLogin(
   userLoginDto: UserLoginDto,

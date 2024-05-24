@@ -23,36 +23,46 @@ export default function PersonalCabinet() {
 
   const handleDeleteAccount = async () => {
     if (user) {
-      const result = await dispatch(deleteUser(user.id));
+      const result = await dispatch(deleteUser(user.id))
       if (deleteUser.fulfilled.match(result)) {
-        navigate('/'); // Перенаправление на домашнюю страницу
+        navigate("/") // Перенаправление на домашнюю страницу
       } else {
-        console.error('Failed to delete user:', result.error.message);
+        console.error("Failed to delete user:", result.error.message)
       }
     }
-  }; 
+  }
   return (
     <div className={s.cabinet}>
       <div className={s.profile_container}>
         <h1>My account</h1>
-        <h2>{user?.fullName}</h2>
+        <div className={s.profile_header}>
+          <h2>{user?.fullName}</h2>
+          <div className={s.avatar_preview}>
+            {user?.avatar && (
+              <img
+                src={`data:image/jpeg;base64,${user.avatar}`}
+                alt="User Avatar"
+              />
+            )}
+          </div>
+        </div>
         <div className={s.contact}>
           <label htmlFor="email">Email:</label>
-          <p>{user?.email}</p>
+          <span>{user?.email}</span>
         </div>
         <div className={s.contact}>
           <label htmlFor="phone">Phone:</label>
-          <p>{user?.phone}</p>
+          <span>{user?.phone}</span>
         </div>
         <div className={s.contact}>
           <label htmlFor="website">Website:</label>
-          <p>{user?.website}</p>
+          <span>{user?.website}</span>
         </div>
 
-        <div>
-          <Link to={`/editUser`}>Change personal details</Link>
-          <Link to={`/newPassword`}>Change password</Link>
-          <button onClick={handleDeleteAccount}>Delete account</button>
+        <div className={s.profile_changes}>
+          <Link to={`/editUser`} className={s.link}>Change personal details</Link>
+          <Link to={`/newPassword`} className={s.link}>Change password</Link>
+          <button onClick={handleDeleteAccount} className={s.link}>Delete account</button>
         </div>
       </div>
 
