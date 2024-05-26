@@ -66,17 +66,37 @@ export async function fetchDeletePet(
 
 export async function fetchAddPet(
   petDTO: PetDTO,
+  files: File[]
 ): Promise<Pet> {
+  const formData = new FormData();
+
+  // Добавление JSON-объекта как строки
+  formData.append('newPet', JSON.stringify(petDTO));
+
+  // Добавление файлов в formData
+  files.forEach((file, index) => {
+    formData.append('photos', file);
+  });
+  // Array.from(files).forEach(file => {
+  //   formData.append('photos', file);
+  // });
+
   const res = await fetch(`/api/pet`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", 
-    accept: "*/*",
-    authorization: `Bearer ${localStorage.getItem("token")}`
+    headers: { 
+      accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`
     },
-    body: JSON.stringify(petDTO),
-  })
-  return res.json()
+    body: formData,
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to add pet: ${res.statusText}`);
+  }
+  return res.json();
 }
+
+
 
 export async function fetchEditPet(
   petDTO: PetDTO, id: number

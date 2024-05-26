@@ -6,10 +6,11 @@ export interface Pet {
   category: string
   gender: string
   age: string
-  photos: string[]
+  photos: Set<string>
   country: string
   city: string
   description: string
+  photoUrls: Set<string>
   dateCreate: string
   deadline: string
 }
@@ -26,7 +27,6 @@ export interface PetDTO {
   category: string
   gender: string
   age: string
-  photos: string[]
   country: string
   city: string
   description: string
