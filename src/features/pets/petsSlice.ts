@@ -1,5 +1,6 @@
+import { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
+import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType, fetchPhotoById } from "./api"
 import type { PetDTO, PetsState } from "./types"
 
 const initialState: PetsState = {
@@ -24,6 +25,7 @@ export const petsSlice = createAppSlice({
         rejected: state => {},
       },
     ),
+
     getPetsByType: create.asyncThunk(
       async (petType: string) => {
         const response = await fetchPetsByType(petType)
@@ -65,6 +67,7 @@ export const petsSlice = createAppSlice({
         rejected: state => {},
       },
     ),
+
      getPet: create.asyncThunk(
        async (id: number) => {
          const response = await fetchPet(id)
@@ -73,14 +76,33 @@ export const petsSlice = createAppSlice({
        {
          pending: state => {},
          fulfilled: (state, action) => {
-          state.selectedPet = action.payload
+          state.selectedPet = action.payload;
+          state.selectedPet.photoUrls = []; // Инициализируем массив photoUrls
+          
          },
          rejected: state => {},
        },
      ),
+
+     getPhotoById: create.asyncThunk(
+      async (id: number) => {
+        const response = await fetchPhotoById(id)
+        return URL.createObjectURL(response);// преобразуем Blob в URL для отображения изображения
+      },
+      {
+        pending: state => {},
+        fulfilled: (state, action: PayloadAction<string>) => {
+          if (state.selectedPet) {
+            state.selectedPet.photoUrls.push(action.payload);  
+          }         
+        },
+        rejected: state => {},
+      },
+    ),
+
     addPet: create.asyncThunk(
-      async (petDTO: PetDTO) => {
-        const response = await fetchAddPet(petDTO)
+      async ({petDTO, files}) => {
+        const response = await fetchAddPet(petDTO, files)
         return response
       },
       {
@@ -112,12 +134,13 @@ export const petsSlice = createAppSlice({
       },
     ),
   }),
+
   selectors: {
     selectPets: petsState => petsState.petsList,
     selectPet: petsState => petsState.selectedPet,
   },
 })
 
-export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
+export const { getPets, getPet, getPhotoById, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
 
 export const { selectPets, selectPet } = petsSlice.selectors

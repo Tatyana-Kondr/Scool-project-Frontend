@@ -4,74 +4,106 @@ import { useNavigate } from "react-router-dom";
 import { addPet } from "../petsSlice";
 import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
 import { selectUser } from "../../auth/authSlice";
-import { useState } from "react";
 import s from "./createPet.module.css"
+import * as Yup from 'yup';
+import { useState } from "react";
 
 export default function CreatePet(){
 
-    const userSelected = useAppSelector(selectUser);
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [photoError, setPhotoError] = useState<string | null>(null);
+  const userSelected = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-    const handlePetPhotoChange = (
-      event: React.ChangeEvent<HTMLInputElement>,
-      setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
-    ) => {
-      const file = event.currentTarget.files?.[0];
-      if (file) {
-        // if (file.size > 5 * 1024 * 1024) { // Проверка на 5MB
-        //   setAvatarError("File size should be less than 5MB");
-        //   return;
-        // }
-        // setAvatarError(null); // Сброс ошибки, если файл подходит
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64String = reader.result?.toString().split(',')[1]; // Удаление префикса "data:image/png;base64,"
-          if (base64String) {
-            setFieldValue('avatar', base64String);
-            setPhotoPreview(reader.result?.toString() || null); // Установка превью
-          }
-        };
-        reader.readAsDataURL(file);
+  const initialValues = { 
+    caption: "",
+    petType: "",
+    category: "",
+    gender: "",
+    age: "",
+    country: "",
+    city: "",
+    description: "" ,
+    photos: [] as File[]
+  };
+
+ 
+  const validationSchema = Yup.object(
+    {
+      caption: Yup.string().required('Required'),
+      petType: Yup.string().required('Required'),
+      category: Yup.string().required('Required'),
+      gender: Yup.string().required('Required'),
+      age: Yup.string().required('Required'),
+      country: Yup.string().required('Required'),    
+      city: Yup.string().required('Required'),
+      description: Yup.string().required('Required'), 
+      photos: Yup.mixed().required('Required')   
+    }
+  );
+
+  const handleSubmit = async (values:any, { setSubmitting, resetForm }:any ) => {
+
+    const { caption, petType, category, gender, age, country, city, description, photos} = values;
+    const petDTO = { caption, petType, category, gender, age, country, city, description};
+    const files = photos;
+
+    try{
+      await dispatch(addPet({petDTO, files}))
+        resetForm() 
+        navigate(`/personalCabinet/${userSelected?.login}`)
+      } catch(error) {
+          console.error("Error then registering a pet: ", error)
+      } finally {
+          setSubmitting(false)
       }
-    };
+  };
+
+  const handlePetPhotoChange = (event:any, setFieldValue:any) => {
+
+    const files = Array.from(event.currentTarget.files);
+    setFieldValue("photos", files);
+
+    // Генерация превью для фото
+    const filePreviews = files.map((file:any) => URL.createObjectURL(file));
+    setPreviewImages(filePreviews);
+  };
 
     return(
 
         <div>
-      <h1>Any place in your app!</h1>
+      <h2>Add a New Pet</h2>
       <Formik
-        initialValues={{ 
-            caption: "",
-            petType: "",
-            category: "",
-            gender: "",
-            age: "",
-            photos: [""],
-            country: "",
-            city: "",
-            description: "" 
-        }}
-
-        
-        
-        onSubmit={async(values, { setSubmitting, resetForm }) => {
-            try{
-            await dispatch(addPet(values))
-            resetForm() // очищаем форму
-            navigate(`/personalCabinet/${userSelected?.login}`)
-            }
-            catch(error){
-              console.error("Ошибка при регистрации объявления: ", error)
-            } finally{
-              setSubmitting(false)
-            }
-        }}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}        
       >
         {({ setFieldValue, isSubmitting }) => (
           <Form>
+            <div className={s.photo_upload}>
+              <label htmlFor="photos">Photos</label>
+              <input
+                type="file"
+                name="photos"
+                multiple
+                onChange={(event) => handlePetPhotoChange(event, setFieldValue)}
+              />
+              <ErrorMessage name="photos" component="div"/>
+            </div>
+            <div className={s.photo_preview}>
+              {previewImages.length > 0 && (
+                <div>
+                  {previewImages.map((src, index) => (
+                    <img 
+                      key={index} 
+                      src={src} 
+                      alt={`Preview ${index}`} 
+                      style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '10px' }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
             <div>
               <label htmlFor="caption">Caption</label>
               <Field type="text" name="caption" />
@@ -130,12 +162,6 @@ export default function CreatePet(){
               <ErrorMessage name="age" component="div" />
             </div>
 
-            {/* <div>
-              <label htmlFor="photo">Photo</label>
-              <Field type="text" name="photo" />
-              <ErrorMessage name="photo" component="div" />
-            </div> */}
-
             <div>
               <label htmlFor="country">Country</label>
               <Field as="select" name="country">
@@ -160,25 +186,6 @@ export default function CreatePet(){
               <Field as="textarea" name="description" />
               <ErrorMessage name="description" component="div" />
             </div>
-
-            <div className={s.photo_upload}>
-                <div className={s.photo_preview}>
-                  {photoPreview ? (
-                    <img src={photoPreview} alt="Avatar Preview" />
-                  ) : (
-                    <div className={s.photo_placeholder}>
-                      <span>+</span>
-                    </div>
-                  )}
-                </div>
-                <input
-                  type="file"
-                  name="photos"
-                  accept="image/*"
-                  onChange={(event) => handlePetPhotoChange(event, setFieldValue)}
-                />
-                <ErrorMessage name="photos" component="div" className="error" />
-              </div>
 
             <button type="submit" disabled={isSubmitting}>
               Send

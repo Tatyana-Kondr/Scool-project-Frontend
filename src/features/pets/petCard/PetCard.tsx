@@ -2,13 +2,15 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { useEffect, useState } from "react"
 import style from "./PetCard.module.css"
-import { getPet, selectPet } from "../petsSlice"
+import { getPet, getPhotoById, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
 import { author, selectUser } from "../../auth/authSlice"
 import { User } from "../../auth/types"
 import Modal from "../../../components/modalProps/ModalProps"
+import { Pet } from "../types"
 
 export default function PetCard() {
+
   const currentUser = useAppSelector(selectUser)
   const { petId } = useParams()
   const dispatch = useAppDispatch()
@@ -19,11 +21,24 @@ export default function PetCard() {
   const [authorData, setAuthorData] = useState<User | null>(null)
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null)
 
-  useEffect(() => {
-    if (petId) {
-      dispatch(getPet(Number(petId)))
-    }
-  }, [dispatch, petId])
+  // useEffect(() => {
+  //   if (petId) {
+  //     dispatch(getPet(Number(petId)))
+  //   }
+  // }, [dispatch, petId])
+
+  // useEffect(() => {
+  //   if (petId) {
+  //     dispatch(getPet(Number(petId))).then(action => {
+  //       const petData = action.payload as Pet;
+  //       if (petData && petData.photos) {
+  //         petData.photos.forEach((photoId: number):void => {
+  //           dispatch(getPhotoById(photoId));
+  //         });
+  //       }
+  //     });
+  //   }
+  // }, [dispatch, petId]);
   
 
   const handleUser = async () => {
@@ -33,8 +48,8 @@ export default function PetCard() {
         const response = await dispatch(author(pet.author))
         const userData = response.payload as User
         const handleSendEmail = () => {
-              const subject = encodeURIComponent("Интерес к вашему объявлению о животном");
-              const body = encodeURIComponent(`Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`);
+              const subject = encodeURIComponent("Interest in your pet ad");
+              const body = encodeURIComponent(`Hello,\n\nI am interested in your pet announcement: ${pet.caption}.`);
               window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`;
             }
         if (userData && "fullName" in userData) {
@@ -51,7 +66,7 @@ export default function PetCard() {
           setIsModalOpen(true)
         }
       } catch (error) {
-        console.error("Ошибка при получении данных автора: ", error)
+        console.error("Error when getting the author's data: ", error)
       }
     } else {
       setModalContent(
@@ -70,15 +85,20 @@ export default function PetCard() {
   return (
     <div className={style.box}>
       <h2>{pet.caption}</h2>
-      <img src={pet.photos[0]} alt={pet.caption} />
+      <img 
+        src={pet.photoUrls[0]} 
+        alt={pet.caption} 
+        style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '10px' }}
+      />
       <p>{pet.description}</p>
       <p>{pet.dateCreate}</p>
       <p>{pet.author}</p>
 
-      <button onClick={() => navigate(-1)}>To previous page</button>
-
-      <button onClick={handleUser}>Contacts</button>
-      {/* <button onClick={handleSendEmail}>Send a message</button> */}
+      <button onClick={() => navigate(-1)}>  To previous page  </button>
+      {/* <button onClick={handleUser} disabled={!currentUser || !pet || !pet.author}> Contacts </button> */}
+      
+      {/* <button onClick={handleSendEmail}>Send a message</button>        */}
+      <button onClick={handleUser}> Contacts </button>
 
       <Modal
         isOpen={isModalOpen}
