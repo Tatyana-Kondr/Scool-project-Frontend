@@ -13,8 +13,6 @@ import { selectUser } from "../../auth/authSlice"
 import { useState } from "react"
 import * as Yup from "yup"
 import s from "./createPet.module.css"
-import * as Yup from 'yup';
-import { useState } from "react";
 
 
 export default function CreatePet() {
@@ -108,30 +106,6 @@ export default function CreatePet() {
       >
         {({ setFieldValue, isSubmitting }) => (
           <Form>
-            <div className={s.photo_upload}>
-              <label htmlFor="photos">Photos</label>
-              <input
-                type="file"
-                name="photos"
-                multiple
-                onChange={(event) => handlePetPhotoChange(event, setFieldValue)}
-              />
-              <ErrorMessage name="photos" component="div"/>
-            </div>
-            <div className={s.photo_preview}>
-              {previewImages.length > 0 && (
-                <div>
-                  {previewImages.map((src, index) => (
-                    <img 
-                      key={index} 
-                      src={src} 
-                      alt={`Preview ${index}`} 
-                      style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '10px' }}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
             <div>
               <label htmlFor="caption">Caption</label>
               <Field type="text" name="caption" />
