@@ -6,11 +6,15 @@ export interface Pet {
   category: string
   gender: string
   age: string
-  photos: string[]
+  photos: Set<string>
   country: string
   city: string
   description: string
+<<<<<<< HEAD
   photoUrls:string[]
+=======
+  photoUrls: Set<string>
+>>>>>>> c7d79b46c6de79ea94fe638b06a8db6df89b2a02
   dateCreate: string
   deadline: string
 }

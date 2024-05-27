@@ -101,7 +101,9 @@ export const petsSlice = createAppSlice({
     ),
 
     addPet: create.asyncThunk(
-      async ({petDTO, files}) => {
+
+      async ({petDTO, files}:{petDTO: PetDTO, files: File[]}) => {
+
         const response = await fetchAddPet(petDTO, files)
         return response
       },
