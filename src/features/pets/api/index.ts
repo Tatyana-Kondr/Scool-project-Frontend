@@ -39,13 +39,21 @@ export async function fetchPet(id: number): Promise<Pet> {
    const res = await fetch(`/api/pet/${id}`,{
     headers: { "Content-Type": "application/json", 
     accept: "*/*",
-    authorization: `Bearer ${localStorage.getItem("token")}`
+    //authorization: `Bearer ${localStorage.getItem("token")}`
    }
    })
    return res.json()
  }
 
-
+//  export async function fetchPhotoByPetId(id: number): Promise<File> {
+//   const res = await fetch(`/api/pet/photos/${id}`,{
+//    headers: { "Content-Type": "application/json", 
+//    accept: "*/*",
+//    //authorization: `Bearer ${localStorage.getItem("token")}`
+//   }
+//   })
+//   return res.json()
+// }
 
 interface ServerDeletePetResponse extends Pet {
   isDeleted: boolean

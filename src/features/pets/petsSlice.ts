@@ -78,6 +78,19 @@ export const petsSlice = createAppSlice({
          rejected: state => {},
        },
      ),
+    //  getPhotos: create.asyncThunk(
+    //   async (id: number) => {
+    //     const response = await fetchPhotoByPetId(id)
+    //     return response
+    //   },
+    //   {
+    //     pending: state => {},
+    //     fulfilled: (state, action) => {
+    //      state.selectedPet = action.payload
+    //     },
+    //     rejected: state => {},
+    //   },
+    // ),
     addPet: create.asyncThunk(
       async ({petDTO, files}:{petDTO: PetDTO, files: File[]}) => {
         const response = await fetchAddPet(petDTO, files)
