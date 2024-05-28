@@ -4,61 +4,48 @@ import { useAppDispatch } from "../../app/hooks";
 import { register } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import s from "./register.module.css";
+import * as Yup from "yup";
 
 export default function Register() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [avatarError, setAvatarError] = useState<string | null>(null);
 
   const initialValues = {
     email: "",
     password: "",
     fullName: "",
-    login: "", 
-    avatar: "",
+    login: "",
     website: "",
     phone: "",
     telegram: "",
     agreeToTerms: false,
+    avatar: null as File | null,
+  };
 
-  }
-  // const validationSchema = Yup.object().shape({
-  //   fullname: Yup.string().required("Required"),
-  //   username: Yup.string().required("Required"),
-  //   password: Yup.string()
-  //     .min(8, "Password must be at least 4 characters")
-  //     .required("Required"),
-  //   email: Yup.string().email("Invalid email format").required("Required"),
-  //   phone: Yup.string(),
-  //   website: Yup.string().url("Invalid URL"),
-  //   telegram: Yup.string(),
-  //   agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
-  // })
+  const validationSchema = Yup.object().shape({
+    fullName: Yup.string().required("Required"),
+    login: Yup.string().required("Required"),
+    password: Yup.string()
+      .min(4, "Password must be at least 4 characters")
+      .required("Required"),
+    email: Yup.string().email("Invalid email format").required("Required"),
+    phone: Yup.string(),
+     website: Yup.string(),
+    telegram: Yup.string(),
+    agreeToTerms: Yup.bool().oneOf([true], "You must agree to the terms"),
+  });
 
-
-  
   const handleAvatarChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+    setFieldValue: (field: string, value: any) => void
   ) => {
-    const file = event.currentTarget.files?.[0];
-    if (file) {
-      // if (file.size > 5 * 1024 * 1024) { // Проверка на 5MB
-      //   setAvatarError("File size should be less than 5MB");
-      //   return;
-      // }
-      // setAvatarError(null); // Сброс ошибки, если файл подходит
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result?.toString().split(',')[1]; // Удаление префикса "data:image/png;base64,"
-        if (base64String) {
-          setFieldValue('avatar', base64String);
-          setAvatarPreview(reader.result?.toString() || null); // Установка превью
-        }
-      };
-      
-      reader.readAsDataURL(file);
+    const files = event.currentTarget.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      setFieldValue("avatar", file);
+      const avatarPreview = URL.createObjectURL(file);
+      setAvatarPreview(avatarPreview);
     }
   };
 
@@ -68,14 +55,15 @@ export default function Register() {
         <h2>Create your account</h2>
         <Formik
           initialValues={initialValues}
-          // validationSchema={validationSchema}
+          validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting, resetForm }) => {
+            const { avatar, agreeToTerms, ...user } = values;
             try {
-              await dispatch(register(values));
-              resetForm(); // очищаем форму
+              await dispatch(register({ user, file: avatar as File }));
+              resetForm();
               navigate("/");
             } catch (error) {
-              console.error("Ошибка при регистрации: ", error);
+              console.error("Error in registration: ", error);
             } finally {
               setSubmitting(false);
             }
@@ -99,7 +87,7 @@ export default function Register() {
                   accept="image/*"
                   onChange={(event) => handleAvatarChange(event, setFieldValue)}
                 />
-                <ErrorMessage name="avatar" component="div" className="error" />
+                <ErrorMessage name="avatar" component="div" className={s.error} />
               </div>
 
               <div className={s.form_group}>
@@ -110,7 +98,7 @@ export default function Register() {
                   type="text"
                   name="fullName"
                   className={s.form_control}
-                  placeholder="FullName"
+                  placeholder="Full Name"
                 />
                 <ErrorMessage
                   name="fullName"
@@ -121,9 +109,7 @@ export default function Register() {
 
               <div className={s.form_group}>
                 <label htmlFor="login" className={s.required_field}>
-                  
                   Username
-
                 </label>
                 <Field
                   type="text"
@@ -221,8 +207,7 @@ export default function Register() {
                   className={s.form_control}
                 />
                 <label htmlFor="agreeToTerms">
-                  I agree to our <a href="/privacy-policy">Privacy Policy</a>{" "}
-                  and <a href="/terms">Terms</a>.
+                  I agree to our <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms">Terms</a>.
                 </label>
                 <ErrorMessage
                   name="agreeToTerms"

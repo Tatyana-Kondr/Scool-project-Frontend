@@ -22,8 +22,6 @@ export default function PetCard() {
   useEffect(() => {
     if (petId) {
       dispatch(getPet(Number(petId)))
-      console.log(pet?.author)
-      console.log(petId)
     }
   }, [dispatch, petId])
 
@@ -33,12 +31,13 @@ export default function PetCard() {
       try {
         const response = await dispatch(author(pet.author))
         const userData = response.payload as User
+        
         const handleSendEmail = () => {
           const subject = encodeURIComponent(
-            "Интерес к вашему объявлению о животном",
+            "Interest in your pet ad",
           )
           const body = encodeURIComponent(
-            `Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`,
+            `Hello,\n\n I am interested in your announcement: ${pet.caption}.`,
           )
           window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`
         }
