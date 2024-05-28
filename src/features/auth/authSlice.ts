@@ -32,13 +32,14 @@ export const authSlice = createAppSlice({
   initialState,
   reducers: create => ({
     register: create.asyncThunk(
-      async (user: UserCreateDto) => {
-        const response = await fetchRegister(user)
+      async ({user, file}:{user: UserCreateDto, file: File}) => {
+        const response = await fetchRegister(user, file)
         return response
       },
       {
         pending: state => {},
         fulfilled: (state, action) => {
+          state.userList.push(action.payload)
           // state.user = action.payload
         },
         rejected: (state, action) => {

@@ -11,7 +11,6 @@ export interface User {
 }
 export interface UserCreateDto {
   fullName: string
-  avatar: string
   login: string
   password: string
   email: string
@@ -22,10 +21,6 @@ export interface UserCreateDto {
 export interface UserLoginDto {
   login: string
   password: string
-}
-
-export interface UserAvatarDto{
-avatarFile: File
 }
 
 export interface UserUpdateDto {
