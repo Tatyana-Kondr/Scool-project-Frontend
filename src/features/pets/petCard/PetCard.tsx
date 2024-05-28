@@ -98,7 +98,7 @@ export default function PetCard() {
       <button onClick={() => navigate(-1)}>To previous page</button>
 
       <button onClick={handleUser}>Contacts</button>
-      {/* <button onClick={handleSendEmail}>Send a message</button> */}
+    
 
       <Modal
         isOpen={isModalOpen}

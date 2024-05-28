@@ -57,7 +57,7 @@ export async function fetchLogin(
 export async function fetchCurrentUser(): Promise<User> {
   const res = await fetch("/api/account", {
     headers: {
-      "Content-Type": "application/json",
+      //"Content-Type": "application/json",
       accept: "*/*",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
