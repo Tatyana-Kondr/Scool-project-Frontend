@@ -7,6 +7,7 @@ export interface User {
   website: string
   phone: string
   telegram: string
+  photoUrls: string
   role: string[]
 }
 export interface UserCreateDto {

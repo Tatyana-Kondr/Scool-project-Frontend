@@ -38,9 +38,9 @@ export default function PersonalCabinet() {
         <div className={s.profile_header}>
           <h2>{user?.fullName}</h2>
           <div className={s.avatar_preview}>
-            {user?.avatar && (
+            {user?.photoUrls && (
               <img
-                src={`data:image/jpeg;base64,${user.avatar}`}
+                src={`${"http://localhost:8080"}${user.photoUrls}`}
                 alt="User Avatar"
               />
             )}

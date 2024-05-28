@@ -119,8 +119,8 @@ export const authSlice = createAppSlice({
     ),
 
     updateUser: create.asyncThunk(
-      async ({ user, id }: { user: UserUpdateDto; id: number }) => {
-        const response = await fetchUpdateUser(user, id)
+      async ({ user, file, id }: { user: UserUpdateDto,  file: File, id: number }) => {
+        const response = await fetchUpdateUser(user, file, id)
         return response
       },
       {

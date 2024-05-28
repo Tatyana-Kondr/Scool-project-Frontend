@@ -119,16 +119,23 @@ export async function fetchDeleteUser(
 
 export async function fetchUpdateUser(
   userUpdateDto: UserUpdateDto,
+  file: File,
   id: number,
 ): Promise<User> {
+  const formData = new FormData()
+
+  // Добавление JSON-объекта как строки
+  formData.append("editDto", JSON.stringify(userUpdateDto))
+
+  // Добавление файлов в formData
+  formData.append("image", file)
   const res = await fetch(`/api/account/user/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       accept: "*/*",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: JSON.stringify(userUpdateDto),
+    body: formData,
   })
   if (!res.ok) {
     throw new Error("Failed to update user")
