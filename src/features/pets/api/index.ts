@@ -94,25 +94,26 @@ export async function fetchAddPet(
 
 
 export async function fetchEditPet(
-   id: number, petEditDTO: PetEditDTO, files: File[]
+
+  petEditDTO: PetEditDTO, id: number, files?: File[]
 ): Promise<Pet> {
   const formData = new FormData();
   formData.append('petDto', JSON.stringify(petEditDTO));
-  files.forEach((file, index) => {
-    formData.append('files', file);
-  });
-
+  if (files) {
+    files.forEach((file) => formData.append('files', file));
+  }
   const res = await fetch(`/api/pet/${id}`, {
     method: "PUT",
-    headers: { 
+    headers: {  
     accept: "*/*",
     authorization: `Bearer ${localStorage.getItem("token")}`
     },
     body: formData,
-  });
+  })
   if (!res.ok) {
-    throw new Error(`Failed to edit pet: ${res.statusText}`);
+    const errorMessage = await res.text();
+    throw new Error(`Failed to update pet: ${res.statusText}, ${errorMessage}`);
   }
 
-  return res.json()
+  return res.json();
 }
