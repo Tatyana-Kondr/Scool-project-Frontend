@@ -1,0 +1,98 @@
+.container_editpet {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .box {
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .group_edit_field {
+    margin-bottom: 20px;
+  }
+  
+  .group_edit_field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .group_edit_field input,
+  .group_edit_field select,
+  .group_edit_field textarea {
+    width: 50%;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .photos_container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .photoItem {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 5px;
+    margin: 10px;
+  }
+  
+  .photo {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .button_edit_photo {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #007bff;
+    
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .button_edit_photo:hover {
+    background-color: #0056b3;
+  }
+  
+  .submit_button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .submit_button:hover {
+    background-color: #218838;
+  }
+  

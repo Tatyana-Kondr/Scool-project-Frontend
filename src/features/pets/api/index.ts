@@ -1,4 +1,4 @@
-import type { Pet, PetDTO } from "../types"
+import type { Pet, PetDTO, PetEditDTO } from "../types"
 
 //type ServerGetPetResponse = Pet[]
 export interface FilterParamDto {
@@ -97,15 +97,25 @@ export async function fetchAddPet(
 
 
 export async function fetchEditPet(
-  petDTO: PetDTO, id: number
+  petEditDTO: PetEditDTO, id: number, files?: File[]
 ): Promise<Pet> {
+  const formData = new FormData();
+  formData.append('petDto', JSON.stringify(petEditDTO));
+  if (files) {
+    files.forEach((file) => formData.append('files', file));
+  }
   const res = await fetch(`/api/pet/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", 
+    headers: {  
     accept: "*/*",
     authorization: `Bearer ${localStorage.getItem("token")}`
     },
-    body: JSON.stringify(petDTO),
+    body: formData,
   })
-  return res.json()
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(`Failed to update pet: ${res.statusText}, ${errorMessage}`);
+  }
+
+  return res.json();
 }

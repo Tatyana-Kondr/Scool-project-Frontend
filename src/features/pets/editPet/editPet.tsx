@@ -1,74 +1,98 @@
-import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useNavigate, useParams } from "react-router-dom";
-import { editPet, getPet, selectPet } from "../petsSlice";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
+import React, { useEffect, useState } from "react"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { useNavigate, useParams } from "react-router-dom"
+import { editPet, getPet, selectPet } from "../petsSlice"
+import { ErrorMessage, Field, Form, Formik } from "formik"
+import {
+  ageList,
+  categoryList,
+  countryList,
+  sexList,
+} from "../petsList/data"
 import styles from "./editPet.module.css"
-import { selectUser } from "../../auth/authSlice";
-
+import { selectUser } from "../../auth/authSlice"
+import { PetEditDTO } from "../types"
 
 const EditPet: React.FC = () => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { petId } = useParams<{ petId: string }>()
+  const currentPet = useAppSelector(selectPet)
+  const currentUser = useAppSelector(selectUser)
+  const [photos, setPhotos] = useState<File[]>([])
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { petId } = useParams<{ petId: string }>();
-  const currentPet = useAppSelector(selectPet);
-  const currentUser = useAppSelector(selectUser);
-  
   const [initialValues, setInitialValues] = useState({
     caption: currentPet?.caption || "",
-    petType: currentPet?.petType || "",
     category: currentPet?.category || "",
     gender: currentPet?.gender || "",
     age: currentPet?.age || "",
-    photo: currentPet?.photos || [""],
     country: currentPet?.country || "",
     city: currentPet?.city || "",
     description: currentPet?.description || "",
-  });
+  })
 
   useEffect(() => {
     if (petId) {
-      dispatch(getPet(Number(petId)));
+      dispatch(getPet(Number(petId)))
     }
-  }, [dispatch, petId]);
+  }, [dispatch, petId])
 
   useEffect(() => {
     if (currentPet) {
       setInitialValues({
         caption: currentPet.caption,
-        petType: currentPet.petType,
         category: currentPet.category,
         gender: currentPet.gender,
         age: currentPet.age,
-        photo: currentPet.photos,
         country: currentPet.country,
         city: currentPet.city,
         description: currentPet.description,
-      });
+      })
     }
-  }, [currentPet]);
+  }, [currentPet])
 
-  const handleSubmit = async (values: any,
-    { setSubmitting, resetForm }: any,) => {
-      if (petId) {
+  // const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  //   const files = Array.from(event.target.files || []);
+  //   const newPhotos = [...photos];
+  //   newPhotos[index] = files[0];
+  //   setPhotos(newPhotos);
+  // };
+  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const files = Array.from(event.target.files || []);
+    const newPhotos = [...photos];
+  
+    // Проверяем, было ли загружено новое фото
+    if (files.length > 0) {
+      // Если было загружено новое фото, заменяем только одно фото по указанному индексу
+      newPhotos.splice(index, 1, files[0]);
+    }
+  
+    setPhotos(newPhotos);
+  };
+  
+
+  const handleSubmit = async (
+    values: PetEditDTO,
+    { setSubmitting, resetForm }: any,
+  ) => {
+    if (petId && initialValues) {
       try {
-        
-        await dispatch(editPet({ petDTO: values, id: Number(petId) }));
-        alert('Pet details updated successfully');
-        navigate(`/personalCabinet/${currentUser?.login}`);
-        
+        await dispatch(
+          editPet({ petEditDTO: values, id: Number(petId), files: photos }),
+        )
+        alert("Pet details updated successfully")
+        navigate(`/personalCabinet/${currentUser?.login}`)
+
         resetForm()
       } catch (error) {
-        console.error('Error:', error);
-        alert('Error updating pet details');
+        console.error("Error:", error)
+        alert("Error updating pet details")
       }
     }
-  };
+  }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container_editpet}>
       <div className={styles.box}>
         <h2>Edit Pet</h2>
         <Formik
@@ -77,7 +101,26 @@ const EditPet: React.FC = () => {
           onSubmit={handleSubmit}
         >
           <Form>
-          <div>
+          <div className={styles.photos_container}>
+              {[0, 1, 2].map((index) => (
+                <div key={index} className={styles.photoItem}>
+                  <img
+                    src={photos[index] ? URL.createObjectURL(photos[index]) : currentPet?.photoUrls[index]}
+                    alt="Pet"
+                    className={styles.photo}
+                  />
+                  <input
+                  className={styles.button_edit_photo}
+                    type="file"
+                    name={`photo_${index}`}
+                    accept="image/*"
+                    onChange={(event) => handlePhotoChange(event, index)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.group_edit_field}>
               <label htmlFor="caption">Caption</label>
               <Field name="caption" type="text" />
               <ErrorMessage
@@ -87,20 +130,7 @@ const EditPet: React.FC = () => {
               />
             </div>
 
-            <div>
-              <label htmlFor="petType">Pet Type</label>
-              <Field as="select" name="petType">
-                <option value="" label="Select pet type" />
-                {petTypeList.map((type, index) => (
-                  <option key={index} value={type.value}>
-                    {type.value}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage name="petType" component="div" />
-            </div>
-
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="category">Category</label>
               <Field as="select" name="category">
                 <option value="" label="Select category" />
@@ -113,7 +143,7 @@ const EditPet: React.FC = () => {
               <ErrorMessage name="category" component="div" />
             </div>
 
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="gender">Gender</label>
               <Field as="select" name="gender">
                 <option value="" label="Select gender" />
@@ -126,7 +156,7 @@ const EditPet: React.FC = () => {
               <ErrorMessage name="gender" component="div" />
             </div>
 
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="age">Age</label>
               <Field as="select" name="age">
                 <option value="" label="Select age" />
@@ -139,13 +169,7 @@ const EditPet: React.FC = () => {
               <ErrorMessage name="age" component="div" />
             </div>
 
-            {/* <div>
-              <label htmlFor="photos">Photo</label>
-              <Field type="text" name="photos" />
-              <ErrorMessage name="photos" component="div" />
-            </div> */}
-
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="country">Country</label>
               <Field as="select" name="country">
                 <option value="" label="Select country" />
@@ -158,7 +182,7 @@ const EditPet: React.FC = () => {
               <ErrorMessage name="country" component="div" />
             </div>
 
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="city">City</label>
               <Field name="city" type="text" />
               <ErrorMessage
@@ -168,7 +192,7 @@ const EditPet: React.FC = () => {
               />
             </div>
 
-            <div>
+            <div className={styles.group_edit_field}>
               <label htmlFor="description">Description</label>
               <Field name="description" as="textarea" />
               <ErrorMessage
@@ -177,12 +201,12 @@ const EditPet: React.FC = () => {
                 className={styles.error}
               />
             </div>
-            <button type="submit">Update</button>
+            <button className={styles.submit_button} type="submit">Update</button>
           </Form>
         </Formik>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditPet;
+export default EditPet
