@@ -10,6 +10,7 @@ export interface User {
   photoUrls: string
   role: string[]
 }
+
 export interface UserCreateDto {
   fullName: string
   login: string
@@ -19,6 +20,7 @@ export interface UserCreateDto {
   phone: string
   telegram: string
 }
+
 export interface UserLoginDto {
   login: string
   password: string
@@ -41,6 +43,7 @@ export interface AuthState {
   loginErrorMessage?: string
   registerErrorMessage?: string
 }
+
 export interface LoginResponse {
   accessToken: string
   refreshToken: string

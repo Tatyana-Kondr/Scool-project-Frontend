@@ -7,6 +7,7 @@ import s from "./register.module.css";
 import * as Yup from "yup";
 
 export default function Register() {
+  
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -38,14 +39,15 @@ export default function Register() {
 
   const handleAvatarChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void
-  ) => {
-    const files = event.currentTarget.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      setFieldValue("avatar", file);
-      const avatarPreview = URL.createObjectURL(file);
-      setAvatarPreview(avatarPreview);
+    setFieldValue: (field: string, value: any) => void) => {
+
+      const files = event.currentTarget.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+
+        setFieldValue("avatar", file);
+        const avatarPreview = URL.createObjectURL(file);
+        setAvatarPreview(avatarPreview);
     }
   };
 

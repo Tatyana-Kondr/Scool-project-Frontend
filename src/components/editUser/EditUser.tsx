@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  updateUser,
-  selectUser,
-  user as fetchCurrentUser,
-} from "../../features/auth/authSlice";
+import { updateUser, selectUser, user as fetchCurrentUser } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
-const EditUser: React.FC = () => {
+export default function EditUser() {
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
@@ -40,7 +37,7 @@ const EditUser: React.FC = () => {
       });
 
       if (currentUser.photoUrls) {
-        setAvatarPreview(`${"http://localhost:8080"}${currentUser.photoUrls}`);
+        setAvatarPreview(`http://localhost:8080${currentUser.photoUrls}`);
       }
     }
   }, [dispatch, currentUser]);
@@ -48,7 +45,7 @@ const EditUser: React.FC = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email is invalid").required("Email is required"),
     fullName: Yup.string().required("Full name is required"),
-    avatar: Yup.mixed(),
+    //avatar: Yup.mixed(),
     website: Yup.string(),
     phone: Yup.string().matches(/^[0-9]+$/, "Phone number is invalid"),
     telegram: Yup.string(),
@@ -143,4 +140,3 @@ const EditUser: React.FC = () => {
   );
 };
 
-export default EditUser;

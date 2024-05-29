@@ -120,15 +120,20 @@ export async function fetchDeleteUser(
 export async function fetchUpdateUser(
   userUpdateDto: UserUpdateDto,
   file: File,
-  id: number,
+  id: number
 ): Promise<User> {
-  const formData = new FormData()
+  const formData = new FormData();
 
   // Добавление JSON-объекта как строки
-  formData.append("editDto", JSON.stringify(userUpdateDto))
-
+  formData.append("editDto", JSON.stringify(userUpdateDto));
   // Добавление файлов в formData
-  formData.append("image", file)
+  formData.append("image", file);
+
+  console.log("FormData to be sent:");
+  formData.forEach((value, key) => {
+    console.log(key, value);
+  });
+  
   const res = await fetch(`/api/account/user/${id}`, {
     method: "PUT",
     headers: {

@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { useNavigate, useParams } from "react-router-dom";
 import { editPet, getPet, selectPet } from "../petsSlice";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { ageList, categoryList, countryList, petTypeList, sexList } from "../petsList/data";
+import { ageList, categoryList, countryList,  sexList } from "../petsList/data";
 import styles from "./editPet.module.css"
 import { selectUser } from "../../auth/authSlice";
 
@@ -18,7 +18,6 @@ const EditPet: React.FC = () => {
   
   const [initialValues, setInitialValues] = useState({
     caption: currentPet?.caption || "",
-    petType: currentPet?.petType || "",
     category: currentPet?.category || "",
     gender: currentPet?.gender || "",
     age: currentPet?.age || "",
@@ -38,7 +37,6 @@ const EditPet: React.FC = () => {
     if (currentPet) {
       setInitialValues({
         caption: currentPet.caption,
-        petType: currentPet.petType,
         category: currentPet.category,
         gender: currentPet.gender,
         age: currentPet.age,
@@ -85,19 +83,6 @@ const EditPet: React.FC = () => {
                 component="div"
                 className={styles.error}
               />
-            </div>
-
-            <div>
-              <label htmlFor="petType">Pet Type</label>
-              <Field as="select" name="petType">
-                <option value="" label="Select pet type" />
-                {petTypeList.map((type, index) => (
-                  <option key={index} value={type.value}>
-                    {type.value}
-                  </option>
-                ))}
-              </Field>
-              <ErrorMessage name="petType" component="div" />
             </div>
 
             <div>
