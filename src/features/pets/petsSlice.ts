@@ -1,6 +1,6 @@
 import { createAppSlice } from "../../app/createAppSlice"
 import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
-import type { PetDTO, PetsState } from "./types"
+import type { PetDTO, PetEditDTO, PetsState } from "./types"
 
 const initialState: PetsState = {
   petsList: [],
@@ -94,8 +94,8 @@ export const petsSlice = createAppSlice({
     ),
 
     editPet: create.asyncThunk(
-      async ({petDTO, id}: {petDTO: PetDTO, id:number}) => {
-        const response = await fetchEditPet(petDTO, id)
+      async ({petEditDTO, id, files}: {petEditDTO: PetEditDTO, id:number, files?: File[]}) => {
+        const response = await fetchEditPet(petEditDTO, id, files)
         return response
       },
       {

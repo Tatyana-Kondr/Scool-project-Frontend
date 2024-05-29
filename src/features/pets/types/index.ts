@@ -31,3 +31,14 @@ export interface PetDTO {
   city: string
   description: string
 }
+
+export interface PetEditDTO {
+  //Для обновления поста о животном
+  caption: string
+  category: string
+  gender: string
+  age: string
+  country: string
+  city: string
+  description: string
+}
