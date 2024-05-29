@@ -51,12 +51,6 @@ const EditPet: React.FC = () => {
     }
   }, [currentPet])
 
-  // const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-  //   const files = Array.from(event.target.files || []);
-  //   const newPhotos = [...photos];
-  //   newPhotos[index] = files[0];
-  //   setPhotos(newPhotos);
-  // };
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const files = Array.from(event.target.files || []);
     const newPhotos = [...photos];
