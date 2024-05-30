@@ -1,25 +1,23 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { useEffect, useState } from "react"
 import style from "./PetCard.module.css"
 import { getPet, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
 import { author, selectUser, selectUserContacts } from "../../auth/authSlice"
-import { User, UserUpdateDto } from "../../auth/types"
+import {  UserUpdateDto } from "../../auth/types"
 import Modal from "../../../components/modalProps/ModalProps"
-import Register from "../../../components/register/Register"
+
 
 export default function PetCard() {
 
   const currentUser = useAppSelector(selectUser)
-  const userContacts = useAppSelector(selectUserContacts)
   const { petId } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const pet = useAppSelector(selectPet)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  // const [authorData, setAuthorData] = useState<User | null>(null)
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null)
 
   useEffect(() => {
@@ -45,7 +43,6 @@ export default function PetCard() {
           window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`
         }
         if (userData && "fullName" in userData) {
-          // setAuthorData(userData)
           setModalContent(
             <div>
               <p>Name: {userData.fullName}</p>
@@ -61,7 +58,7 @@ export default function PetCard() {
         console.error("Error in retrieving author data: ", error)
       }
     } else {
-        navigate("/register")
+        navigate("/loginForm")
       // setModalContent(
       //   <div className={style.modal_error}>
       //     <p>Only registered users can view contacts!</p>
