@@ -12,18 +12,23 @@ export interface PasswordDto {
   newPassword: string
 }
 
-export async function fetchRegister(
-  userCreateDto: UserCreateDto,
-): Promise<User> {
-  const res = await fetch("/api/account", {
+export async function fetchRegister( userCreateDto: UserCreateDto, file: File ): Promise<User> {
+
+  const formData = new FormData()
+
+  // Добавление JSON-объекта как строки
+  formData.append('registerDto', JSON.stringify(userCreateDto));
+  // Добавление файлов в formData
+  formData.append('image', file);
+
+  const res = await fetch(`/api/account`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       accept: "*/*",
     },
-    body: JSON.stringify(userCreateDto),
+    body: formData,
   })
-  
+
   if (res.status === 409) {
     throw new Error("Conflict: User already exists.")
   }
@@ -32,8 +37,7 @@ export async function fetchRegister(
     const errorData = await res.json()
     throw new Error(errorData.message || "Failed to register user.")
   }
-  const data = await res.json();
-  return data;
+  return await res.json()
 }
 
 export async function fetchLogin(
@@ -57,7 +61,7 @@ export async function fetchLogin(
 export async function fetchCurrentUser(): Promise<User> {
   const res = await fetch("/api/account", {
     headers: {
-      "Content-Type": "application/json",
+      //"Content-Type": "application/json",
       accept: "*/*",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -67,11 +71,12 @@ export async function fetchCurrentUser(): Promise<User> {
   }
   return res.json()
 }
-export async function fetchUser(author: string): Promise<User> {
+export async function fetchUser(author: string): Promise<UserUpdateDto> {
   const res = await fetch(`/api/account/${author}`, {
     headers: {
       "Content-Type": "application/json",
       accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
   if (!res.ok) {
@@ -110,18 +115,22 @@ export async function fetchDeleteUser(
   return res.json()
 }
 
-export async function fetchUpdateUser(
-  userUpdateDto: UserUpdateDto,
-  id: number,
-): Promise<User> {
+export async function fetchUpdateUser( id: number, userUpdateDto: UserUpdateDto, file?: File ): Promise<User> {
+
+  const formData = new FormData();
+  
+  formData.append('editDto', JSON.stringify(userUpdateDto));
+  if (file) {
+    formData.append('image', file);
+  }
+  
   const res = await fetch(`/api/account/user/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       accept: "*/*",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: JSON.stringify(userUpdateDto),
+    body: formData,
   })
   if (!res.ok) {
     throw new Error("Failed to update user")
@@ -129,19 +138,19 @@ export async function fetchUpdateUser(
   return res.json()
 }
 
-export async function fetchPassword(paswordDto:PasswordDto): Promise<void> {
+export async function fetchPassword(paswordDto: PasswordDto): Promise<void> {
   const res = await fetch(`/api/account/password`, {
     method: "PUT",
-    headers: { 
-      "Content-Type": "application/json", 
-      "Accept": "*/*",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "*/*",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    body: JSON.stringify(paswordDto)
-  });
+    body: JSON.stringify(paswordDto),
+  })
 
   if (!res.ok) {
-    const errorText = await res.text();
-    throw new Error(`Failed to update password: ${errorText}`);
+    const errorText = await res.text()
+    throw new Error(`Failed to update password: ${errorText}`)
   }
 }

@@ -1,14 +1,16 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import { useEffect, useState } from "react"
 import style from "./PetCard.module.css"
 import { getPet, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
-import { author, selectUser } from "../../auth/authSlice"
-import { User } from "../../auth/types"
+import { author, selectUser, selectUserContacts } from "../../auth/authSlice"
+import {  UserUpdateDto } from "../../auth/types"
 import Modal from "../../../components/modalProps/ModalProps"
 
+
 export default function PetCard() {
+
   const currentUser = useAppSelector(selectUser)
   const { petId } = useParams()
   const dispatch = useAppDispatch()
@@ -16,7 +18,6 @@ export default function PetCard() {
   const pet = useAppSelector(selectPet)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [authorData, setAuthorData] = useState<User | null>(null)
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null)
 
   useEffect(() => {
@@ -24,21 +25,24 @@ export default function PetCard() {
       dispatch(getPet(Number(petId)))
     }
   }, [dispatch, petId])
-  
 
+  
   const handleUser = async () => {
-    
     if (currentUser && pet && pet.author) {
       try {
         const response = await dispatch(author(pet.author))
-        const userData = response.payload as User
+        const userData = response.payload as UserUpdateDto
+        
         const handleSendEmail = () => {
-              const subject = encodeURIComponent("Интерес к вашему объявлению о животном");
-              const body = encodeURIComponent(`Здравствуйте,\n\nЯ заинтересован в вашем объявлении о животном: ${pet.caption}.`);
-              window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`;
-            }
+          const subject = encodeURIComponent(
+            "Interest in your pet ad",
+          )
+          const body = encodeURIComponent(
+            `Hello,\n\n I am interested in your announcement: ${pet.caption}.`,
+          )
+          window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`
+        }
         if (userData && "fullName" in userData) {
-          setAuthorData(userData)
           setModalContent(
             <div>
               <p>Name: {userData.fullName}</p>
@@ -51,15 +55,16 @@ export default function PetCard() {
           setIsModalOpen(true)
         }
       } catch (error) {
-        console.error("Ошибка при получении данных автора: ", error)
+        console.error("Error in retrieving author data: ", error)
       }
     } else {
-      setModalContent(
-        <div className={style.modal_error}>
-          <p>Only registered users can view contacts!</p>
-        </div>,
-      )
-      setIsModalOpen(true)
+        navigate("/loginForm")
+      // setModalContent(
+      //   <div className={style.modal_error}>
+      //     <p>Only registered users can view contacts!</p>
+      //   </div>,
+      // )
+      // setIsModalOpen(true)
     }
   }
 
@@ -70,7 +75,22 @@ export default function PetCard() {
   return (
     <div className={style.box}>
       <h2>{pet.caption}</h2>
-      <img src={pet.photos[0]} alt={pet.caption} />
+      <div>
+        {pet.photoUrls &&
+          pet.photoUrls.map((url, index) => (
+            <img
+              key={index}
+              src={`${"http://localhost:8080"}${url}`} 
+              alt={`Pet ${index}`}
+              style={{
+                width: "200px",
+                height: "200px",
+                objectFit: "cover",
+                margin: "10px",
+              }}
+            />
+          ))}
+      </div>
       <p>{pet.description}</p>
       <p>{pet.dateCreate}</p>
       <p>{pet.author}</p>
@@ -78,7 +98,7 @@ export default function PetCard() {
       <button onClick={() => navigate(-1)}>To previous page</button>
 
       <button onClick={handleUser}>Contacts</button>
-      {/* <button onClick={handleSendEmail}>Send a message</button> */}
+    
 
       <Modal
         isOpen={isModalOpen}

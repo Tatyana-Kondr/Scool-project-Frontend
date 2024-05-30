@@ -16,19 +16,11 @@ import s from "./createPet.module.css"
 
 
 export default function CreatePet() {
+  
   const userSelected = useAppSelector(selectUser)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [previewImages, setPreviewImages] = useState<string[]>(["", "", ""])
-
-  // const handlePetPhotoChange = 
-  //   (event:any, setFieldValue:any) => {
-  //     const files = Array.from(event.currentTarget.files);
-  //     setFieldValue("photos", files);
-  //     // Генерация превью для фото
-  //     const filePreviews = files.map((file:any) => URL.createObjectURL(file));
-  //     setPreviewImages(filePreviews);
-  // }
 
   const handlePetPhotoChange = 
     (event: React.ChangeEvent<HTMLInputElement>, index: number, setFieldValue: (field: string, value: any) => void) => {
@@ -71,17 +63,7 @@ export default function CreatePet() {
           photos: Yup.mixed().required("At least one photo is required"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          const {
-            caption,
-            petType,
-            category,
-            gender,
-            age,
-            country,
-            city,
-            description,
-            photos,
-          } = values
+          const { caption, petType, category, gender, age, country, city, description, photos } = values;
           const petDTO = {
             caption,
             petType,
@@ -90,17 +72,19 @@ export default function CreatePet() {
             age,
             country,
             city,
-            description,
-          }
-          const files = photos
+            description
+          };
+          const files = photos;
           try {
             await dispatch(addPet({ petDTO, files }))
-            resetForm()
-            navigate(`/personalCabinet/${userSelected?.login}`)
+              alert("Pet details updated successfully")
+              navigate(`/personalCabinet/${userSelected?.login}`);
+              resetForm();
           } catch (error) {
-            console.error("Error then registering a pet: ", error)
+              console.error("Error then registering a pet: ", error)
+              alert("Error creating pet details- add photo")
           } finally {
-            setSubmitting(false)
+              setSubmitting(false)
           }
         }}
       >
