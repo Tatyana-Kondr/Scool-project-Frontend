@@ -19,6 +19,7 @@ import {
 
 const initialState: AuthState = {
   user: undefined,
+  userUpdateDto: undefined,
   userList: [],
   roles: [],
   isAuthenticated: false,
@@ -31,14 +32,16 @@ export const authSlice = createAppSlice({
   name: "auth",
   initialState,
   reducers: create => ({
+
     register: create.asyncThunk(
-      async (user: UserCreateDto) => {
-        const response = await fetchRegister(user)
+      async ({user, file}:{user: UserCreateDto, file: File}) => {
+        const response = await fetchRegister(user, file)
         return response
       },
       {
         pending: state => {},
         fulfilled: (state, action) => {
+          state.userList.push(action.payload)
           // state.user = action.payload
         },
         rejected: (state, action) => {
@@ -108,18 +111,17 @@ export const authSlice = createAppSlice({
       {
         pending: state => {},
         fulfilled: (state, action) => {
-          state.user = action.payload
+          state.userUpdateDto = action.payload
         },
-        rejected: state => {
-          // state.isAuthenticated = false;
-          // state.token = undefined;
+        rejected: (state, action) => {
+          console.error(action.error.message)
         },
       },
     ),
 
     updateUser: create.asyncThunk(
-      async ({ user, id }: { user: UserUpdateDto; id: number }) => {
-        const response = await fetchUpdateUser(user, id)
+      async ({ id, userUpdateDto, file }: { id: number, userUpdateDto: UserUpdateDto,  file?: File }) => {
+        const response = await fetchUpdateUser(id, userUpdateDto, file)
         return response
       },
       {
@@ -128,6 +130,7 @@ export const authSlice = createAppSlice({
           state.user = action.payload
           state.userList = state.userList.map(e => {
             if (e.id === action.payload.id) {
+              state.userList.push(action.payload)//
               return action.payload
             }
             return e
@@ -182,6 +185,7 @@ export const authSlice = createAppSlice({
   }),
   selectors: {
     selectUser: userState => userState.user,
+    selectUserContacts: userState => userState.userUpdateDto,
     selectRoles: userState => userState.roles,
     selectUsers: userState => userState.userList,
     selectIsAuthenticated: userState => userState.isAuthenticated,
@@ -205,6 +209,7 @@ export const {
 
 export const {
   selectUser,
+  selectUserContacts,
   selectRoles,
   selectUsers,
   selectIsAuthenticated,

@@ -1,7 +1,8 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType, fetchPhotoById } from "./api"
-import type { PetDTO, PetsState } from "./types"
+import { FilterParamDto, fetchAddPet, fetchDeletePet, fetchEditPet, fetchPet, fetchPets, fetchPetsByFilter, fetchPetsByType } from "./api"
+import type { PetDTO, PetEditDTO, PetsState } from "./types"
+
 
 const initialState: PetsState = {
   petsList: [],
@@ -12,6 +13,7 @@ export const petsSlice = createAppSlice({
   name: "pets",
   initialState,
   reducers: create => ({
+    
     getPets: create.asyncThunk(
       async (arg: void) => {
         const response = await fetchPets()
@@ -84,22 +86,6 @@ export const petsSlice = createAppSlice({
        },
      ),
 
-     getPhotoById: create.asyncThunk(
-      async (id: number) => {
-        const response = await fetchPhotoById(id)
-        return URL.createObjectURL(response);// преобразуем Blob в URL для отображения изображения
-      },
-      {
-        pending: state => {},
-        fulfilled: (state, action: PayloadAction<string>) => {
-          if (state.selectedPet) {
-            state.selectedPet.photoUrls.push(action.payload);  
-          }         
-        },
-        rejected: state => {},
-      },
-    ),
-
     addPet: create.asyncThunk(
 
       async ({petDTO, files}:{petDTO: PetDTO, files: File[]}) => {
@@ -117,22 +103,23 @@ export const petsSlice = createAppSlice({
     ),
 
     editPet: create.asyncThunk(
-      async ({petDTO, id}: {petDTO: PetDTO, id:number}) => {
-        const response = await fetchEditPet(petDTO, id)
+      async ({petEditDTO, id, files}: {petEditDTO: PetEditDTO, id:number, files?: File[]}) => {
+        const response = await fetchEditPet(petEditDTO, id, files)
         return response
       },
       {
         pending: state => {},
         fulfilled: (state, action) => {
-        //  state.selectedPet = action.payload;
+         state.selectedPet = action.payload;//
          state.petsList = state.petsList.map(p=>{
           if(p.id===action.payload.id){
+            state.petsList.push(action.payload)//
             return action.payload
           } 
           return p;          
         })
         },
-        rejected: state => {},
+        rejected: (state, action) => {action.error.message},
       },
     ),
   }),
@@ -143,6 +130,5 @@ export const petsSlice = createAppSlice({
   },
 })
 
-export const { getPets, getPet, getPhotoById, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
-
+export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
 export const { selectPets, selectPet } = petsSlice.selectors

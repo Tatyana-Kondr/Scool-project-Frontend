@@ -6,15 +6,11 @@ export interface Pet {
   category: string
   gender: string
   age: string
-  photos: Set<string>
+  photos: string[]
   country: string
   city: string
   description: string
-<<<<<<< HEAD
-  photoUrls:string[]
-=======
-  photoUrls: Set<string>
->>>>>>> c7d79b46c6de79ea94fe638b06a8db6df89b2a02
+  photoUrls: string[]
   dateCreate: string
   deadline: string
 }
@@ -35,3 +31,15 @@ export interface PetDTO {
   city: string
   description: string
 }
+
+export interface PetEditDTO {
+  //Для обновления поста о животном
+  caption: string
+  category: string
+  gender: string
+  age: string
+  country: string
+  city: string
+  description: string
+}
+

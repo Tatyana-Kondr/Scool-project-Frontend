@@ -1,4 +1,4 @@
-import type { Pet, PetDTO } from "../types"
+import type { Pet, PetDTO, PetEditDTO } from "../types"
 
 //type ServerGetPetResponse = Pet[]
 export interface FilterParamDto {
@@ -39,35 +39,18 @@ export async function fetchPetsByType(petType: string): Promise<Pet[]> {
 export async function fetchPet(id: number): Promise<Pet> {
   const res = await fetch(`/api/pet/${id}`,{
     headers: { "Content-Type": "application/json", 
-      accept: "*/*",
-      //authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch pet');
-  }
-  return res.json()
+
+    accept: "*/*",
+    //authorization: `Bearer ${localStorage.getItem("token")}`
+   }
+   })
+   return res.json()
  }
-
-export async function fetchPhotoById(id: number): Promise<Blob> {
-  const res = await fetch(`/api/pet/photos/${id}`, {
-    headers: {
-      accept: 'image/jpeg',
-      //authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch photo');
-  }
-
-  return res.blob();
-}
+ 
 
 interface ServerDeletePetResponse extends Pet {
   isDeleted: boolean
 }
-
 
 export async function fetchDeletePet(
   id: number,
@@ -95,10 +78,7 @@ export async function fetchAddPet(
   files.forEach((file, index) => {
     formData.append('photos', file);
   });
-  // Array.from(files).forEach(file => {
-  //   formData.append('photos', file);
-  // });
-
+  
   const res = await fetch(`/api/pet`, {
     method: "POST",
     headers: { 
@@ -118,15 +98,26 @@ export async function fetchAddPet(
 
 
 export async function fetchEditPet(
-  petDTO: PetDTO, id: number
+
+  petEditDTO: PetEditDTO, id: number, files?: File[]
 ): Promise<Pet> {
+  const formData = new FormData();
+  formData.append('petDto', JSON.stringify(petEditDTO));
+  if (files) {
+    files.forEach((file) => formData.append('files', file));
+  }
   const res = await fetch(`/api/pet/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json", 
+    headers: {  
     accept: "*/*",
     authorization: `Bearer ${localStorage.getItem("token")}`
     },
-    body: JSON.stringify(petDTO),
+    body: formData,
   })
-  return res.json()
+  if (!res.ok) {
+    const errorMessage = await res.text();
+    throw new Error(`Failed to update pet: ${res.statusText}, ${errorMessage}`);
+  }
+
+  return res.json();
 }
