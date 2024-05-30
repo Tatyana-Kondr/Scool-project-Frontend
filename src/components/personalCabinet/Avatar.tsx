@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { selectUser } from "../../features/auth/authSlice"
-import { fetchCurrentUser, fetchUploadAvatar } from "../../features/auth/api"
+import { fetchCurrentUser } from "../../features/auth/api"
 import { ErrorMessage, Form, Formik } from "formik"
 
 export default function Avatar() {

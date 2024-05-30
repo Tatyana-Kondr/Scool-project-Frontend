@@ -4,19 +4,22 @@ import { useEffect, useState } from "react"
 import style from "./PetCard.module.css"
 import { getPet, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
-import { author, selectUser } from "../../auth/authSlice"
-import { User } from "../../auth/types"
+import { author, selectUser, selectUserContacts } from "../../auth/authSlice"
+import { User, UserUpdateDto } from "../../auth/types"
 import Modal from "../../../components/modalProps/ModalProps"
+import Register from "../../../components/register/Register"
 
 export default function PetCard() {
+
   const currentUser = useAppSelector(selectUser)
+  const userContacts = useAppSelector(selectUserContacts)
   const { petId } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const pet = useAppSelector(selectPet)
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [authorData, setAuthorData] = useState<User | null>(null)
+  // const [authorData, setAuthorData] = useState<User | null>(null)
   const [modalContent, setModalContent] = useState<JSX.Element | null>(null)
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export default function PetCard() {
     if (currentUser && pet && pet.author) {
       try {
         const response = await dispatch(author(pet.author))
-        const userData = response.payload as User
+        const userData = response.payload as UserUpdateDto
         
         const handleSendEmail = () => {
           const subject = encodeURIComponent(
@@ -42,7 +45,7 @@ export default function PetCard() {
           window.location.href = `mailto:${userData.email}?subject=${subject}&body=${body}`
         }
         if (userData && "fullName" in userData) {
-          setAuthorData(userData)
+          // setAuthorData(userData)
           setModalContent(
             <div>
               <p>Name: {userData.fullName}</p>
@@ -58,12 +61,13 @@ export default function PetCard() {
         console.error("Error in retrieving author data: ", error)
       }
     } else {
-      setModalContent(
-        <div className={style.modal_error}>
-          <p>Only registered users can view contacts!</p>
-        </div>,
-      )
-      setIsModalOpen(true)
+        navigate("/register")
+      // setModalContent(
+      //   <div className={style.modal_error}>
+      //     <p>Only registered users can view contacts!</p>
+      //   </div>,
+      // )
+      // setIsModalOpen(true)
     }
   }
 

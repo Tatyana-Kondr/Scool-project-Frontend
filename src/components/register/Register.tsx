@@ -229,8 +229,14 @@ export default function Register() {
           )}
         </Formik>
         <p>
-          Already have an account? <a href="/login">Sign in</a>
-        </p>
+        Already have an account?{" "}
+        <span
+          style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+          onClick={() => navigate("/loginForm")}
+        >
+          Sign in
+        </span>
+      </p>
       </div>
     </div>
   );

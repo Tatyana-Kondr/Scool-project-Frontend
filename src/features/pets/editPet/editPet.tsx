@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { useNavigate, useParams } from "react-router-dom"
-import { editPet, getPet, selectPet } from "../petsSlice"
-import { ErrorMessage, Field, Form, Formik } from "formik"
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useNavigate, useParams } from "react-router-dom";
+import { editPet, getPet, selectPet } from "../petsSlice";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
-  ageList,
-  categoryList,
-  countryList,
-  sexList,
-} from "../petsList/data"
-import styles from "./editPet.module.css"
-import { selectUser } from "../../auth/authSlice"
-import { PetEditDTO } from "../types"
+  ageList, categoryList, countryList, sexList,
+} from "../petsList/data";
+import styles from "./editPet.module.css";
+import { selectUser } from "../../auth/authSlice";
+import { PetEditDTO } from "../types";
 
 const EditPet: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { petId } = useParams<{ petId: string }>()
-  const currentPet = useAppSelector(selectPet)
-  const currentUser = useAppSelector(selectUser)
-  const [photos, setPhotos] = useState<File[]>([])
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { petId } = useParams<{ petId: string }>();
+  const currentPet = useAppSelector(selectPet);
+  const currentUser = useAppSelector(selectUser);
+  const [photos, setPhotos] = useState<{ file: File | null, preview: string | null }[]>([{ file: null, preview: null }, { file: null, preview: null }, { file: null, preview: null }]);
 
   const [initialValues, setInitialValues] = useState({
     caption: currentPet?.caption || "",
@@ -29,13 +26,13 @@ const EditPet: React.FC = () => {
     country: currentPet?.country || "",
     city: currentPet?.city || "",
     description: currentPet?.description || "",
-  })
+  });
 
   useEffect(() => {
     if (petId) {
-      dispatch(getPet(Number(petId)))
+      dispatch(getPet(Number(petId)));
     }
-  }, [dispatch, petId])
+  }, [dispatch, petId]);
 
   useEffect(() => {
     if (currentPet) {
@@ -47,64 +44,80 @@ const EditPet: React.FC = () => {
         country: currentPet.country,
         city: currentPet.city,
         description: currentPet.description,
-      })
+      });
+      setPhotos(currentPet.photoUrls.map(url => ({ file: null, preview: url }))); // Инициализация фото с URL-адресами
     }
-  }, [currentPet])
+  }, [currentPet]);
 
-  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const files = Array.from(event.target.files || []);
-    const newPhotos = [...photos];
-  
-    // Проверяем, было ли загружено новое фото
-    if (files.length > 0) {
-      // Если было загружено новое фото, заменяем только одно фото по указанному индексу
-      newPhotos.splice(index, 1, files[0]);
+  const handlePhotoChange = ( event: React.ChangeEvent<HTMLInputElement>, index: number ) => {
+    const file = event.currentTarget.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotos((prevPhotos) => {
+          const newPhotos = [...prevPhotos];
+          newPhotos[index] = {
+            file,
+            preview: reader.result as string,
+          };
+          return newPhotos;
+        });
+      };
+      reader.readAsDataURL(file);
     }
-  
-    setPhotos(newPhotos);
   };
-  
 
   const handleSubmit = async (
     values: PetEditDTO,
-    { setSubmitting, resetForm }: any,
+    { setSubmitting, resetForm }: any
   ) => {
     if (petId && initialValues) {
       try {
-        await dispatch(
-          editPet({ petEditDTO: values, id: Number(petId), files: photos }),
-        )
-        alert("Pet details updated successfully")
-        navigate(`/personalCabinet/${currentUser?.login}`)
 
-        resetForm()
+        // photos.forEach((photo, index) => {
+        //   if (photo.file) {
+        //     formData.append(`photos[${index}]`, photo.file);
+        //   } else if (photo.preview && typeof photo.preview === "string") {
+        //     formData.append(`photoUrls[${index}]`, photo.preview);
+        //   }
+        // });
+        const filePhotos = photos.map(photo => photo.file).filter(photo => photo !== null) as File[];
+        await dispatch(
+          editPet({ petEditDTO: values, id: Number(petId), files: filePhotos })
+        );
+        //alert("Pet details updated successfully");
+        navigate(`/personalCabinet/${currentUser?.login}`);
+
+        resetForm();
       } catch (error) {
-        console.error("Error:", error)
-        alert("Error updating pet details")
+        console.error("Error:", error);
+        alert("Error updating pet details");
       }
     }
-  }
+  };
 
   return (
     <div className={styles.container_editpet}>
       <div className={styles.box}>
         <h2>Edit Pet</h2>
         <Formik
-          enableReinitialize
+          //enableReinitialize
           initialValues={initialValues}
           onSubmit={handleSubmit}
         >
           <Form>
-          <div className={styles.photos_container}>
+            <div className={styles.photos_container}>
               {[0, 1, 2].map((index) => (
                 <div key={index} className={styles.photoItem}>
                   <img
-                    src={photos[index] ? URL.createObjectURL(photos[index]) : currentPet?.photoUrls[index]}
+                    src={
+                      photos[index]?.preview || currentPet?.photoUrls[index] || ""
+                    }
                     alt="Pet"
                     className={styles.photo}
                   />
                   <input
-                  className={styles.button_edit_photo}
+                    className={styles.button_edit_photo}
                     type="file"
                     name={`photo_${index}`}
                     accept="image/*"
@@ -123,7 +136,7 @@ const EditPet: React.FC = () => {
                 className={styles.error}
               />
             </div>
-            
+
             <div className={styles.group_edit_field}>
               <label htmlFor="category">Category</label>
               <Field as="select" name="category">
@@ -200,7 +213,7 @@ const EditPet: React.FC = () => {
         </Formik>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditPet
+export default EditPet;

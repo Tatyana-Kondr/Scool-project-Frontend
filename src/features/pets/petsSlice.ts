@@ -101,15 +101,16 @@ export const petsSlice = createAppSlice({
       {
         pending: state => {},
         fulfilled: (state, action) => {
-        //  state.selectedPet = action.payload;
+         state.selectedPet = action.payload;//
          state.petsList = state.petsList.map(p=>{
           if(p.id===action.payload.id){
+            state.petsList.push(action.payload)//
             return action.payload
           } 
           return p;          
         })
         },
-        rejected: state => {},
+        rejected: (state, action) => {action.error.message},
       },
     ),
   }),
@@ -120,5 +121,4 @@ export const petsSlice = createAppSlice({
 })
 
 export const { getPets, getPet, getPetsByType, getPetsByFilter, deletePet, addPet, editPet } = petsSlice.actions
-
 export const { selectPets, selectPet } = petsSlice.selectors

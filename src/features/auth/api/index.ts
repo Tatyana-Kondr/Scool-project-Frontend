@@ -12,17 +12,14 @@ export interface PasswordDto {
   newPassword: string
 }
 
-export async function fetchRegister(
-  userCreateDto: UserCreateDto,
-  file: File,
-): Promise<User> {
+export async function fetchRegister( userCreateDto: UserCreateDto, file: File ): Promise<User> {
+
   const formData = new FormData()
 
   // Добавление JSON-объекта как строки
-  formData.append("registerDto", JSON.stringify(userCreateDto))
-
+  formData.append('registerDto', JSON.stringify(userCreateDto));
   // Добавление файлов в formData
-  formData.append("image", file)
+  formData.append('image', file);
 
   const res = await fetch(`/api/account`, {
     method: "POST",
@@ -74,11 +71,12 @@ export async function fetchCurrentUser(): Promise<User> {
   }
   return res.json()
 }
-export async function fetchUser(author: string): Promise<User> {
+export async function fetchUser(author: string): Promise<UserUpdateDto> {
   const res = await fetch(`/api/account/${author}`, {
     headers: {
       "Content-Type": "application/json",
       accept: "*/*",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   })
   if (!res.ok) {
@@ -117,22 +115,14 @@ export async function fetchDeleteUser(
   return res.json()
 }
 
-export async function fetchUpdateUser(
-  userUpdateDto: UserUpdateDto,
-  file: File,
-  id: number
-): Promise<User> {
+export async function fetchUpdateUser( id: number, userUpdateDto: UserUpdateDto, file?: File ): Promise<User> {
+
   const formData = new FormData();
-
-  // Добавление JSON-объекта как строки
-  formData.append("editDto", JSON.stringify(userUpdateDto));
-  // Добавление файлов в formData
-  formData.append("image", file);
-
-  console.log("FormData to be sent:");
-  formData.forEach((value, key) => {
-    console.log(key, value);
-  });
+  
+  formData.append('editDto', JSON.stringify(userUpdateDto));
+  if (file) {
+    formData.append('image', file);
+  }
   
   const res = await fetch(`/api/account/user/${id}`, {
     method: "PUT",

@@ -63,17 +63,7 @@ export default function CreatePet() {
           photos: Yup.mixed().required("At least one photo is required"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          const {
-            caption,
-            petType,
-            category,
-            gender,
-            age,
-            country,
-            city,
-            description,
-            photos,
-          } = values
+          const { caption, petType, category, gender, age, country, city, description, photos } = values;
           const petDTO = {
             caption,
             petType,
@@ -82,17 +72,19 @@ export default function CreatePet() {
             age,
             country,
             city,
-            description,
-          }
-          const files = photos
+            description
+          };
+          const files = photos;
           try {
             await dispatch(addPet({ petDTO, files }))
-            resetForm()
-            navigate(`/personalCabinet/${userSelected?.login}`)
+              alert("Pet details updated successfully")
+              navigate(`/personalCabinet/${userSelected?.login}`);
+              resetForm();
           } catch (error) {
-            console.error("Error then registering a pet: ", error)
+              console.error("Error then registering a pet: ", error)
+              alert("Error creating pet details- add photo")
           } finally {
-            setSubmitting(false)
+              setSubmitting(false)
           }
         }}
       >
