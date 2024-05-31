@@ -1,3 +1,4 @@
+
 .homePageContainer {
   display: flex;
   justify-content: center;
@@ -15,6 +16,7 @@
 }
 
 .text1 {
+  padding-top: 130px;
   margin-left: 150px;
   text-align: left;
   font-family: "PF Scandal Pro", sans-serif;

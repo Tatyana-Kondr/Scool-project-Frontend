@@ -169,6 +169,18 @@ export const authSlice = createAppSlice({
       state.token = undefined
       state.isAuthenticated = false
     }),
+
+    checkAuth: create.reducer(state => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        state.isAuthenticated = true;
+        state.token = token;
+      } else {
+        state.isAuthenticated = false;
+        state.token = undefined;
+      }
+    }),
+
     changePassword: create.asyncThunk(
       async (passwordDto: PasswordDto) => {
         const response = await fetchPassword(passwordDto)
@@ -200,6 +212,7 @@ export const {
   login,
   user,
   logout,
+  checkAuth,
   author,
   updateUser,
   deleteUser,
