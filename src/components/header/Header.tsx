@@ -24,7 +24,7 @@ export default function Header() {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <a href="#!">I want help</a>
+              <Link to="/wantHelp">I want help</Link>
               </li>
               <li>
                 <a href="#!">How it works</a>

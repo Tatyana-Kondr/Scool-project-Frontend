@@ -10,7 +10,7 @@ import Register from "./components/register/Register"
 import LoginForm from "./components/login/LoginForm"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./app/hooks"
-import { selectIsAuthenticated, user } from "./features/auth/authSlice"
+import { checkAuth, selectIsAuthenticated, user } from "./features/auth/authSlice"
 import CreatePet from "./features/pets/createPet/CreatePet"
 import NewPassword from "./components/newPassword/NewPassword"
 import EditUser from "./components/editUser/EditUser"
@@ -18,6 +18,8 @@ import UserList from "./features/auth/userList/userList"
 import EditPet from "./features/pets/editPet/editPet"
 import AdminCabinet from "./components/adminCabinet/AdminCabinet"
 import UserPetsList from "./components/adminCabinet/userPetsList/UserPetsList"
+import WantHelp from "./components/wantHelp/WantHelp"
+import PageNotFound from "./components/pageNotFound"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -27,6 +29,11 @@ const App = () => {
       dispatch(user())
     }
   }, [isAuthenticated])
+
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+  
   return (
     <div className="App">
       <Routes>
@@ -44,7 +51,8 @@ const App = () => {
           <Route path="userList" element={<UserList />} />
           <Route path="pets" element={<PetsList />} />
           <Route path="petCard/:petId" element={<PetCard />} />
-          <Route path="*" element={<NoPageFound />} />
+          <Route path="wantHelp" element={<WantHelp />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </div>
