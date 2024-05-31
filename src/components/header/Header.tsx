@@ -13,7 +13,7 @@ export default function Header() {
   }
   return (
     <header>
-      <div>
+      <div className={styles.header_container}>
         <div className={styles.header_row}>
           <div className={styles.header_logo}>
             <img src={logoImg} alt="Logo" />

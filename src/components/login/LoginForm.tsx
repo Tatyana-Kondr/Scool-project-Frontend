@@ -4,7 +4,7 @@ import {
   selectLoginError,
 } from "../../features/auth/authSlice"
 import { UserLoginDto } from "../../features/auth/types"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import styles from "./login.module.css"
@@ -91,8 +91,8 @@ export default function  LoginForm() {
             </Form>
           )}
         </Formik>
-        <a href="#" className={styles.link}>Forgot password</a>
-        <a href="#" className={styles.link_account}>Create an account</a>
+        {/* <a href="#" className={styles.link}>Forgot password</a> */}
+        <Link className={styles.link_account} to="/register">Create an account</Link>
       </div>
     </div>
   )

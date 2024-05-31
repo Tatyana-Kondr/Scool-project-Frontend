@@ -68,7 +68,7 @@ export default function PersonalCabinet() {
 
       <div className={s.avert_container}>
         <div>
-          <Link to="/createPet/">Add new avert</Link>
+          <Link to="/createPet/">{`Hello, ${user?.fullName}! Create a new pet avert`}</Link>
         </div>
         <ul>
           {petsList.map(p => (

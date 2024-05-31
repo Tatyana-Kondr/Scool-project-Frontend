@@ -15,23 +15,21 @@ export default function Home() {
 
   return (
     <div>
-      <div>
+      <div className={styles.home_container}>
         <h1 className={styles.text1}>
-          Соединяем сердца тех, кто ищет верного друга,
+        Connecting the hearts of those seeking a faithful friend with those in need of loving care!
         </h1>
-        <h1 className={styles.text2}>c теми, кто нуждается в любящем уходе!</h1>
+        
       </div>
       <div className={styles.homePageContainer}>
         <img src={homeImg} alt="Cat" />
         <div className={styles.content}>
-          Наша миссия — преобразовать сострадание в конкретные действия, чтобы
-          каждое животное, лишенное дома, могло найти безусловную заботу и
-          любовь. Мы стремимся стать связующим звеном между животными, которые
-          лишились дома из-за войны или катастрофы, и заботливыми людьми в
-          Европе, желающими предложить им новый дом и любящие сердца. Мы верим,
-          что каждое животное заслуживает лучшего, и мы делаем все возможное,
-          чтобы помочь им найти теплый дом и заботливых хозяев. Присоединяйтесь
-          к нам в нашем стремлении сделать мир лучше!
+        Our mission is to transform compassion into concrete actions so that every homeless animal
+        can find unconditional care and love. We aim to become the link between animals that have lost their homes 
+        due to war or disaster and caring people in Europe who wish to offer them a new home and loving hearts. 
+        We believe that every animal deserves the best, and we do everything we can to help them find a warm home 
+        and caring owners. 
+        Join us in our endeavor to make the world a better place!
         </div>
       </div>
       <div className={styles.lookingFor}>
