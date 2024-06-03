@@ -19,6 +19,7 @@ import AdminCabinet from "./components/adminCabinet/AdminCabinet"
 import UserPetsList from "./components/adminCabinet/userPetsList/UserPetsList"
 import WantHelp from "./components/wantHelp/WantHelp"
 import PageNotFound from "./components/pageNotFound"
+import Messages from "./components/personalCabinet/messages/Messages"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="loginForm" element={<LoginForm />} />
           <Route path="register" element={<Register />} />
           <Route path="personalCabinet/:author" element={<PersonalCabinet />} />
+          <Route path="messages" element={<Messages />} />
           <Route path="adminCabinet" element={<AdminCabinet />} />
           <Route path="/user/:login/pets" element={<UserPetsList />} />
           <Route path="editUser" element={<EditUser />} />

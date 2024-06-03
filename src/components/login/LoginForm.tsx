@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import * as Yup from "yup"
 import styles from "./login.module.css"
+import { useState } from "react"
 
 
 export default function  LoginForm() {
@@ -33,7 +34,14 @@ export default function  LoginForm() {
     try {
       const dispatchResult = await dispatch(login(values))
       if (login.fulfilled.match(dispatchResult)) {
+        // сказать Тане
+        const redirectPath = localStorage.getItem("redirectAfterLogin")
+        if (redirectPath) {
+          localStorage.removeItem("redirectAfterLogin")
+          navigate(redirectPath)
+        } else {
         navigate("/")
+        }
       }
     } catch (error) {
       console.error("Authorization error:", error)

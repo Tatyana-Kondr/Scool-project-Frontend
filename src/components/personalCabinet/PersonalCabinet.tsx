@@ -9,8 +9,10 @@ import {
 import { Link, useNavigate, useParams } from "react-router-dom"
 import s from "./personalCabinet.module.css"
 import { deleteUser, selectUser } from "../../features/auth/authSlice"
+import Messages from "./messages/Messages"
 
 export default function PersonalCabinet() {
+  
   const { author } = useParams<{ author: string }>()
   const petsList = useAppSelector(selectPets)
   const user = useAppSelector(selectUser)
@@ -27,7 +29,7 @@ export default function PersonalCabinet() {
       if (deleteUser.fulfilled.match(result)) {
         navigate("/") // Перенаправление на домашнюю страницу
       } else {
-        console.error("Failed to delete user:", result.error.message)
+        console.error("Failed to delete user", result.error.message)
       }
     }
   }
@@ -60,9 +62,9 @@ export default function PersonalCabinet() {
         </div>
 
         <div className={s.profile_changes}>
-          <Link to={`/editUser`} className={s.link}>Change personal details</Link>
-          <Link to={`/newPassword`} className={s.link}>Change password</Link>
-          <button onClick={handleDeleteAccount} className={s.link}>Delete account</button>
+          <Link to={`/editUser`} className={s.link}>{` Change personal details `}</Link>
+          <Link to={`/newPassword`} className={s.link}>{` Change password `}</Link>
+          <button onClick={handleDeleteAccount} className={s.link}>{` Delete account `}</button>
         </div>
       </div>
 
@@ -78,20 +80,23 @@ export default function PersonalCabinet() {
                   <img src={p.photos[0]} alt="" />
                 </div>
                 <Link to={`/petCard/${p.id}`}>{p.caption}</Link>
-                <Link to={`/editPet/${p.id}`}>Edit</Link>
+                <Link to={`/editPet/${p.id}`}>{`  Edit  `}</Link>
                 <button
                   type="button"
                   onClick={() => {
                     dispatch(deletePet(p.id))
                   }}
                 >
-                  Delete
+                 Delete 
                 </button>
               </div>
             </li>
           ))}
         </ul>
       </div>
+      <div className={s.avert_container}>
+      <Messages/>
+      </div>      
     </div>
   )
 }

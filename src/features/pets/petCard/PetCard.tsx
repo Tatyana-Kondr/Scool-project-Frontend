@@ -59,13 +59,8 @@ export default function PetCard() {
         console.error("Error in retrieving author data: ", error)
       }
     } else {
-        navigate("/loginForm")
-      // setModalContent(
-      //   <div className={style.modal_error}>
-      //     <p>Only registered users can view contacts!</p>
-      //   </div>,
-      // )
-      // setIsModalOpen(true)
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);//сказать Тане
+      navigate("/loginForm");
     }
   }
 

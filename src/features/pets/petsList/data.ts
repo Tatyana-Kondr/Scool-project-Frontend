@@ -4,6 +4,8 @@ export const sexList = [
 ];
 export const countryList = [
     {value: "Ukraine"},
+    {value: "Belarus"},
+    {value: "Poland"},
     {value: "USA"},
     {value: "Kasakhstan"},
     {value: "Russia"}

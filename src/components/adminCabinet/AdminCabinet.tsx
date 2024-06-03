@@ -16,12 +16,11 @@ export default function AdminCabinet() {
     
     const handleDeleteUser = (userId: number) => {
         dispatch(deleteUser(userId));
-        console.log("thdjhtgyj")
     };
   
     return (
         <div>
-            <h1>Admin Cabinet</h1>
+            <h1>Welcome, dear Friend, to the heart of the mountain!</h1>
             <h2>Users List</h2>
             <ul>
                 {users.map((user) => (

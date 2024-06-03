@@ -79,8 +79,6 @@ export const petsSlice = createAppSlice({
          pending: state => {},
          fulfilled: (state, action) => {
           state.selectedPet = action.payload;
-          state.selectedPet.photoUrls = []; // Инициализируем массив photoUrls
-          
          },
          rejected: state => {},
        },
