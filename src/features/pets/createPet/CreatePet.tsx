@@ -34,8 +34,11 @@ export default function CreatePet() {
         newState[index] = filePreview
         return newState
       })
+      // Добавляем класс для скрытия текста "Photo"
+      event.currentTarget.parentElement?.classList.add(styles.photo_uploaded)
     }
   }
+  
 
   return (
     <div className={styles.container_createPet}>
@@ -102,94 +105,84 @@ export default function CreatePet() {
         >
           {({ setFieldValue, isSubmitting }) => (
             <Form>
-              <div className={styles.formGroupRow}>
-                <div className={styles.formGroup}>
-                  <Field as="select" name="petType">
-                    <option value="" label="Select pet type" />
-                    {petTypeList.map((type, index) => (
-                      <option key={index} value={type.value}>
-                        {type.value}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="petType"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
-                </div>
-
-                <div className={styles.formGroupRow}>
-                <div className={styles.formGroup}>
-                  <Field as="select" name="category">
-                    <option value="" label="Select category" />
-                    {categoryList.map((category, index) => (
-                      <option key={index} value={category.value}>
-                        {category.value}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="category"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
+              <div className={styles.formGroup}>
+                <Field as="select" name="petType">
+                  <option value="" label="Select pet type" />
+                  {petTypeList.map((type, index) => (
+                    <option key={index} value={type.value}>
+                      {type.value}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="petType"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
-              <div className={styles.formGroupRow}>
-                <div className={styles.formGroup}>
-                  <Field as="select" name="gender">
-                    <option value="" label="Select gender" />
-                    {sexList.map((gender, index) => (
-                      <option key={index} value={gender.value}>
-                        {gender.value}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="gender"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
+              <div className={styles.formGroup}>
+                <Field as="select" name="category">
+                  <option value="" label="Select category" />
+                  {categoryList.map((category, index) => (
+                    <option key={index} value={category.value}>
+                      {category.value}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="category"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
-              <div className={styles.formGroupRow}>
-                <div className={styles.formGroup}>
-                  <Field as="select" name="age">
-                    <option value="" label="Select age" />
-                    {ageList.map((age, index) => (
-                      <option key={index} value={age.value}>
-                        {age.value}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="age"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
+              <div className={styles.formGroup}>
+                <Field as="select" name="gender">
+                  <option value="" label="Select gender" />
+                  {sexList.map((gender, index) => (
+                    <option key={index} value={gender.value}>
+                      {gender.value}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="gender"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
-              <div className={styles.formGroupRow}>
-                <div className={styles.formGroup}>
-                  <Field as="select" name="country">
-                    <option value="" label="Select country" />
-                    {countryList.map((country, index) => (
-                      <option key={index} value={country.value}>
-                        {country.value}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="country"
-                    component="div"
-                    className={styles.error}
-                  />
-                </div>
+              <div className={styles.formGroup}>
+                <Field as="select" name="age">
+                  <option value="" label="Select age" />
+                  {ageList.map((age, index) => (
+                    <option key={index} value={age.value}>
+                      {age.value}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="age"
+                  component="div"
+                  className={styles.error}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <Field as="select" name="country">
+                  <option value="" label="Select country" />
+                  {countryList.map((country, index) => (
+                    <option key={index} value={country.value}>
+                      {country.value}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="country"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
               <div className={styles.formGroup}>
@@ -241,12 +234,6 @@ export default function CreatePet() {
                           <img
                             src={previewImages[index]}
                             alt={`Preview ${index}`}
-                            style={{
-                              width: "100px",
-                              height: "100px",
-                              objectFit: "cover",
-                              margin: "10px",
-                            }}
                           />
                         )}
                       </div>
@@ -261,7 +248,7 @@ export default function CreatePet() {
                       <ErrorMessage
                         name={`photos[${index}]`}
                         component="div"
-                        className="error"
+                        className={styles.error}
                       />
                     </div>
                   ))}
@@ -269,7 +256,7 @@ export default function CreatePet() {
               </div>
 
               <button
-                className={styles.formButtons}
+                className={styles.formButton_createPet}
                 type="submit"
                 disabled={isSubmitting}
               >
