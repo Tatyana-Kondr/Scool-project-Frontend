@@ -1,0 +1,63 @@
+.containerWantHelp {
+    display: flex;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 1300px;
+    margin: auto;
+    margin-top: 150px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .imageContainerWantHelp {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .imageWantHelp {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .textContainerWantHelp {
+    flex: 2;
+  }
+  
+  .sectionWantHelp {
+    margin-bottom: 20px;
+  }
+  
+  .h2WantHelp {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .h3WantHelp {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #666;
+  }
+  
+  .pWantHelp {
+    margin-bottom: 15px;
+    color: #444;
+  }
+  
+  .ulWantHelp {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .liWantHelp {
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  .strongWantHelp {
+    font-weight: bold;
+    color: #000;
+  }
