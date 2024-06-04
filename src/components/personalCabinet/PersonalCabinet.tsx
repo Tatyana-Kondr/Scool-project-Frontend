@@ -58,7 +58,7 @@ export default function PersonalCabinet() {
         </div>
         <div className={s.contact}>
           <label htmlFor="website">Website:</label>
-          <span>{user?.website}</span>
+          <a href={`https://${user?.website}`} target="blank">{user?.website}</a>
         </div>
 
         <div className={s.profile_changes}>
