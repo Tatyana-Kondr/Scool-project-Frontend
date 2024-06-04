@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { deleteUser, getUsers, selectUsers } from '../../features/auth/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import s from "./adminCabinet.module.css";
 
 
 export default function AdminCabinet() {
@@ -19,7 +20,7 @@ export default function AdminCabinet() {
     };
   
     return (
-        <div>
+        <div className={s.container}>
             <h1>Welcome, dear Friend, to the heart of the mountain!</h1>
             <h2>Users List</h2>
             <ul>
