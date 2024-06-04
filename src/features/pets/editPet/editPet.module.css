@@ -8,7 +8,7 @@
 }
 
 .container_editpet {
-  margin-top: 50px;
+  margin-top: 150px;
   position: relative;
   width: 100%; 
   
@@ -284,10 +284,10 @@ textarea {
   text-align: start;
   margin-left: 100px;
   margin-bottom: 5px;
-  color: #c4c6ca;
+  color: #939598;
 }
 
 .uploadGroup label{
   font-size: 15px;
-  color: #c4c6ca;
+  color: #939598;
 }

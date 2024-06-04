@@ -40,7 +40,7 @@ export default function Header() {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/wantHelp">I want help</Link>
+                <Link to="/wantHelp">I want to help</Link>
               </li>
               <li>
                 <a href="#!">How it works</a>
