@@ -93,14 +93,14 @@ export default function Register() {
               </div>
 
               <div className={s.form_group}>
-                <label htmlFor="fullName" className={s.required_field}>
+                {/* <label htmlFor="fullName" className={s.required_field}>
                   Full Name
-                </label>
+                </label> */}
                 <Field
                   type="text"
                   name="fullName"
                   className={s.form_control}
-                  placeholder="Full Name"
+                  placeholder="Full Name*"
                 />
                 <ErrorMessage
                   name="fullName"
@@ -110,14 +110,14 @@ export default function Register() {
               </div>
 
               <div className={s.form_group}>
-                <label htmlFor="login" className={s.required_field}>
+                {/* <label htmlFor="login" className={s.required_field}>
                   Username
-                </label>
+                </label> */}
                 <Field
                   type="text"
                   name="login"
                   className={s.form_control}
-                  placeholder="Username"
+                  placeholder="Username*"
                 />
                 <ErrorMessage
                   name="login"
@@ -127,14 +127,14 @@ export default function Register() {
               </div>
 
               <div className={s.form_group}>
-                <label htmlFor="password" className={s.required_field}>
+                {/* <label htmlFor="password" className={s.required_field}>
                   Password
-                </label>
+                </label> */}
                 <Field
                   type="password"
                   name="password"
                   className={s.form_control}
-                  placeholder="Password"
+                  placeholder="Password*"
                 />
                 <ErrorMessage
                   name="password"
@@ -144,14 +144,14 @@ export default function Register() {
               </div>
 
               <div className={s.form_group}>
-                <label htmlFor="email" className={s.required_field}>
+                {/* <label htmlFor="email" className={s.required_field}>
                   Email
-                </label>
+                </label> */}
                 <Field
                   type="email"
                   name="email"
-                  className={s.form_control}
-                  placeholder="Email"
+                  className={`${s.form_control} required`}
+                  placeholder="Email*"
                 />
                 <ErrorMessage
                   name="email"
