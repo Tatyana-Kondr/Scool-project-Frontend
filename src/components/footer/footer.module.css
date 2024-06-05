@@ -13,14 +13,22 @@
     
 }
 
-.footerContainer p {
-    margin-right: 20px;
+.footerContainer p,
+.a_footer {
+    margin-right: 35px;
     font-size: 15px;
     color: rgb(243, 247, 247);
     transition: color 0.5s, font-size 0.5s;
 } 
 
-.footerContainer a:hover {
-    color: rgb(245, 247, 248); 
-    font-size: 24px; 
+.a_footer{
+    margin-top: 20.5px;
+    text-decoration: none;
+}
+
+.a_footer:hover {
+    color: rgb(53, 242, 88); 
+    
   }
+
+  

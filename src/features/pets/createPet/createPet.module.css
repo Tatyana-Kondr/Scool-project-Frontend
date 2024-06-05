@@ -4,14 +4,14 @@
   border: 0;
   outline: 0;
   font-size: 100%;
-  background: transparent;
+  background: transparen;
 }
 
 .container_createPet {
-  margin-top: 50px;
+  margin-top: 150px;
   position: relative;
   width: 100%; 
-  
+
 }
 
 .outerBox {
@@ -115,13 +115,13 @@
   z-index: -1;
 }
 
-h1 {
+.outerBox h1 {
   text-align: center;
   margin-bottom: 20px;
   color: #54cd38;
   font:
     bold 25px Helvetica,
-    Arial,
+    Ubuntu,
     sans-serif;
   letter-spacing: -0.05em;
   line-height: 20px;
@@ -180,6 +180,10 @@ textarea {
   resize: none;
 }
 
+.uploadGroup label{
+  font-size: 15px;
+  color: #a0a1a3;
+}
 
 .uploadGroup {
   margin-bottom: 20px;

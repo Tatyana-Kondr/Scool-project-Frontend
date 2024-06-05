@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 .cabinet {
+  margin-top: 90px;
   background-color: #f0eceb;
   display: flex;
   align-items: center;
@@ -12,6 +13,7 @@
 }
 .profile_container {
   max-width: 500px;
+  min-height: 470px;
   background-color: white;
   padding: 0 30px;
 }
@@ -20,11 +22,22 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.profile_changes {
+  margin-top: 40px;
+  display: flex;
+  align-items: start;
+  font-family: Ubuntu;
+  font-size: 15px;
+  gap: 10px;
+  flex-direction: column;
+}
 .avatar_preview {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-left: 30px;
 }
 
 .avatar_preview img {
@@ -35,10 +48,7 @@
   border: 2px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень для придания глубины */
 }
-.profile_changes {
-  margin-bottom: 20px;
-  flex-direction: column;
-}
+
 .contact {
   display: flex;
   color: #757575;
@@ -58,6 +68,10 @@
 .avert_container {
   max-width: 1000px;
   background-color: white;
+}
+
+.link_create_pet {
+  margin: 10px 0;
 }
 
 .link {
