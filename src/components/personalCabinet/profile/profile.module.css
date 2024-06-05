@@ -37,6 +37,7 @@
   .contact {
     display: flex;
     color: #757575;
+    gap: 15px;
   }
   
   .contact label {
@@ -63,7 +64,7 @@
     align-items: start;
     font-family: Ubuntu;
     font-size: 15px;
-    gap: 10px;
+    gap: 15px;
     flex-direction: column;
   }
   
@@ -75,5 +76,5 @@
   }
   
   .link:hover {
-    color: red;
+    color: #b60707;
   }
