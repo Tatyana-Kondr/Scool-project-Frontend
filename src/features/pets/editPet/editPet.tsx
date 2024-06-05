@@ -80,20 +80,12 @@ const EditPet: React.FC = () => {
   ) => {
     if (petId && initialValues) {
       try {
-        // photos.forEach((photo, index) => {
-        //   if (photo.file) {
-        //     formData.append(`photos[${index}]`, photo.file);
-        //   } else if (photo.preview && typeof photo.preview === "string") {
-        //     formData.append(`photoUrls[${index}]`, photo.preview);
-        //   }
-        // });
         const filePhotos = photos
           .map(photo => photo.file)
           .filter(photo => photo !== null) as File[]
         await dispatch(
           editPet({ petEditDTO: values, id: Number(petId), files: filePhotos }),
         )
-        //alert("Pet details updated successfully");
         navigate(`/personalCabinet/${currentUser?.login}`)
 
         resetForm()
@@ -109,7 +101,6 @@ const EditPet: React.FC = () => {
       <div className={styles.outerBox_editPet}>
         <h1>Edit ad details</h1>
         <Formik
-          //enableReinitialize
           initialValues={initialValues}
           onSubmit={handleSubmit}
         >

@@ -3,35 +3,65 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 .cabinet {
-  margin-top: 90px;
   background-color: #f0eceb;
   display: flex;
-  align-items: center;
-  gap: 30px;
-  padding: 30px 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 200px 30px;
 }
+
+.avert_container {
+  min-height: 500px;
+  flex: 1;
+  min-width: 200px; /* Чтобы блоки не становились слишком узкими */
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.avert_cards_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .profile_container {
-  max-width: 500px;
-  min-height: 470px;
-  background-color: white;
-  padding: 0 30px;
+  min-height: 500px;
+  flex: 1;
+  min-width: 200px; /* Чтобы блоки не становились слишком узкими */
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  max-width: 25%;
 }
+
+.avert_container {
+  max-width: 65%;
+  background-color: #f9f9f9;
+}
+
+.avert_card {
+  flex: 1 1 30%; /* Равномерное распределение по ширине */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 20px 10px;
+}
+
 .profile_header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 15px;
 }
 
-.profile_changes {
-  margin-top: 40px;
-  display: flex;
-  align-items: start;
-  font-family: Ubuntu;
-  font-size: 15px;
-  gap: 10px;
-  flex-direction: column;
-}
 .avatar_preview {
   display: flex;
   justify-content: center;
@@ -44,7 +74,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  object-fit: contain;
+  object-fit: cover; /*contain*/
   border: 2px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Лёгкая тень для придания глубины */
 }
@@ -56,6 +86,7 @@
 .contact label {
   font-weight: 500;
 }
+
 .profile_container h1 {
   margin: 20px auto;
   color: #54cd38;
@@ -65,14 +96,20 @@
   color: #757575;
   font-size: 25px;
 }
-.avert_container {
-  max-width: 1000px;
-  background-color: white;
+
+.profile_changes {
+  margin-top: 40px;
+  display: flex;
+  align-items: start;
+  font-family: Ubuntu;
+  font-size: 15px;
+  gap: 10px;
+  flex-direction: column;
 }
 
-.link_create_pet {
+/* .link_create_pet {
   margin: 10px 0;
-}
+} */
 
 .link {
   color: #007bff;
@@ -82,7 +119,7 @@
 }
 
 .link:hover {
-  color: #0056b3;
+  color:/* #0056b3*/ red;
 }
 
 .edit_link {
@@ -98,15 +135,44 @@
   background-color: #218838;
 }
 
-.avert_card {
+
+/* .profile_changes .link {
+  display: block;
+  margin: 5px 0;
+} */
+
+/* .avert_card {
   display: flex;
   align-items: center;
-  width: 800px;
-  border: 1px solid gray;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
   margin-bottom: 20px;
   padding: 20px 10px;
   list-style: none;
 }
+
 .avert_card li {
   list-style: none;
+} */
+
+
+
+.pet_img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.link_create_pet {
+  display: block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  color:  #54cd38;
+  /* color: #007bff; */
+  font-weight: bold;
+}
+
+.link_create_pet:hover {
+  text-decoration: underline;
 }

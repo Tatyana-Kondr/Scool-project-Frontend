@@ -1,0 +1,79 @@
+.profile_container {
+    min-height: 500px;
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    max-width: 25%;
+  }
+  
+  .profile_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+  
+  .avatar_preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    margin-left: 30px;
+  }
+  
+  .avatar_preview img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact {
+    display: flex;
+    color: #757575;
+  }
+  
+  .contact label {
+    font-weight: 500;
+  }
+  .a_contact{
+    color: rgba(0, 0, 0, 0.7);
+  }
+  
+  .profile_container h1 {
+    margin: 20px auto;
+    color: #54cd38;
+    font-size: 25px;
+  }
+  
+  .profile_container h2 {
+    color: #757575;
+    font-size: 25px;
+  }
+  
+  .profile_changes {
+    margin-top: 40px;
+    display: flex;
+    align-items: start;
+    font-family: Ubuntu;
+    font-size: 15px;
+    gap: 10px;
+    flex-direction: column;
+  }
+  
+  .link {
+    color: rgba(10, 80, 15, 1);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 15px;
+  }
+  
+  .link:hover {
+    color: red;
+  }
