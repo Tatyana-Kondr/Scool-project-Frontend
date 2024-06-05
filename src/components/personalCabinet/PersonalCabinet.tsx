@@ -58,7 +58,7 @@ export default function PersonalCabinet() {
         </div>
         <div className={s.contact}>
           <label htmlFor="website">Website:</label>
-          <a href={`https://${user?.website}`} target="blank">{user?.website}</a>
+          <a href={`https://${user?.website}`} target="_blank" rel="noopener noreferrer">{user?.website}</a>
         </div>
 
         <div className={s.profile_changes}>
@@ -70,7 +70,7 @@ export default function PersonalCabinet() {
 
       <div className={s.avert_container}>
         <div>
-          <Link to="/createPet/">{`Hello, ${user?.fullName}! Create a new pet avert`}</Link>
+          <Link className={s.link_create_pet} to="/createPet/">{`Hello, ${user?.fullName}! Create a new pet avert`}</Link>
         </div>
         <ul>
           {petsList.map(p => (
