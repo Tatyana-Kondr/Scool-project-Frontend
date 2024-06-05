@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { logout, selectUser } from "../../features/auth/authSlice"
-import logoImg from "./../../media/logo.png"
+import logoImg from "./../../media/logo-removebg.png"
 import styles from "./header.module.css"
 import { useEffect } from "react"
 

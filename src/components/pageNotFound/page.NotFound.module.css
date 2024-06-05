@@ -3,6 +3,7 @@
   width: 50%;
   text-align: center;
   margin-top: 93px;
+  
 }
 
 .body_pnf {
@@ -11,7 +12,8 @@
   justify-content: center;
   color: #333;
   margin: 0;
-  padding: 0;
+  padding-top: 150px;
+  padding-bottom: 350px;
 }
 
 .body_pnf img {

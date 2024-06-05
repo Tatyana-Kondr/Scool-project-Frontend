@@ -57,12 +57,34 @@ code {
 
 @font-face {
   font-family: "Rock Salt";
-  src: url("RockSalt-Regular.eot");
-  src:
+    src:
     local("Rock Salt Regular"),
     local("RockSalt-Regular"),
-    url("RockSalt-Regular.woff2") format("woff2");
+    url("/src/fonts/RockSalt-Regular.woff2") format("woff2");
 
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Hero Light Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Hero Light Regular'), url('/src/fonts/HeroLight-Regular.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Hero Light Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Hero Light Bold'), url('/src/fonts/HeroLight-Bold.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Hero Light Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Hero Light Light'), url('/src/fonts/HeroLight-Light.woff') format('woff');
+  }

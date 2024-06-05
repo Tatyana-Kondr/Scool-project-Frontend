@@ -20,6 +20,7 @@ import UserPetsList from "./components/adminCabinet/userPetsList/UserPetsList"
 import WantHelp from "./components/wantHelp/WantHelp"
 import PageNotFound from "./components/pageNotFound"
 import Messages from "./components/personalCabinet/messages/Messages"
+import FoundAnimal from "./components/foundAnimal/FoundAnimal"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="pets" element={<PetsList />} />
           <Route path="petCard/:petId" element={<PetCard />} />
           <Route path="wantHelp" element={<WantHelp />} />
+          <Route path="foundAnimal" element={<FoundAnimal />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
