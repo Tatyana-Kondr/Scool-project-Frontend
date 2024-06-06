@@ -7,7 +7,6 @@ import s from "./petsList.module.css"
 import Dropdown from "../../../components/dropdown/Dropdown"
 import { sexList, countryList, categoryList, ageList } from "./data"
 
-
 export default function PetsList() {
 
   const petsByType = useAppSelector(selectPets)
@@ -29,10 +28,10 @@ export default function PetsList() {
     event: React.ChangeEvent<HTMLSelectElement>,
     param: string,
   ) => {
-    // Получаем значение выбранного элемента из события
     const value = event.target.value
     setQueryParams({ ...queryParams, [param]: value })
   }
+
   const handleResetFilter = () => {
     setQueryParams({
       country: "",
@@ -41,34 +40,43 @@ export default function PetsList() {
       gender: "",
     })
   }
+
   return (
-    <>
+    <div className={s.container_petsList}>
       <div className={s.dropdown_container}>
         <div className={s.dropdown_menu}>
-          <Dropdown
-            label="Country"
-            options={[...countryList]}
-            value={queryParams.country || ""}
-            onChange={event => handleDropdownChange(event, "country")}
-          />
-          <Dropdown
-            label="Category"
-            options={[...categoryList]}
-            value={queryParams.category || ""}
-            onChange={event => handleDropdownChange(event, "category")}
-          />
-          <Dropdown
-            label="Age"
-            options={[...ageList]}
-            value={queryParams.age || ""}
-            onChange={event => handleDropdownChange(event, "age")}
-          />
-          <Dropdown
-            label="Sex"
-            options={[...sexList]}
-            value={queryParams.gender || ""}
-            onChange={event => handleDropdownChange(event, "gender")}
-          />
+          <div className={s.dropdown_label}>
+            <Dropdown 
+              label="Country:" 
+              options={[...countryList]}
+              value={queryParams.country || ""}
+              onChange={event => handleDropdownChange(event, "country")}
+            />
+          </div>
+          <div className={s.dropdown_label}>
+            <Dropdown
+              label="Category:"
+              options={[...categoryList]}
+              value={queryParams.category || ""}
+              onChange={event => handleDropdownChange(event, "category")}
+            />
+          </div>
+          <div className={s.dropdown_label}>
+            <Dropdown
+              label="Age:"
+              options={[...ageList]}
+              value={queryParams.age || ""}
+              onChange={event => handleDropdownChange(event, "age")}
+            />
+          </div>
+          <div className={s.dropdown_label}>
+            <Dropdown
+              label="Sex:"
+              options={[...sexList]}
+              value={queryParams.gender || ""}
+              onChange={event => handleDropdownChange(event, "gender")}
+            />
+          </div>
           <button
             className={s.reset_filter}
             type="button"
@@ -78,36 +86,37 @@ export default function PetsList() {
           </button>
         </div>
       </div>
-      <ul>
+      <ul className={s.petList}>
         {petsByType.map(p => (
-          <li key={p.id}>
+          <li key={p.id} className={s.petItem}>
             <div className={s.petCard}>
-              <div className={s.petCard_img}>
-              {p.photoUrls && p.photoUrls.map((url, index) => (
-                <img key={index} src={`${"http://localhost:8080"}${url}`} alt={`Pet ${index}`}
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    objectFit: "cover",
-                    margin: "10px",
-                  }}
-                />
-              ))}
+            <div className={s.petCard_img}>
+               {p.photoUrls && p.photoUrls[0] ? ( 
+                  <img src={`http://localhost:8080${p.photoUrls[0]}`} 
+                       alt={`Photo of ${p.caption}`} 
+                   /> ) : ( 
+                   <div className={s.noPhoto}>No Photo
+                   </div> )} 
+            </div>
+              <div className={s.petCard_body}>
+                <div className={s.petCard_body_location}>
+                  <p>{p.country}</p>
+                  <p>{p.city}</p>
+                </div>
+                <div className={s.petCard_body_caption}>
+                  <h1>{p.caption}</h1>
+                </div>                
+                <p>category: {p.category}</p>
+                <p>age: {p.age}</p>
+                <p>sex: {p.gender}</p>
                 <div className={s.petCard_btn}>
                   <Link to={`/petCard/${p.id}`}>Read more</Link>
                 </div>
-              </div>
-              <div className={s.petCard_body}>
-                <p>{p.dateCreate}</p>
-                <h3>{p.country}</h3>
-                <p>{p.city}</p>
-                <h1>{p.caption}</h1>
-                <p>{p.category}</p>
               </div>
             </div>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   )
 }

@@ -1,11 +1,13 @@
 .container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items:baseline;
     width: 200px;
 }
 label {
     margin-right: 10px;
+    margin: 5px;
+    color: green;
 }
 
 select {
