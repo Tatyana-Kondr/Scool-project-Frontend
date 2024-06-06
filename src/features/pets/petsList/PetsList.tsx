@@ -86,6 +86,8 @@ export default function PetsList() {
           </button>
         </div>
       </div>
+
+      <div className={s.petList_box}>
       <ul className={s.petList}>
         {petsByType.map(p => (
           <li key={p.id} className={s.petItem}>
@@ -117,6 +119,7 @@ export default function PetsList() {
           </li>
         ))}
       </ul>
+      </div>
     </div>
   )
 }

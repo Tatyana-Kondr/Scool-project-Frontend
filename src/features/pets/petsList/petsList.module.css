@@ -32,7 +32,7 @@
   
 .dropdown_label:hover,
 .dropdown_label:focus-within {
-    border-color: #007bff;
+    border-color: darkgreen;
 }
   
 .reset_filter {
@@ -48,17 +48,22 @@
 .reset_filter:hover {
     background-color: #ff4b4b;
 }
+
+.petList_box{
+    padding: 0 100px;
+}
   
 .petList {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    padding: 0 100px;
-    justify-content: center;
+
+    
 }
   
 .petItem {
     list-style: none;
+    max-width: 400px;
 }
   
 .petCard {
@@ -109,7 +114,7 @@
   
 .petCard_body h1 {
     font-size: 18px;
-    color: #28a745;
+    color: #389324;
     margin-top: 25px;
     margin-bottom: 25px;
 }
@@ -132,7 +137,7 @@
 }
   
 .petCard_btn a {
-    background-color: #28a745;
+    background-color: #389324;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -140,5 +145,5 @@
 }
   
 .petCard_btn a:hover {
-    background-color: #218838;
+    background-color: #246117;
 }
