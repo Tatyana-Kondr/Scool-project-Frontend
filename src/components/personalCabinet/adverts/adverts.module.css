@@ -53,11 +53,13 @@
   
   .avert_buttons a, .avert_buttons button {
     text-decoration: none;
+
     padding: 5px 15px;  /* Уменьшенные отступы */
     border: none;
     border-radius: 5px;
     font-weight: 500;
     font-size: 14px;  /* Уменьшенный размер текста */
+
     color: #fff;
     background-color: #86d575;
     cursor: pointer;

@@ -5,8 +5,8 @@ import { deletePet, getPet, getPetsByFilter, selectPet, selectPets } from '../..
 import s from "./adverts.module.css";
 
 export default function Adverts() {
+  
     const { author } = useParams<{ author: string }>();
-    const { petId } = useParams()
     const petsList = useAppSelector(selectPets);
     const pet = useAppSelector(selectPet);
     const dispatch = useAppDispatch();
@@ -16,8 +16,10 @@ export default function Adverts() {
     }, [dispatch, author]);
 
     useEffect(() => {
-        dispatch(getPet(Number(petId)));
-      }, [dispatch, petId]);
+      if(pet){
+        dispatch(getPet(pet?.id));
+      }
+      }, [dispatch, pet?.id]);
   
     return (
       <div className={s.avert_container}>

@@ -9,14 +9,15 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 200px 30px;
+  gap: 10px;
+  padding: 200px 50px;
 }
 
 .avert_container {
   min-height: 500px;
+  max-width: 50%;
   flex: 1;
-  min-width: 200px; /* Чтобы блоки не становились слишком узкими */
+  min-width: 200px; 
   border: 1px solid #ccc;
   max-width: 65%;
   padding: 20px;
@@ -25,27 +26,30 @@
   background-color: #f9f9f9;
 }
 
-.chat_container {
-  min-height: 500px;
-  width: 27%;
-  min-width: 100px; /* Чтобы блоки не становились слишком узкими */
+
+.chat_container{
+  min-height: 200px;
+  max-width: 20%;
+  flex: 1;
+  min-width: 200px; 
   border: 1px solid #ccc;
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color:#f9f9f9;
 }
 
-.link_create_pet {
+ .link_create_pet {
+
   display: block;
   margin-top: 10px;
   margin-bottom: 20px;
   text-decoration: none;
-  color: #54cd38;
+  color:  #54cd38;
   font-weight: bold;
   font-size: 20px;
 }
 
 .link_create_pet:hover {
   text-decoration: underline;
-}
+} 
