@@ -40,7 +40,7 @@ export default function Home() {
           <Link className={styles.found_pet_link} to="/foundAnimal">I found the animal. What do I do?</Link>
         </div>
         <div className={styles.how_work_btn}>
-        <Link className={styles.found_pet_link} to="/howItWork">How it works?</Link>
+        <Link className={styles.found_pet_link} to="/howItWorks">How it works?</Link>
         </div>
       </div>
 

@@ -4,6 +4,8 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { deleteUser, selectUser } from "../../../features/auth/authSlice";
 import s from "./profile.module.css"
 import { getPetsByFilter } from "../../../features/pets/petsSlice";
+
+
 export default function Profile() {
 
   const user = useAppSelector(selectUser);

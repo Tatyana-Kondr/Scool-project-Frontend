@@ -33,12 +33,14 @@ const EditPet: React.FC = () => {
   })
 
   useEffect(() => {
+    console.log("useEffect - petId:", petId)
     if (petId) {
       dispatch(getPet(Number(petId)))
     }
   }, [dispatch, petId])
 
   useEffect(() => {
+    console.log("useEffect - currentPet:", currentPet)
     if (currentPet) {
       setInitialValues({
         caption: currentPet.caption,
@@ -102,6 +104,7 @@ const EditPet: React.FC = () => {
         <h1>Edit ad details</h1>
         <Formik
           initialValues={initialValues}
+          enableReinitialize
           onSubmit={handleSubmit}
         >
           <Form>

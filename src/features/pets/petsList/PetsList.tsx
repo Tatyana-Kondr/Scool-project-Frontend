@@ -1,14 +1,15 @@
 import React, { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
-import { deletePet, getPetsByFilter, selectPets } from "../petsSlice"
+import { getPetsByFilter, selectPets } from "../petsSlice"
 import { Link } from "react-router-dom"
-import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
+import { StringParam, useQueryParams } from "use-query-params"
 import s from "./petsList.module.css"
 import Dropdown from "../../../components/dropdown/Dropdown"
 import { sexList, countryList, categoryList, ageList } from "./data"
-//import Checkbox from "../../../components/dropdown/Checkbox"
+
 
 export default function PetsList() {
+
   const petsByType = useAppSelector(selectPets)
   const dispatch = useAppDispatch()
 
@@ -82,7 +83,16 @@ export default function PetsList() {
           <li key={p.id}>
             <div className={s.petCard}>
               <div className={s.petCard_img}>
-                <img src={p.photos[0]} alt="" />
+              {p.photoUrls && p.photoUrls.map((url, index) => (
+                <img key={index} src={`${"http://localhost:8080"}${url}`} alt={`Pet ${index}`}
+                  style={{
+                    width: "200px",
+                    height: "200px",
+                    objectFit: "cover",
+                    margin: "10px",
+                  }}
+                />
+              ))}
                 <div className={s.petCard_btn}>
                   <Link to={`/petCard/${p.id}`}>Read more</Link>
                 </div>
