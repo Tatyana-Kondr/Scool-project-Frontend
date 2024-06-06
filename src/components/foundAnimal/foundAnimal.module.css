@@ -1,47 +1,42 @@
 .container_found_pet {
-    margin-top: 107px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 200px); /* Adjust the height based on your header and footer height */
-    text-align: center;
-    background: linear-gradient(90deg, rgba(46, 204, 113, 1) 0%, rgba(39, 174, 96, 1) 100%);
-    padding: 20px;
-  }
-  
-  .heading {
-    font-size: 36px;
-    color: white;
-    margin-bottom: 10px;
-  }
-  
-  .subHeading {
-    font-size: 24px;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 800px;
-    text-align: left;
-    color: black;
-  }
-  
-  .sectionTitle {
-    font-size: 24px;
-    color: #54cd38;
-    margin-bottom: 10px;
-  }
-  
-  .paragraph {
-    font-size: 16px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 150px;
+  padding-bottom: 100px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.subHeading {
+  font-size: 1.25rem;
+  margin-bottom: 20px;
+  color: #555;
+  text-align: center;
+}
+
+.content {
+  padding: 10px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.paragraph {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #666;
+  line-height: 1.6;
+}

@@ -23,6 +23,8 @@ import Chat from "./components/personalCabinet/chat/Chat"
 import FoundAnimal from "./components/foundAnimal/FoundAnimal"
 import Adverts from "./components/personalCabinet/adverts/Adverts"
 import Profile from "./components/personalCabinet/profile/Profile"
+import HowItWorks from "./components/howItWorks/HowItWorks"
+import PrivacyPolicy from "./components/privacyPolicy/PrivacyPolicy"
 
 const App = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated)
@@ -44,6 +46,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="loginForm" element={<LoginForm />} />
           <Route path="register" element={<Register />} />
+          <Route path="privacyPolicy" element={<PrivacyPolicy />} />
           <Route path="personalCabinet/:author" element={<PersonalCabinet />} />
           <Route path="chat" element={<Chat />} />
           <Route path="adverts" element={<Adverts />} />
@@ -59,6 +62,7 @@ const App = () => {
           <Route path="petCard/:petId" element={<PetCard />} />
           <Route path="wantHelp" element={<WantHelp />} />
           <Route path="foundAnimal" element={<FoundAnimal />} />
+          <Route path="howItWorks" element={<HowItWorks />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>

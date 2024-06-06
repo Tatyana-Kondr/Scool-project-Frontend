@@ -43,7 +43,7 @@ export default function Header() {
                 <Link to="/wantHelp">I want to help</Link>
               </li>
               <li>
-                <a href="#!">How it works</a>
+                <Link to="/howItWorks">How it works</Link>
               </li>
 
               {userSelected ? (
