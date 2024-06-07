@@ -88,7 +88,7 @@ const EditPet: React.FC = () => {
         await dispatch(
           editPet({ petEditDTO: values, id: Number(petId), files: filePhotos }),
         )
-        navigate(`/personalCabinet/${currentUser?.login}`)
+        navigate(`/personal-cabinet/${currentUser?.login}`)
 
         resetForm()
       } catch (error) {

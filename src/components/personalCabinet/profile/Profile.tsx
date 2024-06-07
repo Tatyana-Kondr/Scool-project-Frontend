@@ -35,7 +35,7 @@ export default function Profile() {
         <div className={s.avatar_preview}>
           {user?.photoUrls && (
             <img
-              src={`${"http://localhost:8080"}${user.photoUrls}`}
+              src={`${"https://take-me-home-sqbog.ondigitalocean.app"}${user.photoUrls}`}
               alt="User Avatar"
             />
           )}
@@ -60,8 +60,8 @@ export default function Profile() {
       </div>
 
       <div className={s.profile_changes}>
-        <Link to={`/editUser`} className={s.link}>Change personal details</Link>
-        <Link to={`/newPassword`} className={s.link}>Change password</Link>
+        <Link to={`/edit-user`} className={s.link}>Change personal details</Link>
+        <Link to={`/new-password`} className={s.link}>Change password</Link>
         <button onClick={handleDeleteAccount} className={s.link_button}>{` Delete account `}</button>
       </div>
     </div>

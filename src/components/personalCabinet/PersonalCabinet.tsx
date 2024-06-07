@@ -22,7 +22,7 @@ export default function PersonalCabinet() {
     <div className={s.cabinet}>
       <Profile />
       <div className={s.avert_container}>
-      <Link className={s.link_create_pet} to="/createPet/">{`Hello, ${user?.fullName}! Create a new pet avert`}</Link>
+      <Link className={s.link_create_pet} to="/create-pet/">{`Hello, ${user?.fullName}! Create a new pet avert`}</Link>
         <Adverts />
       </div>
       <div className={s.chat_container}>

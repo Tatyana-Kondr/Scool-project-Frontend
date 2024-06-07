@@ -1,21 +1,18 @@
-import React from "react"
-import styles from "./foundAnimal.module.css"
-import catImg from "./../../media/cat.jpg"
-import dogImg_6 from "./../../media/dog6.jpg"
+import React from "react";
+import styles from "./foundAnimal.module.css";
+import catImg from "./../../media/cat.jpg";
 
 export default function FoundAnimal() {
   return (
     <div className={styles.container_found_pet}>
       <div className={styles.box_found_pet}>
-        <h1 className={styles.heading_found}>
-          I found an animal on the street.
-        </h1>
+        <h1 className={styles.heading_found}>I found an animal on the street.</h1>
         <p className={styles.subHeading}>What do I do?</p>
       </div>
 
       <div className={styles.box_content_found}>
         <div className={styles.imageContainerFound_cat}>
-          <img src={catImg} alt="dog" className={styles.imageFound} />
+          <img src={catImg} alt="cat" className={styles.imageFound} />
         </div>
         <div className={styles.content_found}>
           <h2 className={styles.sectionTitle_found}>Ensure Safety:</h2>
@@ -73,10 +70,7 @@ export default function FoundAnimal() {
             social media, place ads in local newspapers.
           </p>
         </div>
-        {/* <div className={styles.imageContainerFound_dog}>
-          <img src={dogImg_6} alt="dog" className={styles.imageFound} />
-        </div> */}
       </div>
     </div>
-  )
+  );
 }

@@ -21,7 +21,7 @@ const EditUser: React.FC = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login"); // Redirect to login if not authenticated
+      navigate("/login-form"); // Redirect to login if not authenticated
     }
     if (user && user.photoUrls) {
       setAvatarPreview(user.photoUrls); // Set current avatar as initial preview
@@ -37,7 +37,7 @@ const EditUser: React.FC = () => {
   };
 
   const validationSchema = Yup.object({
-    fullName: Yup.string().required("Full Name is required"),
+    fullName: Yup.string().matches(/^[A-Za-z]+$/, "Name can only contain Latin letters").required("Full Name is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email is required"),
@@ -64,7 +64,7 @@ const EditUser: React.FC = () => {
             updateUser({ id: userId, userUpdateDto: values, file: undefined })
           ).unwrap();
         }
-        navigate(`/personalCabinet/${user?.login}`);
+        navigate(`/personal-cabinet/${user?.login}`);
       } catch (error) {
         console.error("Failed to update user:", error);
       } finally {

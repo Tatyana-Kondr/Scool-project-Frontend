@@ -17,9 +17,11 @@ if (container) {
     <React.StrictMode>
       <Provider store={store}>
         <BrowserRouter>
+        {/* <HashRouter */}
           <QueryParamProvider adapter={ReactRouter6Adapter}>
             <App />
           </QueryParamProvider>
+        {/* <HashRouter */}
         </BrowserRouter>
       </Provider>
     </React.StrictMode>,

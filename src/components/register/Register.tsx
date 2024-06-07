@@ -24,7 +24,7 @@ export default function Register() {
   }
 
   const validationSchema = Yup.object().shape({
-    fullName: Yup.string().required("Required"),
+    fullName: Yup.string().matches(/^[A-Za-z]+$/, "Name can only contain Latin letters").required("Required"),
     login: Yup.string().required("Required"),
     password: Yup.string()
       .min(4, "Password must be at least 4 characters")
@@ -105,9 +105,6 @@ export default function Register() {
               </div>
 
               <div className={s.form_group_register}>
-                {/* <label htmlFor="fullName" className={s.required_field}>
-                  Full Name
-                </label> */}
                 <Field
                   type="text"
                   name="fullName"
@@ -122,9 +119,6 @@ export default function Register() {
               </div>
 
               <div className={s.form_group_register}>
-                {/* <label htmlFor="login" className={s.required_field}>
-                  Username
-                </label> */}
                 <Field
                   type="text"
                   name="login"
@@ -139,9 +133,6 @@ export default function Register() {
               </div>
 
               <div className={s.form_group_register}>
-                {/* <label htmlFor="password" className={s.required_field}>
-                  Password
-                </label> */}
                 <Field
                   type="password"
                   name="password"
@@ -156,9 +147,6 @@ export default function Register() {
               </div>
 
               <div className={s.form_group_register}>
-                {/* <label htmlFor="email" className={s.required_field}>
-                  Email
-                </label> */}
                 <Field
                   type="email"
                   name="email"
@@ -218,10 +206,9 @@ export default function Register() {
                 <Field type="checkbox" name="agreeToTerms" />
                 <label htmlFor="agreeToTerms">
                   I agree to{" "}
-                  <Link to="/privacyPolicy" className={s.checkboxGroup_link}>
+                  <Link to="/privacy-policy" className={s.checkboxGroup_link}>
                     Privacy Policy
-                  </Link>
-                  {/* and <a href="/terms">Terms</a> */}
+                  </Link>                  
                 </label>
                 <ErrorMessage
                   name="agreeToTerms"
@@ -245,7 +232,7 @@ export default function Register() {
             Already have an account?{"  "}
             <span
               style={{ color: "green", cursor: "pointer" }}
-              onClick={() => navigate("/loginForm")}
+              onClick={() => navigate("/login-form")}
               className={s.accountExist_login}
             >
               Sign in
