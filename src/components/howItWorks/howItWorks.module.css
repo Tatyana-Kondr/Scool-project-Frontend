@@ -1,59 +1,70 @@
-.divHowItWorks{
-    padding-top: 200px;
-    padding-bottom: 200px;
+.container_howWork {
+  max-width: 70%;
+  margin: 0 auto;
+  padding-top: 150px;
+  padding-bottom: 40px;
+  color: #757575;
+  font:
+    18px Helvetica,
+    Ubuntu,
+    sans-serif;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-top: 150px;
-    padding-bottom: 150px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .heading {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .intro {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #555;
-    line-height: 1.6;
-  }
-  
-  .list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .listItem {
-    margin-bottom: 20px;
-  }
-  
-  .listItemTitle {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .paragraph {
-    font-size: 1rem;
-    color: #666;
-    line-height: 1.6;
-  }
-  
-  .conclusion {
-    font-size: 1.2rem;
-    margin-top: 20px;
-    color: #555;
-    line-height: 1.6;
-    text-align: center;
-  }
-  
+.heading_howWork {
+  font-size: 40px;
+  text-align: center;
+  color: #54cd38;
+  margin-bottom: 20px;
+}
+
+.intro_howWork {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.section_howWork {
+  display: flex;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.imageContainerHowWork {
+  height: 300px;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageHowWork {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.listItem_howWork {
+  margin-bottom: 15px;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.list_howWork {
+  list-style-type: none;
+  padding: 0;
+}
+
+.listItemTitle_howWork {
+  font-weight: bold;
+  color: #545252;
+  margin-top: 15px;
+  font-size: 24px;
+}
+
+.conclusion{
+  margin-top: 30px;
+  margin-bottom: 40px;
+  color: rgb(4, 139, 4);
+  font-family: "Kaushan Script", sans-serif;
+  font-size: 26px;
+}
