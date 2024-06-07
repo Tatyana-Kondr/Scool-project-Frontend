@@ -171,9 +171,10 @@
   background-position: 10px -53px !important
 }
 .button {
-  width: 80%;
+  width: 70%;
   padding: 10px;
   background-color: #54cd38;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   color: white;
   border: none;
   border-radius: 4px;
@@ -194,6 +195,7 @@
   font-size: 12px;
 }
 .link_account{
+  padding-top: 10px;
    margin-bottom: 25px;
   }
 .box_front a:hover {
