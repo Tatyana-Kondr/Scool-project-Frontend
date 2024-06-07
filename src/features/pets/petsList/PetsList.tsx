@@ -94,7 +94,7 @@ export default function PetsList() {
             <div className={s.petCard}>
             <div className={s.petCard_img}>
                {p.photoUrls && p.photoUrls[0] ? ( 
-                  <img src={`http://localhost:8080${p.photoUrls[0]}`} 
+                  <img src={`${"https://take-me-home-sqbog.ondigitalocean.app"}${p.photoUrls[0]}`} 
                        alt={`Photo of ${p.caption}`} 
                    /> ) : ( 
                    <div className={s.noPhoto}>No Photo
@@ -112,7 +112,7 @@ export default function PetsList() {
                 <p>age: {p.age}</p>
                 <p>sex: {p.gender}</p>
                 <div className={s.petCard_btn}>
-                  <Link to={`/petCard/${p.id}`}>Read more</Link>
+                  <Link to={`/pet-card/${p.id}`}>Read more</Link>
                 </div>
               </div>
             </div>

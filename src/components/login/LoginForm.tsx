@@ -9,6 +9,7 @@ import { useState } from "react";
 import open from "./../../media/icons/openEye.png"
 import close from "./../../media/icons/closeEye.png"
 
+
 export default function LoginForm() {
   const dispatch = useAppDispatch();
   const message = useAppSelector(selectLoginError);
@@ -24,6 +25,8 @@ export default function LoginForm() {
     login: Yup.string().required("Username is required"),
     password: Yup.string()
       .min(4, "Password must be at least 4 characters")
+      .max(8, "Password must be no more than 8 characters") 
+      .matches(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{4,8}$/, "Password must contain at least one uppercase letter and one number") 
       .required("Password is required"),
   });
 

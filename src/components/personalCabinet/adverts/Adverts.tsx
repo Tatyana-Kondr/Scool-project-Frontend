@@ -18,6 +18,7 @@ export default function Adverts() {
   const dispatch = useAppDispatch()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
+
   useEffect(() => {
     dispatch(getPetsByFilter({ author }))
   }, [dispatch, author])
@@ -40,11 +41,10 @@ export default function Adverts() {
               className={s.avert_deadline}
             >{`active until: ${p.deadline}`}</span>
             <div className={s.avert_details}>
-              <Link className={s.avert_caption} to={`/petCard/${p.id}`}>
-                {p.caption}
-              </Link>
+            <Link className={s.avert_caption} to={`/pet-card/${p.id}`}>{p.caption}</Link>
+             
               <div className={s.avert_buttons}>
-                <Link to={`/editPet/${p.id}`}>Edit</Link>
+              <Link to={`/edit-pet/${p.id}`}>Edit</Link>
                 <button type="button" onClick={openModal}>
                   {`Delete`}
                 </button>

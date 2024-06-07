@@ -44,25 +44,25 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="loginForm" element={<LoginForm />} />
+          <Route path="login-form" element={<LoginForm />} />
           <Route path="register" element={<Register />} />
-          <Route path="privacyPolicy" element={<PrivacyPolicy />} />
-          <Route path="personalCabinet/:author" element={<PersonalCabinet />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="personal-cabinet/:author" element={<PersonalCabinet />} />
           <Route path="chat" element={<Chat />} />
           <Route path="adverts" element={<Adverts />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="adminCabinet" element={<AdminCabinet />} />
+          <Route path="admin-cabinet" element={<AdminCabinet />} />
           <Route path="/user/:login/pets" element={<UserPetsList />} />
-          <Route path="editUser" element={<EditUser />} />
-          <Route path="editPet/:petId" element={<EditPet />} />
-          <Route path="newPassword" element={<NewPassword />} />
-          <Route path="createPet" element={<CreatePet />} />
-          <Route path="userList" element={<UserList />} />
+          <Route path="edit-user" element={<EditUser />} />
+          <Route path="edit-pet/:petId" element={<EditPet />} />
+          <Route path="new-password" element={<NewPassword />} />
+          <Route path="create-pet" element={<CreatePet />} />
+          <Route path="user-list" element={<UserList />} />
           <Route path="pets" element={<PetsList />} />
-          <Route path="petCard/:petId" element={<PetCard />} />
-          <Route path="wantHelp" element={<WantHelp />} />
-          <Route path="foundAnimal" element={<FoundAnimal />} />
-          <Route path="howItWorks" element={<HowItWorks />} />
+          <Route path="pet-card/:petId" element={<PetCard />} />
+          <Route path="want-help" element={<WantHelp />} />
+          <Route path="found-animal" element={<FoundAnimal />} />
+          <Route path="how-it-works" element={<HowItWorks />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>

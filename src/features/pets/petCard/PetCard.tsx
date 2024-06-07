@@ -86,7 +86,7 @@ export default function PetCard() {
       }
     } else {
       localStorage.setItem("redirectAfterLogin", window.location.pathname)
-      navigate("/loginForm")
+      navigate("/login-form")
     }
   }
 
@@ -136,7 +136,8 @@ export default function PetCard() {
             {pet.photoUrls && pet.photoUrls.length > 0 && (
               <>
                 <img
-                  src={`http://localhost:8080${pet.photoUrls[currentPhotoIndex]}`}
+                  src={`${"https://take-me-home-sqbog.ondigitalocean.app"}${pet.photoUrls[currentPhotoIndex]}`}
+                  // https://localhost:8080
                   alt={`Pet ${currentPhotoIndex}`}
                 />
                 <div className={style.photo_navigation}>

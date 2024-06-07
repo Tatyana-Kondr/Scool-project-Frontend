@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { deleteUser, selectUser } from "../../../features/auth/authSlice";
-import s from "./profile.module.css";
-import { getPetsByFilter } from "../../../features/pets/petsSlice";
-import ModalDeleteAccount from "../../modals/modalDeleteAccount/ModalDeleteAccount";
+import React, { useEffect, useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../../app/hooks"
+import { deleteUser, selectUser } from "../../../features/auth/authSlice"
+import s from "./profile.module.css"
+import { getPetsByFilter } from "../../../features/pets/petsSlice"
+import ModalDeleteAccount from "../../modals/modalDeleteAccount/ModalDeleteAccount"
 
 export default function Profile() {
-  const user = useAppSelector(selectUser);
-  const { author } = useParams<{ author: string }>();
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const user = useAppSelector(selectUser)
+  const { author } = useParams<{ author: string }>()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    dispatch(getPetsByFilter({ author }));
-  }, [dispatch, author]);
+    dispatch(getPetsByFilter({ author }))
+  }, [dispatch, author])
 
   const handleDeleteAccount = async () => {
     if (user) {
-      const result = await dispatch(deleteUser(user.id));
+      const result = await dispatch(deleteUser(user.id))
       if (deleteUser.fulfilled.match(result)) {
-        navigate("/"); // Перенаправление на домашнюю страницу
+        navigate("/") // Перенаправление на домашнюю страницу
       } else {
-        console.error("Failed to delete user", result.error.message);
+        console.error("Failed to delete user", result.error.message)
       }
     }
-  };
+  }
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
   const confirmDelete = () => {
-    closeModal();
-    handleDeleteAccount();
-  };
+    closeModal()
+    handleDeleteAccount()
+  }
 
   return (
     <div className={s.profile_container}>
@@ -43,7 +43,7 @@ export default function Profile() {
         <div className={s.avatar_preview}>
           {user?.photoUrls && (
             <img
-              src={`${"http://localhost:8080"}${user.photoUrls}`}
+              src={`${"https://take-me-home-sqbog.ondigitalocean.app"}${user.photoUrls}`}
               alt="User Avatar"
             />
           )}
@@ -70,10 +70,10 @@ export default function Profile() {
       </div>
 
       <div className={s.profile_changes}>
-        <Link to={`/editUser`} className={s.link}>
+        <Link to={`/edit-user`} className={s.link}>
           Change personal details
         </Link>
-        <Link to={`/newPassword`} className={s.link}>
+        <Link to={`/new-password`} className={s.link}>
           Change password
         </Link>
         <button
@@ -81,7 +81,11 @@ export default function Profile() {
           className={s.link_button}
         >{` Delete account `}</button>
       </div>
-      <ModalDeleteAccount isOpen={isModalOpen} onClose={closeModal} onConfirm={confirmDelete} />
+      <ModalDeleteAccount
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onConfirm={confirmDelete}
+      />
     </div>
-  );
+  )
 }
