@@ -6,7 +6,7 @@ import { getPet, selectPet } from "../petsSlice"
 import PageNotFound from "../../../components/pageNotFound"
 import { author, selectUser } from "../../auth/authSlice"
 import { User, UserUpdateDto } from "../../auth/types"
-import Modal from "../../../components/modalProps/ModalProps"
+import Modal from "../../../components/modals/modalProps/ModalProps"
 
 export default function PetCard() {
   const currentUser = useAppSelector(selectUser)

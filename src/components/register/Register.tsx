@@ -5,11 +5,14 @@ import { register } from "../../features/auth/authSlice"
 import { Link, useNavigate } from "react-router-dom"
 import s from "./register.module.css"
 import * as Yup from "yup"
+import open from "./../../media/icons/openEye.png"
+import close from "./../../media/icons/closeEye.png"
 
 export default function Register() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false);
 
   const initialValues = {
     email: "",
@@ -139,15 +142,28 @@ export default function Register() {
               </div>
 
               <div className={s.form_group_register}>
+              <div className={s.password_wrapper_register}>
                 {/* <label htmlFor="password" className={s.required_field}>
                   Password
                 </label> */}
                 <Field
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   className={s.form_control_register}
                   placeholder="Password*"
                 />
+                <button
+                    type="button"
+                    className={s.toggle_password_register}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <img
+                      src={showPassword ? close : open}
+                      alt="Toggle visibility"
+                      className={s.icon_register}
+                    />
+                  </button>
+                  </div>
                 <ErrorMessage
                   name="password"
                   component="div"

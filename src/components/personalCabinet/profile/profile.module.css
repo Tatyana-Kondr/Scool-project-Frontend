@@ -54,7 +54,8 @@
   margin-bottom: 5px;
 }
 
-.contact span, .contact a {
+.contact span,
+.contact a {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.9);
 }
@@ -76,7 +77,8 @@
   margin-top: 20px;
 }
 
-.link,.link_button {
+.link,
+.link_button {
   display: block;
   text-decoration: none;
   padding: 8px 12px;
@@ -95,7 +97,7 @@
   background-color: #5cd33f;
 }
 
-.link_button:hover{
+.link_button:hover {
   background-color: #b0424d;
 }
 
@@ -106,10 +108,8 @@
   }
 
   .avatar_preview img {
-
     width: 80px;
     height: 80px;
-
   }
 }
 
@@ -117,7 +117,6 @@
   .profile_container {
     padding: 15px;
   }
-
 
   .avatar_preview img {
     width: 60px;

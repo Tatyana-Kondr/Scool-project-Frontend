@@ -35,7 +35,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(54, 37, 38, 0.8);
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -44,7 +44,7 @@
   }
   
   .footerContainer.scrolled {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(54, 37, 38, 0.6);
   }
   
   .footerContent {

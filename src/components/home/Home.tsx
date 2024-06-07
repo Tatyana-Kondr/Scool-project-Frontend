@@ -37,10 +37,14 @@ export default function Home() {
 
       <div className={styles.round_buttons}>
         <div className={styles.found_pet_btn}>
-          <Link className={styles.found_pet_link} to="/foundAnimal">I found the animal. What do I do?</Link>
+          <Link className={styles.found_pet_link} to="/foundAnimal">
+            I found the animal. What do I do?
+          </Link>
         </div>
         <div className={styles.how_work_btn}>
-        <Link className={styles.found_pet_link} to="/howItWorks">How it works?</Link>
+          <Link className={styles.found_pet_link} to="/howItWorks">
+            How it works?
+          </Link>
         </div>
       </div>
 
@@ -52,18 +56,14 @@ export default function Home() {
             onClick={() => handlePetsTypeFilter("dog")}
           >
             <img src={dogsImg} alt="Dogs" />
-            <div className={styles.dogs_cats_body}>
-              {/* <Link className={styles.dogs_cats_btn} to="/pets?petType=dog">DOGS</Link> */}
-            </div>
+            <div className={styles.dogs_cats_body}></div>
           </div>
           <div
             className={styles.dogs_cats}
             onClick={() => handlePetsTypeFilter("cat")}
           >
             <img src={catsImg} alt="Cats" />
-            <div className={styles.dogs_cats_body}>
-              {/* <button className={styles.dogs_cats_btn} onClick={() => handlePetsTypeFilter('cat')}>CATS</button> */}
-            </div>
+            <div className={styles.dogs_cats_body}></div>
           </div>
         </div>
       </div>

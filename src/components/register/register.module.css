@@ -318,3 +318,22 @@
   text-decoration: underline;
   color: darkgreen;
 }
+.form_control_register{
+  position: relative;
+}
+
+.toggle_password_register {
+  position: absolute;
+  right: 110px;
+  top: 365px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+
+.icon_register {
+  width: 20px;
+  height: auto;
+}
