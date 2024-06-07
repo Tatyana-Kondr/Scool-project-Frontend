@@ -9,10 +9,9 @@
 .login_container {
   margin-top: 50px;
   padding-top: 150px;
-  padding-bottom: 300px;
+  padding-bottom: 100px;
   position: relative;
   width: 100%;
-  min-height: 700px; 
 }
 
 .box_front {

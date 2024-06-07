@@ -240,20 +240,3 @@ p a:hover {
   color: #9d9595;
 }
 
-.form_control.required::before {
-  content: "*";
-  color: red;
-  margin-right: 5px;
-  position: absolute;
-  left: 5px; /* Расположим звездочку слева внутри поля ввода */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.form_control.required {
-  padding-left: 20px; /* Увеличим отступ слева, чтобы звездочка не перекрывалась текстом */
-  background-image: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="red"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-9h2v6h-2zm0-4h2v2h-2z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* Расположим звездочку справа внутри поля ввода */
-  background-size: 15px; /* Установим размер изображения */
-}
